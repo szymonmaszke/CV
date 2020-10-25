@@ -1,0 +1,27 @@
+% Universities
+M.I.T. Stanford Oxford Carnegie Mellon University Boston University
+Toronto Boston Harvard Caltech ETH Zurich Cambridge UCL
+Imperial College London Princeton Yale
+% Researchers
+Bengio Kaiming He Goodfellow Hinton LeCun
+% Deep Learning
+Attention Transformers Self-attention capsule nets GPT-3 GPT-2
+% Companies
+Google Facebook Twitter
+Amazon Microsoft Apple IBM Oracle DeepMind OpenAI Facebook AI Research
+F.A.I.R. Tesla Uber
+% Traits
+diligent punctual communicative management fast team leader
+decisive achieving target goals time management skills
+effectiveness knowledge sharing
+% Other
+research optimize improve extend help multiple responsibilities
+cost optimization
+% Languages
+Rust Go Scala Swift Assembler JavaScript PHP C\# TypeScript Ruby
+Shell MySQL R Excel
+% Tools
+Apache Spark Hadoop Kafka Kubernetes k8s Apache Impala PySpark
+MariaDB Anaconda
+% buzzwords
+Blockchain artificial intelligence AI microsystems
