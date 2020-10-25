@@ -5,6 +5,12 @@
 
 \documentclass[11pt]{article}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                   PACKAGES
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % more advanced expressions in \setlength
 \usepackage{float}
 \usepackage{calc}
@@ -13,64 +19,76 @@
 \usepackage{fontawesome}
 \usepackage{enumitem}
 \usepackage{setspace}
-
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,backgrounds,matrix}
 
 % load external fonts
 \usepackage[default]{lato}
 
-% define margin
-\newlength\cvMargin
-\setlength\cvMargin{1cm}
+% advanced drawing
 
-\usepackage[margin=0.5\cvMargin,noheadfoot,a4paper]{geometry}
+% No page numbering
+\usepackage{nopageno}
+\usepackage{anyfontsize}
+\usepackage{graphicx, calc}
+\usepackage{hyperref}
+
+
+\newlength\Margin
+\setlength\Margin{1cm}
+
+\usepackage[margin=0.5\Margin,noheadfoot,a4paper]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                           VARIABLES & LENGTHS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\TopBarHeight}{0.28}
 \newcommand{\SideBarWidth}{0.3}
 
 % other lengths
 \newlength\cvSideWidth
-\setlength\cvSideWidth{\SideBarWidth\paperwidth-\cvMargin}
+\setlength\cvSideWidth{\SideBarWidth\paperwidth-\Margin}
 
 \newlength\cvSideBar
 \setlength\cvSideBar{\SideBarWidth\paperwidth}
 
 \newlength\cvMainWidth
-\setlength\cvMainWidth{\paperwidth-4\cvMargin-\cvSideWidth}
+\setlength\cvMainWidth{\paperwidth-4\Margin-\cvSideWidth}
 
 
 \newlength\cvTopHeight
-\setlength\cvTopHeight{\TopBarHeight\paperheight-\cvMargin}
+\setlength\cvTopHeight{\TopBarHeight\paperheight-\Margin}
 
 \newlength\cvMainHeight
-\setlength\cvMainHeight{\paperheight-4\cvMargin-\cvTopHeight}
-
-% Helpers
+\setlength\cvMainHeight{\paperheight-4\Margin-\cvTopHeight}
 
 \newlength\cvTopHeightMargin
-\setlength\cvTopHeightMargin{-\cvTopHeight+2\cvMargin}
+\setlength\cvTopHeightMargin{-\cvTopHeight+2\Margin}
 
 \newlength\cvSectionHeight
 \setlength\cvSectionHeight{1.4cm}
 
 
-% Sidebar Helpers
 \newlength{\textStart}
 \setlength\textStart{\cvTopHeightMargin+\cvSectionHeight}
 
 \newlength{\cvMiddleSidebar}
-\setlength\cvMiddleSidebar{\cvSideWidth + 2\cvMargin}
+\setlength\cvMiddleSidebar{\cvSideWidth + 2\Margin}
 
 \newlength{\cvTopBarIconSpacing}
 \setlength\cvTopBarIconSpacing{-0.5cm}
 
-% advanced drawing
-\usepackage{tikz}
-\usetikzlibrary{calc,positioning,backgrounds,matrix}
 
-% define four main colours
-\usepackage{xcolor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                   COLORS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% general colors
 \definecolor{topbar}{HTML}{eceff1}
 \definecolor{sidebar}{HTML}{cfd8dc}
 \definecolor{background}{HTML}{f5f5f5}
@@ -81,6 +99,10 @@
 \pagecolor{background}
 \color{text}
 
+% icon colors
+\definecolor{phone}{HTML}{43a047}
+\definecolor{location}{HTML}{3d5afe}
+
 % brand colors
 \definecolor{linkedin}{HTML}{0072b1}
 \definecolor{github}{HTML}{333333}
@@ -90,81 +112,125 @@
 % section colors
 \definecolor{skills}{HTML}{ec407a}
 \definecolor{languages}{HTML}{26c6da}
-\definecolor{phone}{HTML}{43a047}
-\definecolor{location}{HTML}{3d5afe}
 \definecolor{education}{HTML}{fbc02d}
 \definecolor{work}{HTML}{9fa8da}
 \definecolor{foss}{HTML}{c0ca33}
+
 % tags color
-\definecolor{cvtagcolor}{HTML}{0366d6}
+\definecolor{skilltag}{HTML}{0366d6}
 
-% No page numbering
-\usepackage{nopageno}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                ENVIRONMENTS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{anyfontsize}
+\newenvironment{cvtext}{\par\color{text}}{\par}
 
-\usepackage{graphicx, calc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                  RULERS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{hyperref}
+\makeatletter
+\def\fossrulefill{\vspace{-5mm}\leavevmode\leaders\hrule height 1pt\hfill\kern\z@}
+\makeatother
 
-% Inline graphics and icons
-\newcommand*{\img}[2]{%
-  \raisebox{-0.3\baselineskip*{#2}}{%
-        \includegraphics[
-        height={#2}\baselineskip,
-        width={#2}\baselineskip,
-        keepaspectratio,
-        ]{#1}%
-    }%
-}
+\makeatletter
+\def\skillsrulefill{\vspace{-1mm}\leavevmode\leaders\hrule height 1pt\hfill\kern\z@\vspace{1mm}}
+\makeatother
 
-% Section
-\newcommand{\cvtag}[1]{%
-  \tikz[baseline]\node[anchor=base,fill=cvtagcolor,opacity=.1,
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                 COMMANDS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Create skill tags in skills bar
+\newcommand{\skilltag}[1]{%
+  \tikz[baseline]\node[anchor=base,fill=skilltag,opacity=.1,
     text opacity=1., rounded corners,
     inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
 }
 
-% Section
-\makeatletter
-\def\cv@hrulefill{{\color{text}\leavevmode\leaders\hrule height 1pt\hfill\kern\z@}}
 
-% line before and after text
-\NewDocumentCommand{\rulefill}{m}{\par\noindent\raisebox{\baselineskip/4}{\makebox[\linewidth]
-{\cv@hrulefill\hspace{1ex}\raisebox{-\baselineskip/4}{#1}\hspace{1ex}\cv@hrulefill}}}
-\makeatother
+% Create Privacy compliant clause at the end of document.
+\newcommand{\clause}{
+  \begin{spacing}{0.25}
+    \textcolor{clause}{
+      \tiny{
+        I hereby give consent for my personal data included in my application to be processed for the purposes of the recruitment process under the European Parliament's
+        and Council of the European Union Regulation on the Protection of Natural Persons as of 27 April 2016, with regard to the processing of personal data and
+        on the free movement of such data, and repealing Directive 95/46/EC (Data Protection Directive)
+      }
+    }
+  \end{spacing}
+}
 
-\makeatletter
-\def\thickhrulefill{\leavevmode\leaders\hrule height 1pt\hfill\kern\z@}
-\makeatother
+% Create name and surname at top left corner
+\newcommand{\name}[2]{
+  \node (username) at ($(current page.north west)+(\cvMiddleSidebar / 2, 0cm)$)
+    [below, text width = \cvSideWidth]
+    {
+      \begin{cvtext}
+        \begin{center}
 
-\newenvironment{cvtext}{\par\color{text}}{\par}
+          \fontsize{40}{48}\selectfont #1
+          \textbf{#2}
+
+        \end{center}
+      \end{cvtext}
+  };
+}
+
+% Create open source project
+%   1 - name of project
+%   2 - href to project
+%   3 - number of stars
+%   4 - release date
+%   5 - first description
+%   6 - second description
+\newcommand{\project}[6]{
+  \textbf{
+    \href{#2}{\large \faGithub\space #1} \hfill
+  }
+  \textcolor{annotation}{
+    \faStar\space #3 \hfill
+    \faCalendar\space #4
+  }
+  \vspace{-2.5mm}
+
+  \begin{itemize}[leftmargin=*]
+    \setlength\itemsep{0mm}
+    \item #5
+    \item #6
+  \end{itemize}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                 DOCUMENT
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
+  % Algorithmic tags
   \input{data/tags.txt}
-    % Bars
+  % Bars
   \begin{tikzpicture}[remember picture, overlay]
-    \fill[sidebar] (current page.north west) rectangle ++(\cvSideWidth+2\cvMargin,-\paperheight);
+    \fill[sidebar] (current page.north west) rectangle ++(\cvSideWidth+2\Margin,-\paperheight);
     \fill[topbar] (current page.north west) rectangle +(\paperwidth, \cvTopHeightMargin);
   \end{tikzpicture}
 
   % Sidebar
   \begin{tikzpicture}[remember picture, overlay]
-    \node (username) at ($(current page.north west)+(\cvMiddleSidebar / 2, 0cm)$)
-      [below, text width = \cvSideWidth]
-      {
-        \begin{cvtext}
-          \begin{center}
-            \fontsize{40}{48}\selectfont Szymon
-
-            \textbf{Maszke}
-          \end{center}
-        \end{cvtext}
-    };
+    \name{Szymon}{Maszke}
     % Calculate it properly
     % GitHub
     \node (github) at ($(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-2.1cm)$)
-      [rectangle, fill=github, minimum width=\cvSideWidth+2\cvMargin, minimum height=\cvSectionHeight]
+      [rectangle, fill=github, minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{background}{\Large \textbf{\faGithub\space GitHub}}};
     \node (github data) at ($(github.south)+(0cm, 2mm)$) [below, text width = \cvSideWidth] {
       \textcolor{text}{
@@ -177,7 +243,7 @@
     };
     \node (stackoverflow) at (github data.south)
       [rectangle, fill=stackoverflow, below,
-      minimum width=\cvSideWidth+2\cvMargin, minimum height=\cvSectionHeight]
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{background}{\Large \faStackOverflow}
         \textcolor{text}{\Large \space stack\textbf{overflow}
       }};
@@ -194,55 +260,47 @@
     };
     \node (skills) at (stackoverflow data.south)
       [rectangle, fill=skills, below,
-      minimum width=\cvSideWidth+2\cvMargin, minimum height=\cvSectionHeight]
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{background}{\Large\textbf{\faCogs\space Skills}}};
 
 
     \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth] {
-      \cvtag{python} \href{https://github.com/szymonmaszke/numpp}{\cvtag{C++}} \cvtag{java}
+      \skilltag{python} \href{https://github.com/szymonmaszke/numpp}{\skilltag{C++}} \skilltag{java}
 
-      \cvtag{C} \href{https://github.com/szymonmaszke/xms}{\cvtag{SQL}} \cvtag{R}
-      \href{https://stackoverflow.com/questions/55206227/why-bashrc-is-not-executed-when-run-docker-container/55213158#55213158}{\cvtag{bash}}
+      \skilltag{C} \href{https://github.com/szymonmaszke/xms}{\skilltag{SQL}} \skilltag{R}
+      \href{https://stackoverflow.com/questions/55206227/why-bashrc-is-not-executed-when-run-docker-container/55213158#55213158}{\skilltag{bash}}
 
-      \vspace{-1mm}
-      \thickhrulefill
-      \vspace{1mm}
+      \skillsrulefill
 
       % Machine Learning
-      \cvtag{numpy}
-      \href{https://stackoverflow.com/questions/55675788/how-can-i-lemmatize-list-of-lists-in-python-using-spacy/55676283#55676283}{\cvtag{spacy}} \cvtag{nltk}
+      \skilltag{numpy}
+      \href{https://stackoverflow.com/questions/55675788/how-can-i-lemmatize-list-of-lists-in-python-using-spacy/55676283#55676283}{\skilltag{spacy}} \skilltag{nltk}
 
-      \href{https://stackoverflow.com/questions/55009704/why-is-cross-val-predict-not-appropriate-for-measuring-the-generalisation-error/55010603#55010603}{\cvtag{scikit-learn}}
-      \href{https://stackoverflow.com/questions/55601928/apply-multiple-standardscalers-to-individual-groups/55602630#55602630}{\cvtag{pandas}}
+      \href{https://stackoverflow.com/questions/55009704/why-is-cross-val-predict-not-appropriate-for-measuring-the-generalisation-error/55010603#55010603}{\skilltag{scikit-learn}}
+      \href{https://stackoverflow.com/questions/55601928/apply-multiple-standardscalers-to-individual-groups/55602630#55602630}{\skilltag{pandas}}
 
-      \vspace{-1mm}
-      \thickhrulefill
-      \vspace{1mm}
+      \skillsrulefill
 
       % Deep Learning
-      \cvtag{pytorch}
-      \href{https://stackoverflow.com/questions/57086301/custom-neural-network-implementation-on-mnist-using-tensorflow-2-0/57136842#57136842}{\cvtag{tensorflow2.x}}
+      \skilltag{pytorch}
+      \href{https://stackoverflow.com/questions/57086301/custom-neural-network-implementation-on-mnist-using-tensorflow-2-0/57136842#57136842}{\skilltag{tensorflow2.x}}
 
-      \href{https://stackoverflow.com/questions/55421290/tensorflow-2-0-keras-how-to-write-image-summaries-for-tensorboard/55754700#55754700}{\cvtag{keras}} \cvtag{tensorflow1.x}
+      \href{https://stackoverflow.com/questions/55421290/tensorflow-2-0-keras-how-to-write-image-summaries-for-tensorboard/55754700#55754700}{\skilltag{keras}} \skilltag{tensorflow1.x}
 
-      \vspace{-1mm}
-      \thickhrulefill
-      \vspace{1mm}
+      \skillsrulefill
 
-      \cvtag{tox} \cvtag{pytest} \cvtag{travis}
-      \cvtag{github-actions}
+      \skilltag{tox} \skilltag{pytest} \skilltag{travis}
+      \skilltag{github-actions}
 
-      \vspace{-1mm}
-      \thickhrulefill
-      \vspace{1mm}
+      \skillsrulefill
 
       % Other
-      \cvtag{docker} \href{https://github.com/szymonmaszke/dotfiles}{\cvtag{linux}} \cvtag{make}
-      \cvtag{aws-lambda} \cvtag{openmp}
+      \skilltag{docker} \href{https://github.com/szymonmaszke/dotfiles}{\skilltag{linux}} \skilltag{make}
+      \skilltag{aws-lambda} \skilltag{openmp}
     };
     \node (languages) at ($(skills data.south)+(0cm, -2mm)$)
       [rectangle, fill=languages, below,
-      minimum width=\cvSideWidth+2\cvMargin, minimum height=\cvSectionHeight]
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{background}{\Large\textbf{\faCommenting\space Languages}}};
     \node (languages data) at ($(languages.south)+(0cm, 3mm)$) [below, text width = \cvSideWidth] {
       \textcolor{text}{
@@ -258,7 +316,7 @@
   \begin{tikzpicture}[remember picture, overlay]
     % Top Bar
     % First column
-    \node (gmail) at ($(current page.north west)+(\cvMiddleSidebar+\cvMargin,-\cvMargin / 2)$)
+    \node (gmail) at ($(current page.north west)+(\cvMiddleSidebar+\Margin,-\Margin / 2)$)
       [rectangle, fill=gmail, below,
       minimum width=1cm, minimum height=1cm]
       {\textcolor{background}{\Large \faEnvelopeO}};
@@ -305,10 +363,10 @@
 
   % Main section
   \begin{tikzpicture}[remember picture, overlay]
-    \node (education) at ($(current page.north west)+(\paperwidth-\cvMiddleSidebar+\cvMargin / 2,\textStart)+(-0.5mm,-2.1cm)$)
+    \node (education) at ($(current page.north west)+(\paperwidth-\cvMiddleSidebar+\Margin / 2,\textStart)+(-0.5mm,-2.1cm)$)
       [rectangle, fill=education, minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
       {\Large \textbf{\textcolor{text}{\faUniversity\space Education}}};
-    \node (education data) at (education.south) [below, text width = \paperwidth-\cvMiddleSidebar-\cvMargin] {
+    \node (education data) at (education.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
         \vspace*{-0.35cm}
         \begin{cvtext}
           \begin{center}
@@ -346,7 +404,7 @@
       [rectangle, fill=work, below,
       minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
       {\Large \textbf{\textcolor{text}{\faBriefcase\space Work}}};
-    \node (work data) at (work.south) [below, text width = \paperwidth-\cvMiddleSidebar-\cvMargin] {
+    \node (work data) at (work.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
         \begin{cvtext}
           \textbf{
             \large \faBriefcase\space Freelance Machine Learning \hfill
@@ -354,21 +412,21 @@
           }
           \textcolor{annotation}{\faCalendar\space 09.2019-06.2020}
 
-          \vspace*{-0.2cm}
+          \vspace{-0.2cm}
 
           \begin{itemize}[leftmargin=*]
             \setlength\itemsep{0mm}
             \item Developed cost-effective neural network art tagger (\textbf{see torch* below})
           \end{itemize}
 
-          \vspace*{-0.1cm}
+          \vspace{-0.1cm}
           \textbf{
             \large \faBriefcase\space Machine Learning Research \hfill
             \faMapMarker\space \href{https://codete.com/}{Codete} \hfill
           }
           \textcolor{annotation}{\faCalendar\space 04.2018-09.2018}
 
-          \vspace*{-0.2cm}
+          \vspace{-0.2cm}
 
           \begin{itemize}[leftmargin=*]
             \setlength\itemsep{0mm}
@@ -383,108 +441,41 @@
       [rectangle, fill=foss, below,
       minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
       {\Large \textbf{\textcolor{text}{\faHeart\space Open Source}}};
-    \node (foss data) at (foss.south) [below, text width = \paperwidth-\cvMiddleSidebar-\cvMargin] {
-        \begin{cvtext}
-        \textbf{
-          \href{https://github.com/szymonmaszke/seafig}{\large \faGithub\space szymonmaszke/seafig} \hfill
-        }
-        \textcolor{annotation}{
-          \faStar\space ? \hfill
-          \faCalendar\space 11.2020
-        }
-        \vspace{-2.5mm}
+    \node (foss data) at (foss.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
+      \begin{cvtext}
+        \project{szymonmaszke/seafig}{https://github.com/szymonmaszke/seafig}{?}{11.2020}
+        {Configuration management framework (like \href{https://github.com/facebookresearch/hydra}{\textbf{facebookresearch/hydra}})}
+        {Reduces manual argument passing and automates the process}
 
-        \begin{itemize}[leftmargin=*]
-          \setlength\itemsep{0mm}
-          \item Configuration management framework (like \href{https://github.com/facebookresearch/hydra}{\textbf{facebookresearch/hydra}})
-          \item Reduces manual argument passing and automates the process
-        \end{itemize}
+        \fossrulefill
 
-        \vspace{-5mm}
-        \thickhrulefill
+        \project{szymonmaszke/sciper}{https://github.com/szymonmaszke/sciper}{?}{11.2020}
+        {Management framework for \textbf{SCI}entific ex\textbf{PER}iments (like \href{https://mlflow.org/}{\textbf{mlflow}})}
+        {Simplifies experimenting, integrates with machine learning ecosystem}
 
-        \textbf{
-          \href{https://github.com/szymonmaszke/sciper}{\large \faGithub\space szymonmaszke/sciper} \hfill
-        }
-        \textcolor{annotation}{
-          \faStar\space ? \hfill
-          \faCalendar\space 11.2020
-        }
-        \vspace{-2mm}
+        \fossrulefill
 
-        \begin{itemize}[leftmargin=*]
-          \setlength\itemsep{0mm}
-          \item Management framework for \textbf{SCI}entific ex\textbf{PER}iments (like \href{https://mlflow.org/}{\textbf{mlflow}})
-          \item Simplifies experimenting, integrates with machine learning ecosystem
-        \end{itemize}
+        \project{szymonmaszke/torchlayers}{https://github.com/szymonmaszke/torchlayers}{507}{03.2020}
+        {Shape \& dimension inference for PyTorch (like \href{https://keras.io/}{\textbf{Keras}})}
+        {Improves prototyping speed, zero overhead, featured on \href{https://www.kdnuggets.com/2020/04/pytorch-models-torchlayers.html}{KDNuggets}}
 
-        \vspace{-5mm}
-        \thickhrulefill
+        \fossrulefill
 
-        \textbf{
-          \href{https://github.com/szymonmaszke/torchlayers}{\large \faGithub\space szymonmaszke/torchlayers} \hfill
-        }
-        \textcolor{annotation}{
-          \faStar\space 505 \hfill
-          \faCalendar\space 03.2020
-        }
-        \vspace{-2mm}
+        \project{szymonmaszke/torchlambda}{https://github.com/szymonmaszke/torchlambda}{67}{03.2020}
+        {Lightweight deployment of PyTorch neural networks to AWS Lambda}
+        {Reduced fixed costs of AI infrastructure (1M free requests)}
 
-        \begin{itemize}[leftmargin=*]
-          \setlength\itemsep{0mm}
-          \item Shape \& dimension inference for PyTorch (like \href{https://keras.io/}{\textbf{Keras}})
-          \item Improves prototyping speed, zero overhead, featured on \href{https://www.kdnuggets.com/2020/04/pytorch-models-torchlayers.html}{KDNuggets}
-        \end{itemize}
+        \fossrulefill
 
-        \vspace{-5mm}
-        \thickhrulefill
+        \project{szymonmaszke/torchdata}{https://github.com/szymonmaszke/torchdata}{188}{09.2019}
+        {Extended PyTorch datasets with cache, map etc. (like \href{https://www.tensorflow.org/guide/data}{\textbf{tensorflow.data}})}
+        {\faTrophy\space One of \href{https://devpost.com/software/torch-torchdata-torchfunc}{PyTorch Global Summer Hackathon 2019} winning projects}
 
-        \textbf{
-          \href{https://github.com/szymonmaszke/torchlambda}{\large \faGithub\space szymonmaszke/torchlambda} \hfill
-        }
-        \textcolor{annotation}{
-          \faStar\space 65 \hfill
-          \faCalendar\space 03.2020
-        }
+      \end{cvtext}
 
-        \vspace{-2mm}
+      \vspace{-1mm}
 
-        \begin{itemize}[leftmargin=*]
-          \setlength\itemsep{0mm}
-          \item Lightweight deployment of PyTorch neural networks to AWS Lambda
-          \item Reduced fixed costs of AI infrastructure to zero (1M free requests)
-        \end{itemize}
-
-        \vspace{-5mm}
-        \thickhrulefill
-
-        \textbf{
-          \href{https://github.com/szymonmaszke/torchdata}{\large \faGithub\space szymonmaszke/torchdata} \hfill
-        }
-        \textcolor{annotation}{
-          \faStar\space 187 \hfill
-          \faCalendar\space 09.2019
-        }
-        \vspace{-2mm}
-
-        \begin{itemize}[leftmargin=*]
-          \setlength\itemsep{0mm}
-          \item Extended PyTorch datasets with cache, map etc. (like \href{https://www.tensorflow.org/guide/data}{\textbf{tensorflow.data}})
-          \item[\faTrophy] One of \href{https://devpost.com/software/torch-torchdata-torchfunc}{PyTorch Global Summer Hackathon 2019} winning projects
-        \end{itemize}
-
-        \end{cvtext}
-
-        \vspace{-1mm}
-        \begin{spacing}{0.25}
-          \textcolor{clause}{
-            \tiny{
-              I hereby give consent for my personal data included in my application to be processed for the purposes of the recruitment process under the European Parliament's
-              and Council of the European Union Regulation on the Protection of Natural Persons as of 27 April 2016, with regard to the processing of personal data and
-              on the free movement of such data, and repealing Directive 95/46/EC (Data Protection Directive)
-            }
-          }
-        \end{spacing}
+      \clause
     };
 
   \end{tikzpicture}
