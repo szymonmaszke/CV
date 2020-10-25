@@ -75,7 +75,7 @@
 \definecolor{sidebar}{HTML}{cfd8dc}
 \definecolor{background}{HTML}{f5f5f5}
 \definecolor{text}{HTML}{37474f}
-\definecolor{annotation}{HTML}{9e9e9e}
+\definecolor{annotation}{HTML}{757575}
 \definecolor{clause}{HTML}{b0bec5}
 
 \pagecolor{background}
@@ -204,7 +204,7 @@
         \begin{itemize}
           \item[\faStar] \textbf{1100} stars received
           \item[\faPlus] \textbf{966} contributions
-          \item[\faUsers] \textbf{94} followers
+          \item[\faUser] \textbf{94} followers
         \end{itemize}
      }
     };
@@ -217,11 +217,11 @@
     \node (stackoverflow data) at ($(stackoverflow.south)+(0cm, 2mm)$) [below, text width = \cvSideWidth] {
       \textcolor{text}{
         \begin{itemize}
-          \item[\faStar] \textbf{Top 10 PyTorch} all time
+          \item[\faStar] \href{https://stackoverflow.com/tags/pytorch/topusers}{\textbf{Top 10 PyTorch} all time}
           \item[\faTrophy] \textbf{Top 0.28\% users} yearly
-          \item[\faQuestion] \textbf{371} answers
-          \item[\faUsers] \textbf{235.000} reached
-          \item[\faThumbsOUp] \textbf{12.000} points
+          \item[\faCheck] \textbf{371} answers
+          \item[\faUser] \textbf{235.000} reached
+          \item[\faThumbsUp] \textbf{12.000} points
         \end{itemize}
      }
     };
@@ -232,43 +232,46 @@
 
 
     \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth] {
-      \cvtag{python} \cvtag{C++} \cvtag{java}
+      \cvtag{python} \href{https://github.com/szymonmaszke/numpp}{\cvtag{C++}} \cvtag{java}
 
-      \cvtag{C} \cvtag{SQL} \cvtag{R} \cvtag{bash}
+      \cvtag{C} \href{https://github.com/szymonmaszke/xms}{\cvtag{SQL}} \cvtag{R}
+      \href{https://stackoverflow.com/questions/55206227/why-bashrc-is-not-executed-when-run-docker-container/55213158#55213158}{\cvtag{bash}}
 
       \vspace{-1mm}
       \thickhrulefill
       \vspace{1mm}
 
       % Machine Learning
-      \cvtag{numpy} \cvtag{spacy} \cvtag{nltk}
+      \cvtag{numpy}
+      \href{https://stackoverflow.com/questions/55675788/how-can-i-lemmatize-list-of-lists-in-python-using-spacy/55676283#55676283}{\cvtag{spacy}} \cvtag{nltk}
 
-      \cvtag{scikit-learn} \cvtag{pandas}
+      \href{https://stackoverflow.com/questions/55009704/why-is-cross-val-predict-not-appropriate-for-measuring-the-generalisation-error/55010603#55010603}{\cvtag{scikit-learn}}
+      \href{https://stackoverflow.com/questions/55601928/apply-multiple-standardscalers-to-individual-groups/55602630#55602630}{\cvtag{pandas}}
 
       \vspace{-1mm}
       \thickhrulefill
       \vspace{1mm}
 
       % Deep Learning
-      \cvtag{pytorch} \cvtag{tensorflow2.x}
+      \cvtag{pytorch}
+      \href{https://stackoverflow.com/questions/57086301/custom-neural-network-implementation-on-mnist-using-tensorflow-2-0/57136842#57136842}{\cvtag{tensorflow2.x}}
 
-      \cvtag{keras} \cvtag{tensorflow1.x}
+      \href{https://stackoverflow.com/questions/55421290/tensorflow-2-0-keras-how-to-write-image-summaries-for-tensorboard/55754700#55754700}{\cvtag{keras}} \cvtag{tensorflow1.x}
 
       \vspace{-1mm}
       \thickhrulefill
       \vspace{1mm}
 
       \cvtag{tox} \cvtag{pytest} \cvtag{travis}
-      \cvtag{github-actions} \cvtag{make}
+      \cvtag{github-actions}
 
       \vspace{-1mm}
       \thickhrulefill
       \vspace{1mm}
 
       % Other
-      \cvtag{docker} \cvtag{git} \cvtag{linux}
-      \cvtag{aws-lambda} \cvtag{mkdocs} \cvtag{vim}
-      \cvtag{openmp} \cvtag{tikz}
+      \cvtag{docker} \href{https://github.com/szymonmaszke/dotfiles}{\cvtag{linux}} \cvtag{make}
+      \cvtag{aws-lambda} \cvtag{openmp}
     };
     \node (languages) at ($(skills data.south)+(0cm, -2mm)$)
       [rectangle, fill=languages, below,
@@ -293,7 +296,7 @@
       minimum width=1cm, minimum height=1cm]
       {\textcolor{background}{\Large \faEnvelopeO}};
     \node (gmail data) at (gmail.east) [right, text width = \cvSideWidth] {
-      \textcolor{text}{szymon.maszke@gmail.com}
+      \textcolor{text}{\href{mailto:szymon@maszke.com}{szymon@maszke.com}}
     };
     \node (phone) at ($(gmail.south) + (0cm, \cvTopBarIconSpacing)$)
       [rectangle, fill=phone, below,
@@ -315,21 +318,21 @@
       minimum width=1cm, minimum height=1cm]
       {\textcolor{background}{\Large \faLinkedin}};
     \node (linkedin data) at (linkedin.east) [right, text width = \cvSideWidth] {
-        \textcolor{text}{szymonmaszke}
+      \textcolor{text}{\href{https://www.linkedin.com/}{szymonmaszke}}
     };
     \node (github) at ($(linkedin.south) + (0cm, \cvTopBarIconSpacing)$)
       [rectangle, fill=github, below,
       minimum width=1cm, minimum height=1cm]
       {\textcolor{background}{\Large \faGithub}};
     \node (github data) at (github.east) [right, text width = \cvSideWidth] {
-        \textcolor{text}{szymonmaszke}
+      \textcolor{text}{\href{https://github.com/szymonmaszke}{szymonmaszke}}
     };
     \node (stackoverflow) at ($(github.south) + (0cm, \cvTopBarIconSpacing)$)
       [rectangle, fill=stackoverflow, below,
       minimum width=1cm, minimum height=1cm]
       {\textcolor{background}{\Large \faStackOverflow}};
     \node (stackoverflow data) at (stackoverflow.east) [right, text width = \cvSideWidth] {
-        \textcolor{text}{szymonmaszke}
+      \textcolor{text}{\href{https://stackoverflow.com/users/10886420/szymon-maszke?tab=topactivity}{szymonmaszke}}
     };
   \end{tikzpicture}
 
@@ -379,7 +382,7 @@
     \node (work data) at (work.south) [below, text width = \paperwidth-\cvMiddleSidebar-\cvMargin] {
         \begin{cvtext}
           \textbf{
-            \large Freelance Machine Learning \hfill
+            \large \faBriefcase\space Freelance Machine Learning \hfill
             \faMapMarker\space Remote \hfill
           }
           \textcolor{annotation}{\faCalendar\space 09.2019-06.2020}
@@ -388,13 +391,13 @@
 
           \begin{itemize}[leftmargin=*]
             \setlength\itemsep{0mm}
-            \item Developed cost-effective neural network art tagger (\textbf{see Open Source})
+            \item Developed cost-effective neural network art tagger (\textbf{see torch* below})
           \end{itemize}
 
           \vspace*{-0.1cm}
           \textbf{
-            \large Machine Learning Research \hfill
-            \faMapMarker\space Codete \hfill
+            \large \faBriefcase\space Machine Learning Research \hfill
+            \faMapMarker\space \href{https://codete.com/}{Codete} \hfill
           }
           \textcolor{annotation}{\faCalendar\space 04.2018-09.2018}
 
@@ -416,102 +419,99 @@
     \node (foss data) at (foss.south) [below, text width = \paperwidth-\cvMiddleSidebar-\cvMargin] {
         \begin{cvtext}
         \textbf{
-          \large seafig \hfill
+          \href{https://github.com/szymonmaszke/seafig}{\large \faGithub\space szymonmaszke/seafig} \hfill
         }
         \textcolor{annotation}{
-          \faGithub\space szymonmaszke/seafig \hfill
           \faStar\space ? \hfill
           \faCalendar\space 11.2020
         }
-
-          Configuration files management library which automates
-          argument passing. Versatile tool for scientific experiments,
-          server management etc.
-
         \vspace{-2.5mm}
+
+        \begin{itemize}[leftmargin=*]
+          \setlength\itemsep{0mm}
+          \item Configuration management framework (like \href{https://github.com/facebookresearch/hydra}{\textbf{facebookresearch/hydra}})
+          \item Reduces manual argument passing and automates the process
+        \end{itemize}
+
+        \vspace{-5mm}
         \thickhrulefill
 
         \textbf{
-          \large sciper \hfill
+          \href{https://github.com/szymonmaszke/sciper}{\large \faGithub\space szymonmaszke/sciper} \hfill
         }
         \textcolor{annotation}{
-          \faGithub\space szymonmaszke/sciper \hfill
           \faStar\space ? \hfill
           \faCalendar\space 11.2020
         }
+        \vspace{-2mm}
 
-          Library for \textbf{SCI}entific ex\textbf{PER}iments management,
-          which streamlines entire process. Integrated with over 10
-          libraries and tools.
+        \begin{itemize}[leftmargin=*]
+          \setlength\itemsep{0mm}
+          \item Management framework for \textbf{SCI}entific ex\textbf{PER}iments (like \href{https://mlflow.org/}{\textbf{mlflow}})
+          \item Simplifies experimenting, integrates with machine learning ecosystem
+        \end{itemize}
 
-        \vspace{-2.5mm}
+        \vspace{-5mm}
         \thickhrulefill
 
         \textbf{
-          \large torchlayers \hfill
+          \href{https://github.com/szymonmaszke/torchlayers}{\large \faGithub\space szymonmaszke/torchlayers} \hfill
         }
         \textcolor{annotation}{
-          \faGithub\space szymonmaszke/torchlayers \hfill
           \faStar\space 505 \hfill
           \faCalendar\space 03.2020
         }
+        \vspace{-2mm}
 
-          Improves deep learning prototyping speed by providing shape \& dimension
-          inference for PyTorch (like Keras). Featured on \href{https://www.kdnuggets.com/2020/04/pytorch-models-torchlayers.html}{KDNuggets}
+        \begin{itemize}[leftmargin=*]
+          \setlength\itemsep{0mm}
+          \item Shape \& dimension inference for PyTorch (like \href{https://keras.io/}{\textbf{Keras}})
+          \item Improves prototyping speed, zero overhead, featured on \href{https://www.kdnuggets.com/2020/04/pytorch-models-torchlayers.html}{KDNuggets}
+        \end{itemize}
 
-        \vspace{-2.5mm}
+        \vspace{-5mm}
         \thickhrulefill
 
         \textbf{
-          \large torchlambda \hfill
+          \href{https://github.com/szymonmaszke/torchlambda}{\large \faGithub\space szymonmaszke/torchlambda} \hfill
         }
         \textcolor{annotation}{
-          \faGithub\space szymonmaszke/torchlambda\hfill
           \faStar\space 65 \hfill
           \faCalendar\space 03.2020
         }
 
-          Deployment tool for PyTorch neural networks on AWS Lambda.
-          Reduced fixed costs of AI infrastructure to zero (free 1.000.000 inference calls).
+        \vspace{-2mm}
 
-        \vspace{-2.5mm}
+        \begin{itemize}[leftmargin=*]
+          \setlength\itemsep{0mm}
+          \item Lightweight deployment of PyTorch neural networks to AWS Lambda
+          \item Reduced fixed costs of AI infrastructure to zero (1M free requests)
+        \end{itemize}
+
+        \vspace{-5mm}
         \thickhrulefill
 
         \textbf{
-          \large torchdata \hfill
+          \href{https://github.com/szymonmaszke/torchdata}{\large \faGithub\space szymonmaszke/torchdata} \hfill
         }
         \textcolor{annotation}{
-          \faGithub\space szymonmaszke/torchdata\hfill
           \faStar\space 187 \hfill
           \faCalendar\space 09.2019
         }
+        \vspace{-2mm}
 
-          PyTorch dataset extended with map, cache and other functionalities
-          known from TensorFlow. Improves data processing and code readability.
-
-        \vspace{-2.5mm}
-        \thickhrulefill
-
-        \textbf{
-          \large torchfunc \hfill
-        }
-        \textcolor{annotation}{
-          \faGithub\space szymonmaszke/torchfunc\hfill
-          \faStar\space 171 \hfill
-          \faCalendar\space 09.2019
-        }
-
-          PyTorch utilities libary (Tensor Cores compatibility testing, seeding, time measurement etc.)
-          supporting users in optimization of neural networks.
-
+        \begin{itemize}[leftmargin=*]
+          \setlength\itemsep{0mm}
+          \item Extended PyTorch datasets with cache, map etc. (like \href{https://www.tensorflow.org/guide/data}{\textbf{tensorflow.data}})
+          \item[\faTrophy] One of \href{https://devpost.com/software/torch-torchdata-torchfunc}{PyTorch Global Summer Hackathon 2019} winning projects
+        \end{itemize}
 
         \end{cvtext}
 
-        \hspace*{\fill}
-
+        \vspace{-1mm}
         \begin{spacing}{0.25}
           \textcolor{clause}{
-            \scriptsize{
+            \tiny{
               I hereby give consent for my personal data included in my application to be processed for the purposes of the recruitment process under the European Parliament's
               and Council of the European Union Regulation on the Protection of Natural Persons as of 27 April 2016, with regard to the processing of personal data and
               on the free movement of such data, and repealing Directive 95/46/EC (Data Protection Directive)
