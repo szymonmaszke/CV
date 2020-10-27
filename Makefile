@@ -12,9 +12,9 @@ update: scripts
 		--stackoverflow-url $(STACKOVERFLOW_URL) \
 		--data cv/data
 	@echo "Updated succesfully."
-cv: cv/data cv/main.tex cv/sections
+cv: cv/data cv/main.tex cv/sections cv/styles
 	@echo "Compiling LaTeX CV..."
-	$(XETEX) cv/main.tex && $(XETEX) cv/main.tex && mv main.pdf cv.pdf
+	cd cv && $(XETEX) main.tex && $(XETEX) main.tex && mv main.pdf ../cv.pdf && cd -
 	@echo "LaTeX CV compiled successfully."
 clean:
-	rm -rf *.aux *.log *.out
+	rm -rf cv/*.aux cv/*.log cv/*.out

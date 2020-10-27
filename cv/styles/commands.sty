@@ -1,0 +1,151 @@
+\ProvidesPackage{styles/commands}
+
+% Create skill tags in skills bar
+%   1 - Name of skill tag
+\newcommand{\skilltag}[1]{%
+  \tikz[baseline]\node[anchor=base,fill=skilltag,opacity=.1,
+    text opacity=1., rounded corners,
+    inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
+}
+
+
+% Create Privacy compliant clause at the end of document.
+\newcommand{\clause}{
+  \begin{spacing}{0.25}
+    \textcolor{clause}{
+      \tiny{
+        I hereby give consent for my personal data included in my application to be processed for the purposes of the recruitment process under the European Parliament's
+        and Council of the European Union Regulation on the Protection of Natural Persons as of 27 April 2016, with regard to the processing of personal data and
+        on the free movement of such data, and repealing Directive 95/46/EC (Data Protection Directive)
+      }
+    }
+  \end{spacing}
+}
+
+% Create name and surname at top left corner
+%   1 - Name
+%   2 - Surname
+\newcommand{\name}[2]{
+  \node (username) at ($(current page.north west)+(\cvMiddleSidebar / 2, 0cm)$)
+    [below, text width = \cvSideWidth]
+    {
+      \begin{cvtext}
+        \begin{center}
+
+          \fontsize{40}{48}\selectfont #1
+          \textbf{#2}
+
+        \end{center}
+      \end{cvtext}
+  };
+}
+
+% Create open source project
+%   1 - name of project
+%   2 - href to project
+%   3 - number of stars
+%   4 - release date
+%   5 - first description
+%   6 - second description
+\newcommand{\project}[6]{
+  \textbf{
+    \href{#2}{\large \faGithub\space #1} \hfill
+  }
+  \textcolor{annotation}{
+    \faStar\space #3 \hfill
+    \faCalendar\space #4
+  }
+  \vspace{-2.5mm}
+
+  \begin{itemize}[leftmargin=*]
+    \setlength\itemsep{0mm}
+    \item #5
+    \item #6
+  \end{itemize}
+}
+
+% Create work entry
+%   1 - name of work
+%   2 - location of work
+%   3 - start date
+%   4 - finish date
+%   5 - list with job descriptions
+\newcommand{\work}[5]{
+  \textbf{
+    \large \faBriefcase\space #1 \hfill
+    \faMapMarker\space #2 \hfill
+  }
+  \textcolor{annotation}{\faCalendar\space #3-#4}
+  \vspace{-0.1cm}
+  \begin{itemize}[leftmargin=*]
+    \setlength\itemsep{0mm}
+    \foreach \Description in #5{
+      \item \Description
+    }
+  \end{itemize}
+  \vspace{0.05cm}
+}
+
+% Create education entry
+%   1 - name and rank
+%   2 - university
+%   3 - Other (location, GPA)
+%   4 - Start date
+%   5 - End date
+\newcommand{\education}[5]{
+  \begin{cvtext}
+    \begin{center}
+      \textbf{\large #1}
+    \end{center}
+  \end{cvtext}
+  \vspace*{-0.3cm}
+  \small{
+    \textcolor{annotation}{
+      \faUniversity\space #2
+      \hfill #3
+      \hfill \faCalendar\space #4-#5
+    }
+  }
+}
+
+% Create top bar icon
+%   1 - [optional] relative location of icon (below or east usually)
+%   2 - Name of node (and name of color)
+%   3 - Location of icon
+%   4 - Icon
+%   5 - Text displayed to the right
+\newcommand{\icon}[5][below]{
+  \node (#2) at (#3)
+    [rectangle, fill=#2, #1,
+    minimum width=1cm, minimum height=1cm]{
+      \textcolor{background}{\Large #4}
+  };
+  \node (#2 data) at (#2.east) [right, text width = \cvSideWidth] {
+    \textcolor{text}{#5}
+  };
+}
+
+% Create sidebar enumeration
+%   1 - [optional] relative location of icon (usually below)
+%   2 - Name of node (and name of color)
+%   3 - Location of icon
+%   4 - Icon
+%   5 - Text displayed to the right
+\newcommand{\sidebarEnum}[5][below]{
+  \node (#2) at (#3)
+    [
+      rectangle, fill=#2, #1,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight
+    ]{
+      #4
+  };
+  \node (#2 data) at ($(#2.south) + (0cm, 2mm)$) [below, text width = \cvSideWidth] {
+    \textcolor{text}{
+      \begin{itemize}
+        \foreach \Icon/\Description in #5{
+          \item[\Icon] \Description
+        }
+      \end{itemize}
+    }
+  };
+}
