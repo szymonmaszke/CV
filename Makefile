@@ -3,16 +3,18 @@
 XETEX = xelatex
 PYTHON = python
 
-all: cv.pdf clean
+all: update cv clean
 
 update: scripts
 	@echo "Updating GitHub & StackOverflow statistics..."
 	$(PYTHON) scripts/main.py --github-token $(GITHUB_TOKEN) \
 		--github-url $(GITHUB_URL) \
 		--stackoverflow-url $(STACKOVERFLOW_URL) \
-		--data data
-cv: data cv.tex
-	@echo "Compiling LaTeX"
-	$(XETEX) cv.tex && $(XETEX) cv.tex
+		--data cv/data
+	@echo "Updated succesfully."
+cv: cv/data cv/main.tex cv/sections
+	@echo "Compiling LaTeX CV..."
+	$(XETEX) cv/main.tex && $(XETEX) cv/main.tex && mv main.pdf cv.pdf
+	@echo "LaTeX CV compiled successfully."
 clean:
-	rm -rf cv.aux cv.log cv.out missfont.log
+	rm -rf *.aux *.log *.out

@@ -1,0 +1,86 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+  \begin{tikzpicture}[remember picture, overlay]
+
+    % Education
+    \node (education) at ($(current page.north west)+(\paperwidth-\cvMiddleSidebar+\Margin / 2,\textStart)+(-0.5mm,-2.1cm)$)
+      [rectangle, fill=education, minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
+      {\Large \textbf{\textcolor{text}{\faGraduationCap\space Education}}};
+    \node (education data) at (education.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
+        \vspace*{-0.35cm}
+        \education{M.Sc. Computer Science (Machine Learning specialization)}
+        {Jagiellonian University}{\faTrophy\space GPA 4.7/5.0 (ML 4.9+/5.0)}
+        {2018}{2021}
+
+        \vspace*{-0.25cm}
+        \education{B.Sc. Computer Science}
+        {Jagiellonian University}{\faMapMarker\space Faculty of Physics}
+        {2014}{2017}
+    };
+
+    % Work
+    \node (work) at ($(education data.south)+(0cm, -2.3mm)$)
+      [rectangle, fill=work, below,
+      minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
+      {\Large \textbf{\textcolor{text}{\faBriefcase\space Work}}};
+    \node (work data) at (work.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
+      \begin{cvtext}
+        \work{Freelance Machine Learning}{Remote}{08.2019}{06.2020}
+        {
+          {Developed cost-effective neural network art tagger (\textbf{see torch* below})}
+        }
+
+        \work{Machine Learning Research}{\href{https://codete.com/}{Codete}}{04.2018}{09.2018}
+        {
+          {
+            Developed \& tested POC Keras \faArrowsH Tensorflow neural network converter,
+            Co-created company's commercial Machine Learning \& NLP courses,
+            Developed \& managed promotional algorithmic/hacking challenges
+          }
+        }
+      \end{cvtext}
+    };
+
+    % Open Source
+    \node (foss) at ($(work data.south)+(0cm, 2.89mm)$)
+      [rectangle, fill=foss, below,
+      minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
+      {\Large \textbf{\textcolor{text}{\faHeart\space Open Source}}};
+    \node (foss data) at (foss.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
+      \begin{cvtext}
+        \project{szymonmaszke/seafig}{https://github.com/szymonmaszke/seafig}{?}{11.2020}
+        {Configuration management framework (like \href{https://github.com/facebookresearch/hydra}{\textbf{facebookresearch/hydra}})}
+        {Reduces manual argument passing and automates the process}
+
+        \fossrulefill
+
+        \project{szymonmaszke/sciper}{https://github.com/szymonmaszke/sciper}{?}{11.2020}
+        {Management framework for \textbf{SCI}entific ex\textbf{PER}iments (like \href{https://mlflow.org/}{\textbf{mlflow}})}
+        {Simplifies experimenting, integrates with machine learning ecosystem}
+
+        \fossrulefill
+
+        \project{szymonmaszke/torchlayers}{https://github.com/szymonmaszke/torchlayers}{507}{03.2020}
+        {Shape \& dimension inference for PyTorch (like \href{https://keras.io/}{\textbf{Keras}})}
+        {Improves prototyping speed, zero overhead, featured on \href{https://www.kdnuggets.com/2020/04/pytorch-models-torchlayers.html}{KDNuggets}}
+
+        \fossrulefill
+
+        \project{szymonmaszke/torchlambda}{https://github.com/szymonmaszke/torchlambda}{67}{03.2020}
+        {Lightweight deployment of PyTorch neural networks to AWS Lambda}
+        {Reduced fixed costs of AI infrastructure (1M free requests)}
+
+        \fossrulefill
+
+        \project{szymonmaszke/torchdata}{https://github.com/szymonmaszke/torchdata}{188}{09.2019}
+        {Extended PyTorch datasets with cache, map etc. (like \href{https://www.tensorflow.org/guide/data}{\textbf{tensorflow.data}})}
+        {\faTrophy\space One of \href{https://devpost.com/software/torch-torchdata-torchfunc}{PyTorch Global Summer Hackathon 2019} winning projects}
+
+      \end{cvtext}
+
+      \clause
+    };
+
+  \end{tikzpicture}
+\end{document}

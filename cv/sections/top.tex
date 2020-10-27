@@ -1,0 +1,20 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+  \begin{tikzpicture}[remember picture, overlay]
+    % First column
+    \icon{gmail}{$(current page.north west)+(\cvMiddleSidebar+\Margin,-\Margin / 2)$}
+      {\faEnvelopeO}{\href{mailto:szymon@maszke.com}{szymon@maszke.com}}
+    \icon{phone}{$(gmail.south) + (0cm, \cvTopBarIconSpacing)$}
+      {\faPhone}{(+48) 535 151 042}
+    \icon{location}{$(phone.south) + (0cm, \cvTopBarIconSpacing)$}
+      {\faMapMarker}{Poland, Kraków}
+    % Second column
+    \icon[right]{linkedin}{gmail data.east}
+      {\faLinkedin}{\href{https://www.linkedin.com/}{Szymon Maszke}}
+    \icon{github}{$(linkedin.south) + (0cm, \cvTopBarIconSpacing)$}
+      {\faGithub}{\href{https://github.com/szymonmaszke}{szymonmaszke}}
+    \icon{stackoverflow}{$(github.south) + (0cm, \cvTopBarIconSpacing)$}
+      {\faStackOverflow}{\href{https://stackoverflow.com/users/10886420/szymon-maszke?tab=topactivity}{Szymon Maszke}}
+  \end{tikzpicture}
+\end{document}

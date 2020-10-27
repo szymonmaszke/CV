@@ -1,0 +1,323 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+
+% https://olivierpieters.be/blog/2017/10/02/designing-a-cv-in-latex-part-2
+
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                   PACKAGES
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% more advanced expressions in \setlength
+\usepackage{float}
+\usepackage{calc}
+\usepackage{fontspec}
+% workaround for XeTeX and fontawesome
+\usepackage{fontawesome}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,backgrounds,matrix}
+
+% load external fonts
+\usepackage[default]{lato}
+
+% advanced drawing
+
+% No page numbering
+\usepackage{nopageno}
+\usepackage{anyfontsize}
+\usepackage{graphicx, calc}
+\usepackage{hyperref}
+
+\usepackage{subfiles}
+
+
+\newlength\Margin
+\setlength\Margin{1cm}
+
+\usepackage[margin=0.5\Margin,noheadfoot,a4paper]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                           VARIABLES & LENGTHS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\TopBarHeight}{0.28}
+\newcommand{\SideBarWidth}{0.3}
+
+% other lengths
+\newlength\cvSideWidth
+\setlength\cvSideWidth{\SideBarWidth\paperwidth-\Margin}
+
+\newlength\cvSideBar
+\setlength\cvSideBar{\SideBarWidth\paperwidth}
+
+\newlength\cvMainWidth
+\setlength\cvMainWidth{\paperwidth-4\Margin-\cvSideWidth}
+
+
+\newlength\cvTopHeight
+\setlength\cvTopHeight{\TopBarHeight\paperheight-\Margin}
+
+\newlength\cvMainHeight
+\setlength\cvMainHeight{\paperheight-4\Margin-\cvTopHeight}
+
+\newlength\cvTopHeightMargin
+\setlength\cvTopHeightMargin{-\cvTopHeight+2\Margin}
+
+\newlength\cvSectionHeight
+\setlength\cvSectionHeight{1.4cm}
+
+
+\newlength{\textStart}
+\setlength\textStart{\cvTopHeightMargin+\cvSectionHeight}
+
+\newlength{\cvMiddleSidebar}
+\setlength\cvMiddleSidebar{\cvSideWidth + 2\Margin}
+
+\newlength{\cvTopBarIconSpacing}
+\setlength\cvTopBarIconSpacing{-0.5cm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                   COLORS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{topbar}{HTML}{eceff1}
+\definecolor{sidebar}{HTML}{cfd8dc}
+\definecolor{background}{HTML}{f5f5f5}
+\definecolor{text}{HTML}{37474f}
+\definecolor{annotation}{HTML}{757575}
+\definecolor{clause}{HTML}{b0bec5}
+
+\pagecolor{background}
+\color{text}
+
+% icon colors
+\definecolor{phone}{HTML}{43a047}
+\definecolor{location}{HTML}{3d5afe}
+
+% brand colors
+\definecolor{linkedin}{HTML}{0072b1}
+\definecolor{github}{HTML}{333333}
+\definecolor{gmail}{HTML}{DB4437}
+\definecolor{stackoverflow}{HTML}{F48024}
+
+% section colors
+\definecolor{skills}{HTML}{ec407a}
+\definecolor{languages}{HTML}{26c6da}
+\definecolor{education}{HTML}{fbc02d}
+\definecolor{work}{HTML}{9fa8da}
+\definecolor{foss}{HTML}{c0ca33}
+
+% tags color
+\definecolor{skilltag}{HTML}{0366d6}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                ENVIRONMENTS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{cvtext}{\par\color{text}}{\par}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                  RULERS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\def\fossrulefill{\vspace{-5mm}\leavevmode\leaders\hrule height 1pt\hfill\kern\z@\vspace{1mm}}
+\makeatother
+
+\makeatletter
+\def\skillsrulefill{\vspace{-1mm}\leavevmode\leaders\hrule height 1pt\hfill\kern\z@\vspace{1mm}}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                 COMMANDS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Create skill tags in skills bar
+%   1 - Name of skill tag
+\newcommand{\skilltag}[1]{%
+  \tikz[baseline]\node[anchor=base,fill=skilltag,opacity=.1,
+    text opacity=1., rounded corners,
+    inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
+}
+
+
+% Create Privacy compliant clause at the end of document.
+\newcommand{\clause}{
+  \begin{spacing}{0.25}
+    \textcolor{clause}{
+      \tiny{
+        I hereby give consent for my personal data included in my application to be processed for the purposes of the recruitment process under the European Parliament's
+        and Council of the European Union Regulation on the Protection of Natural Persons as of 27 April 2016, with regard to the processing of personal data and
+        on the free movement of such data, and repealing Directive 95/46/EC (Data Protection Directive)
+      }
+    }
+  \end{spacing}
+}
+
+% Create name and surname at top left corner
+%   1 - Name
+%   2 - Surname
+\newcommand{\name}[2]{
+  \node (username) at ($(current page.north west)+(\cvMiddleSidebar / 2, 0cm)$)
+    [below, text width = \cvSideWidth]
+    {
+      \begin{cvtext}
+        \begin{center}
+
+          \fontsize{40}{48}\selectfont #1
+          \textbf{#2}
+
+        \end{center}
+      \end{cvtext}
+  };
+}
+
+% Create open source project
+%   1 - name of project
+%   2 - href to project
+%   3 - number of stars
+%   4 - release date
+%   5 - first description
+%   6 - second description
+\newcommand{\project}[6]{
+  \textbf{
+    \href{#2}{\large \faGithub\space #1} \hfill
+  }
+  \textcolor{annotation}{
+    \faStar\space #3 \hfill
+    \faCalendar\space #4
+  }
+  \vspace{-2.5mm}
+
+  \begin{itemize}[leftmargin=*]
+    \setlength\itemsep{0mm}
+    \item #5
+    \item #6
+  \end{itemize}
+}
+
+% Create work entry
+%   1 - name of work
+%   2 - location of work
+%   3 - start date
+%   4 - finish date
+%   5 - list with job descriptions
+\newcommand{\work}[5]{
+  \textbf{
+    \large \faBriefcase\space #1 \hfill
+    \faMapMarker\space #2 \hfill
+  }
+  \textcolor{annotation}{\faCalendar\space #3-#4}
+  \vspace{-0.1cm}
+  \begin{itemize}[leftmargin=*]
+    \setlength\itemsep{0mm}
+    \foreach \Description in #5{
+      \item \Description
+    }
+  \end{itemize}
+  \vspace{0.05cm}
+}
+
+% Create education entry
+%   1 - name and rank
+%   2 - university
+%   3 - Other (location, GPA)
+%   4 - Start date
+%   5 - End date
+\newcommand{\education}[5]{
+  \begin{cvtext}
+    \begin{center}
+      \textbf{\large #1}
+    \end{center}
+  \end{cvtext}
+  \vspace*{-0.3cm}
+  \small{
+    \textcolor{annotation}{
+      \faUniversity\space #2
+      \hfill #3
+      \hfill \faCalendar\space #4-#5
+    }
+  }
+}
+
+% Create top bar icon
+%   1 - [optional] relative location of icon (below or east usually)
+%   2 - Name of node (and name of color)
+%   3 - Location of icon
+%   4 - Icon
+%   5 - Text displayed to the right
+\newcommand{\icon}[5][below]{
+  \node (#2) at (#3)
+    [rectangle, fill=#2, #1,
+    minimum width=1cm, minimum height=1cm]{
+      \textcolor{background}{\Large #4}
+  };
+  \node (#2 data) at (#2.east) [right, text width = \cvSideWidth] {
+    \textcolor{text}{#5}
+  };
+}
+
+% Create top bar icon
+%   1 - [optional] relative location of icon (below or east usually)
+%   2 - Name of node (and name of color)
+%   3 - Location of icon
+%   4 - Icon
+%   5 - Text displayed to the right
+\newcommand{\sidebarEnum}[5][below]{
+  \node (#2) at (#3)
+    [
+      rectangle, fill=#2, #1,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight
+    ]{
+      #4
+  };
+  \node (#2 data) at ($(#2.south) + (0cm, 2mm)$) [below, text width = \cvSideWidth] {
+    \textcolor{text}{
+      \begin{itemize}
+        \foreach \Icon/\Description in #5{
+          \item[\Icon] \Description
+        }
+      \end{itemize}
+    }
+  };
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                 DOCUMENT
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+  % Algorithmic tags
+  \input{cv/data/tags.txt}
+  % Bars
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[sidebar] (current page.north west) rectangle ++(\cvSideWidth+2\Margin,-\paperheight);
+    \fill[topbar] (current page.north west) rectangle +(\paperwidth, \cvTopHeightMargin);
+  \end{tikzpicture}
+
+  \subfile{cv/sections/sidebar}
+  \subfile{cv/sections/top}
+  \subfile{cv/sections/core}
+
+  % Main section
+\end{document}

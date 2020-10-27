@@ -1,0 +1,84 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+  \begin{tikzpicture}[remember picture, overlay]
+    \name{Szymon}{Maszke}
+    % Calculate it properly
+    % GitHub
+    \sidebarEnum{github}{$(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.4\Margin)$}
+      {\textcolor{background}{\Large \textbf{\faGithub\space GitHub}}}
+      {
+        {
+          \faStar/\textbf{\input{cv/data/stars.txt}}stars received,
+          \faPlus/\textbf{\input{cv/data/contributions.txt}}contributions,
+          \faUser/\textbf{\input{cv/data/followers.txt}}followers,
+        }
+      }
+
+    \sidebarEnum{stackoverflow}{$(github data.south)+(0cm, \Margin-2.8mm)$}
+      {
+        \Large{
+          \textcolor{background}{\faStackOverflow\space }
+          \textcolor{text}{stack\textbf{overflow}}
+        }
+      }
+      {
+        {
+          \faStar/\input{cv/data/stack-special1.txt},
+          \faTrophy/\input{cv/data/stack-special2.txt},
+          \faCheck/\textbf{\input{cv/data/answers.txt}}answers,
+          \faThumbsUp/\textbf{\input{cv/data/points.txt}}points,
+          \faUser/\textbf{\input{cv/data/reached.txt}}reached,
+        }
+      }
+
+    \node (skills) at ($(stackoverflow data.south) + (0mm, \Margin-2.5mm)$)
+      [rectangle, fill=skills, below,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
+      {\textcolor{background}{\Large\textbf{\faCogs\space Skills}}};
+    \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth] {
+      \skilltag{python} \href{https://github.com/szymonmaszke/numpp}{\skilltag{C++}} \skilltag{java}
+
+      \skilltag{C} \href{https://github.com/szymonmaszke/xms}{\skilltag{SQL}} \skilltag{R}
+      \href{https://stackoverflow.com/questions/55206227/why-bashrc-is-not-executed-when-run-docker-container/55213158#55213158}{\skilltag{bash}}
+
+      \skillsrulefill
+
+      % Machine Learning
+      \skilltag{numpy}
+      \href{https://stackoverflow.com/questions/55675788/how-can-i-lemmatize-list-of-lists-in-python-using-spacy/55676283#55676283}{\skilltag{spacy}} \skilltag{nltk}
+
+      \href{https://stackoverflow.com/questions/55009704/why-is-cross-val-predict-not-appropriate-for-measuring-the-generalisation-error/55010603#55010603}{\skilltag{scikit-learn}}
+      \href{https://stackoverflow.com/questions/55601928/apply-multiple-standardscalers-to-individual-groups/55602630#55602630}{\skilltag{pandas}}
+
+      \skillsrulefill
+
+      % Deep Learning
+      \skilltag{pytorch}
+      \href{https://stackoverflow.com/questions/57086301/custom-neural-network-implementation-on-mnist-using-tensorflow-2-0/57136842#57136842}{\skilltag{tensorflow2.x}}
+
+      \href{https://stackoverflow.com/questions/55421290/tensorflow-2-0-keras-how-to-write-image-summaries-for-tensorboard/55754700#55754700}{\skilltag{keras}} \skilltag{tensorflow1.x}
+
+      \skillsrulefill
+
+      \skilltag{tox} \skilltag{pytest} \skilltag{travis}
+      \skilltag{github-actions} \skilltag{dvc}
+
+      \skillsrulefill
+
+      % Other
+      \skilltag{docker} \href{https://github.com/szymonmaszke/dotfiles}{\skilltag{linux}} \skilltag{make}
+      \skilltag{aws-lambda} \skilltag{openmp}
+    };
+
+    \sidebarEnum{languages}{$(skills data.south) + (0mm, -2.5mm)$}
+      {\textcolor{background}{\Large\textbf{\faCommenting\space Languages}}}
+      {
+        {
+          \faVolumeUp/\textbf{Polish} native,
+          \faVolumeUp/\textbf{English} C1
+        }
+      }
+
+  \end{tikzpicture}
+\end{document}
