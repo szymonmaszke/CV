@@ -1,4 +1,4 @@
-.PHONY: clean all
+.PHONY: clean
 
 XETEX = xelatex
 PYTHON = python

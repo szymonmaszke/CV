@@ -1,0 +1,1 @@
+make all PYTHON="python3" GITHUB_TOKEN="$1" GITHUB_URL="$2" STACKOVERFLOW_URL="$3"
