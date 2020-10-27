@@ -11,7 +11,7 @@ update: scripts
 		--github-url $(GITHUB_URL) \
 		--stackoverflow-url $(STACKOVERFLOW_URL) \
 		--data data
-cv.pdf: update data cv.tex
+cv: data cv.tex
 	@echo "Compiling LaTeX"
 	$(XETEX) cv.tex && $(XETEX) cv.tex
 clean:
