@@ -16,4 +16,4 @@ def answers(text):
 def points(text):
     data = utils.find(text, "([0-9]+,[0-9]+)", "points")
     no_comma = "".join(data.split(","))
-    return utils.strint(no_comma, "points")
+    return "{:,}".format(int(no_comma))
