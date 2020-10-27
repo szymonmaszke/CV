@@ -6,7 +6,7 @@ import utils
 
 
 def reached(text):
-    return utils.find(text, r"(.+)\speople reached", "reached")
+    return utils.find(text, r"(.+)\speople reached", "reached").upper()[1:]
 
 
 def answers(text):
