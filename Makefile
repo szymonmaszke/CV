@@ -1,4 +1,18 @@
-pdf:
-	xelatex cv.tex && xelatex cv.tex
+.PHONY: clean all
+
+XETEX = xelatex
+PYTHON = python
+
+all: cv.pdf clean
+
+update: scripts
+	@echo "Updating GitHub & StackOverflow statistics..."
+	$(PYTHON) scripts/main.py --github-token $(GITHUB_TOKEN) \
+		--github-url $(GITHUB_URL) \
+		--stackoverflow-url $(STACKOVERFLOW_URL) \
+		--data data
+cv.pdf: update data cv.tex
+	@echo "Compiling LaTeX"
+	$(XETEX) cv.tex && $(XETEX) cv.tex
 clean:
-	rm cv.aux cv.log cv.out missfont.log
+	rm -rf cv.aux cv.log cv.out missfont.log
