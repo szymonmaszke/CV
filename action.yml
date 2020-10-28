@@ -1,0 +1,21 @@
+# action.yml
+---
+name: "CV"
+description: "Automatically updates CV"
+inputs:
+  github_token:
+    description: "GitHub private access token. Should allow repository & statistics reading"
+    required: true
+  github_url:
+    description: "Link to GitHub overview of profile, https://github.com/<username>"
+    required: true
+  stackoverflow_url:
+    description: "Link to StackOverflow activity tab, for example: https://stackoverflow.com/users/10886420/szymon-maszke?tab=topactivity"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.github_token }}
+    - ${{ inputs.github_url }}
+    - ${{ inputs.stackoverflow_url }}
