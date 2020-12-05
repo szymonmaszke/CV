@@ -20,7 +20,7 @@ def stars(user, data) -> str:
         sum(
             repo.stargazers_count
             for repo in user.get_repos()
-            if not repo.name in to_exclude
+            if not repo.full_name in to_exclude
         )
     )
 

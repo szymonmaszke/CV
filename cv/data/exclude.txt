@@ -1,6 +1,6 @@
-Practical-ML-DS
-Algorithms
-SpatialNetworks
-DataScienceBowl2018
-cv
-vim-swiftdocstring
+AI-Core/Practical-ML-DS
+Dzionek95/Algorithms
+gmum/SpatialNetworks
+joanna-janos/DataScienceBowl2018
+witekbobrowski/cv
+witekbobrowski/vim-swiftdocstring
