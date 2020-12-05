@@ -1,6 +1,7 @@
 # action.yml
 ---
 name: "CV"
+author: "Szymon Maszke"
 description: "Automatically updates CV"
 inputs:
   github_token:
