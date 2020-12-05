@@ -15,9 +15,21 @@ import loguru
 from bs4 import BeautifulSoup
 
 
-def load_text(url):
+def load_text(url: str) -> str:
     """
-    Loads HTML and returns textual content
+    Loads HTML and returns textual content.
+
+    Used for stackoverflow & github page parsing.
+
+    Parameters
+    ----------
+    url : str
+        URL pointing to the resource
+
+    Returns
+    -------
+    str
+        Text after BeautifulSoup parsing
 
     """
     try:

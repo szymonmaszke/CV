@@ -1,21 +1,31 @@
+"""
+Parse GitHub data (contributions, total numbers of stars etc.)
+
+This module is run by `main.py`
+
+"""
+
 import sys
 
 import utils
 
 
-def exclude(data):
+def _exclude(data):
+    """Load repositories which shouldn't be counted in stars."""
     with open(data / "exclude.txt", "r") as f:
         return f.read().split()
 
 
 def contributions(text) -> str:
+    """String finding total number of contributions on GitHub."""
     return utils.strint(
         utils.find(text, "([0-9]+) contributions", "contributions"), "contributions"
     )
 
 
 def stars(user, data) -> str:
-    to_exclude = exclude(data)
+    """Return total number of stars user has on GitHub."""
+    to_exclude = _exclude(data)
     return str(
         sum(
             repo.stargazers_count
@@ -25,7 +35,12 @@ def stars(user, data) -> str:
     )
 
 
-def specific_repos(user, data):
+def specific_repos(user, data) -> None:
+    """Save into data/repo_name.txt number of stars.
+
+    Those files are read by LaTeX after processing.
+
+    """
     with open(data / "specific_repos.txt", "r") as f:
         specific_repos = f.read().split()
     for repo in user.get_repos():
@@ -35,4 +50,5 @@ def specific_repos(user, data):
 
 
 def followers(user) -> str:
+    """Return number of followers."""
     return str(user.followers)
