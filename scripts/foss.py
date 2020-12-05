@@ -20,9 +20,18 @@ def stars(user, data) -> str:
         sum(
             repo.stargazers_count
             for repo in user.get_repos()
-            if not repo.full_name in to_exclude
+            if repo.full_name not in to_exclude
         )
     )
+
+
+def specific_repos(user, data):
+    with open(data / "specific_repos.txt", "r") as f:
+        specific_repos = f.read().split()
+    for repo in user.get_repos():
+        if repo.name in specific_repos:
+            with open((data / repo.name).with_suffix(".txt"), "w") as f:
+                f.write(str(repo.stargazers_count))
 
 
 def followers(user) -> str:

@@ -16,6 +16,9 @@ def main():
     }
     utils.save(dictionary, args)
 
+    # Add stats about special repositories
+    foss.specific_repos(args.github_token, args.data)
+
 
 if __name__ == "__main__":
     main()
