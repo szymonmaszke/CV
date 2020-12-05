@@ -3,6 +3,7 @@ FROM ubuntu:latest
 RUN apt-get -y update \
   # LaTeX dependencies and python environment
   && apt-get -y install \
+    git \
     make \
     # Python
     python3.8 \
