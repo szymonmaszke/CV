@@ -1,8 +1,11 @@
 import sys
 
-import loguru
-
 import utils
+
+
+def exclude(data):
+    with open(data / "exclude.txt", "r") as f:
+        return f.read().split()
 
 
 def contributions(text) -> str:
@@ -11,8 +14,15 @@ def contributions(text) -> str:
     )
 
 
-def stars(user) -> str:
-    return str(sum(repo.stargazers_count for repo in user.get_repos()))
+def stars(user, data) -> str:
+    to_exclude = exclude(data)
+    return str(
+        sum(
+            repo.stargazers_count
+            for repo in user.get_repos()
+            if not repo.name in to_exclude
+        )
+    )
 
 
 def followers(user) -> str:
