@@ -1,4 +1,4 @@
 FROM szymonmaszke/cv:latest
 
 COPY . /
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/bin/sh", "./entrypoint.sh"]
