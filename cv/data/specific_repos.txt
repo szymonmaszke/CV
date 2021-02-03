@@ -1,5 +1,5 @@
-sciper
-seafig
 torchlayers
 torchlambda
 torchdata
+vimpyter
+torchfunc
