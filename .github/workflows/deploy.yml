@@ -14,9 +14,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: ./
         with:
-          read_github_token: ${{ secrets.READ_GITHUB_TOKEN }}
+          token_github: ${{ secrets.TOKEN_GITHUB }}
           url_github: ${{ secrets.URL_GITHUB}}
           url_stackoverflow: ${{ secrets.URL_STACKOVERFLOW }}
-          github_actor: ${ GITHUB_ACTOR }
           github_repository: ${ GITHUB_REPOSITORY }
-          github_token: ${{ secrets.GITHUB_TOKEN }}

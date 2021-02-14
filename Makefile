@@ -7,7 +7,7 @@ all: update cv clean
 
 update:
 	@echo "Updating GitHub & StackOverflow statistics..."
-	$(PYTHON) scripts/main.py --github-token $(READ_GITHUB_TOKEN) \
+	$(PYTHON) scripts/main.py --github-token $(TOKEN_GITHUB) \
 		--github-url $(URL_GITHUB) \
 		--stackoverflow-url $(URL_STACKOVERFLOW) \
 		--data cv/data

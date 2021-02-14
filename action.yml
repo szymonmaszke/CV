@@ -4,8 +4,8 @@ name: "CV"
 author: "Szymon Maszke"
 description: "Automatically updates CV"
 inputs:
-  read_github_token:
-    description: "GitHub private access token. Should allow repository & statistics reading"
+  token_github:
+    description: "GitHub private access token. Should allow repository read/push & user push"
     required: true
   url_github:
     description: "Link to GitHub overview of profile, https://github.com/<username>"
@@ -13,22 +13,14 @@ inputs:
   url_stackoverflow:
     description: "Link to StackOverflow activity tab, for example: https://stackoverflow.com/users/10886420/szymon-maszke?tab=topactivity"
     required: true
-  github_actor:
-    description: "Name of GitHub actor used for pushing CV. Usually predefined {GITHUB_ACTOR}"
-    required: true
   github_repository:
-    description: "Name of GitHub repository. Should be predefined {GITHUB_REPOSITORY}"
-    required: true
-  github_token:
-    description: "GitHub workflows specific token. Should be predefined {GITHUB_TOKEN}"
+    description: "Name of GitHub repository. Usually a predefined {GITHUB_REPOSITORY} constant"
     required: true
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.read_github_token }}
+    - ${{ inputs.token_github}}
     - ${{ inputs.url_github }}
     - ${{ inputs.url_stackoverflow }}
-    - ${{ inputs.github_actor }}
     - ${{ inputs.github_repository }}
-    - ${{ inputs.github_token }}
