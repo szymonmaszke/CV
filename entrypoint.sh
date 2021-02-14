@@ -4,6 +4,11 @@ printf "\n==============================UPDATE CV==============================\
 
 make all PYTHON="python3" TOKEN_GITHUB="$1" URL_GITHUB="$2" URL_STACKOVERFLOW="$3"
 
+printf "\n==============================SETUP GIT==============================\n\n"
+
+git config --local user.email "action@github.com"
+git config --local user.name "GitHub Action"
+
 printf "\n==============================COMMIT CV==============================\n\n"
 
 git add cv.pdf
