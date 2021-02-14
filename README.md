@@ -8,7 +8,7 @@
 </p>
 
 [![full](https://img.shields.io/badge/-FULL&nbsp;CV&nbsp;+&nbsp;DOWNLOAD-43a047?style=for-the-badge)](https://github.com/szymonmaszke/CV/blob/master/cv.pdf)
- [![mail](https://img.shields.io/badge/-MAIL&nbsp;ME-DB4437?style=for-the-badge)](mailto:szymon@maszke.com)
+ [![mail](https://img.shields.io/badge/-MAIL&nbsp;ME-DB4437?style=for-the-badge)](mailto:work@maszke.com)
  [![overleaf](https://img.shields.io/badge/-ON&nbsp;OVERLEAF-27a770?style=for-the-badge)](https://github.com/szymonmaszke)
  [![linkedin](https://img.shields.io/badge/-LINKEDIN-0072b1?style=for-the-badge)](https://github.com/szymonmaszke)
  [![github](https://img.shields.io/badge/-GITHUB-333333?style=for-the-badge)](https://github.com/szymonmaszke)
