@@ -1,7 +1,7 @@
 # Curriculum Vitae
 
 <p align=center>
-<img alt="screenshot" src="https://user-images.githubusercontent.com/20703378/101247701-4ff47e80-371b-11eb-8a3f-a8b7671d4cc9.png">
+<img alt="screenshot" src="https://user-images.githubusercontent.com/20703378/107883698-ae469600-6ef0-11eb-92f5-828e02306881.png">
 </p>
 <p align=center>
   Click icons below to contact me and more
