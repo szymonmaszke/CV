@@ -1,3 +1,6 @@
+# Ignore temporary file to run updates
+run.sh
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

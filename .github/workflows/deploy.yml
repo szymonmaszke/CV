@@ -17,6 +17,6 @@ jobs:
           read_github_token: ${{ secrets.READ_GITHUB_TOKEN }}
           url_github: ${{ secrets.URL_GITHUB}}
           url_stackoverflow: ${{ secrets.URL_STACKOVERFLOW }}
-          github_actor: ${{ GITHUB_ACTOR }}
-          github_repository: ${{ GITHUB_REPOSITORY }}
+          github_actor: ${ GITHUB_ACTOR }
+          github_repository: ${ GITHUB_REPOSITORY }
           github_token: ${{ secrets.GITHUB_TOKEN }}
