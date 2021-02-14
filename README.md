@@ -7,8 +7,7 @@
   Click icons below to contact me and more
 </p>
 
-[![full](https://img.shields.io/badge/-FULL&nbsp;CV-ec407a?style=for-the-badge)](https://github.com/szymonmaszke/CV/blob/master/cv.pdf)
- [![download](https://img.shields.io/badge/-DOWNLOAD&nbsp;CV-43a047?style=for-the-badge)](https://github.com/szymonmaszke/CV/raw/master/cv.pdf)
+[![full](https://img.shields.io/badge/-FULL&nbsp;CV&nbsp;+&nbsp;DOWNLOAD-43a047?style=for-the-badge)](https://github.com/szymonmaszke/CV/blob/master/cv.pdf)
  [![mail](https://img.shields.io/badge/-MAIL&nbsp;ME-DB4437?style=for-the-badge)](mailto:szymon@maszke.com)
  [![overleaf](https://img.shields.io/badge/-ON&nbsp;OVERLEAF-27a770?style=for-the-badge)](https://github.com/szymonmaszke)
  [![linkedin](https://img.shields.io/badge/-LINKEDIN-0072b1?style=for-the-badge)](https://github.com/szymonmaszke)
