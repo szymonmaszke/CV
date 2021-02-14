@@ -6,6 +6,7 @@ import utils
 
 def main():
     args = arguments.get()
+    utils.setup_folders(args.data)
     dictionary = {
         "stars": foss.stars(args.github_token, args.data),
         "contributions": foss.contributions(args.github_url),
@@ -14,7 +15,7 @@ def main():
         "reached": stackoverflow.reached(args.stackoverflow_url),
         "points": stackoverflow.points(args.stackoverflow_url),
     }
-    utils.save(dictionary, args)
+    utils.save(dictionary, args.data)
 
     # Add stats about special repositories
     foss.specific_repos(args.github_token, args.data)

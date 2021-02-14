@@ -11,7 +11,7 @@ import utils
 
 
 def _exclude(data):
-    """Load repositories which shouldn't be counted in stars."""
+    """Load repositories which shouldn't be counted in total stars."""
     with open(data / "exclude.txt", "r") as f:
         return f.read().split()
 
@@ -25,7 +25,7 @@ def contributions(text) -> str:
 
 def stars(user, data) -> str:
     """Return total number of stars user has on GitHub."""
-    to_exclude = _exclude(data)
+    to_exclude = _exclude(data / "specified")
     return str(
         sum(
             repo.stargazers_count
@@ -41,11 +41,11 @@ def specific_repos(user, data) -> None:
     Those files are read by LaTeX after processing.
 
     """
-    with open(data / "specific_repos.txt", "r") as f:
+    with open(data / "specified" / "repos.txt", "r") as f:
         specific_repos = f.read().split()
     for repo in user.get_repos():
         if repo.name in specific_repos:
-            with open((data / repo.name).with_suffix(".txt"), "w") as f:
+            with open((data / "generated" / repo.name).with_suffix(".txt"), "w") as f:
                 f.write(str(repo.stargazers_count))
 
 

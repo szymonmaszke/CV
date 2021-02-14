@@ -8,6 +8,12 @@ import sys
 import loguru
 
 
+def setup_folders(data):
+    "Create generated folder in specified data directory"
+    generated = data / "generated"
+    generated.mkdir(parents=True, exist_ok=True)
+
+
 def strint(value: str, error: str):
     """
     Try to cast value to int and back to string.
@@ -22,16 +28,17 @@ def strint(value: str, error: str):
         sys.exit(1)
 
 
-def save(dictionary, args):
+def save(dictionary, data):
     """
-    Save gathered data into `.txt` files.
+    Save gathered data into `.txt` files under generated folder.
 
     Those files are loaded by LaTeX source code afterwards.
 
     """
-    for name, data in dictionary.items():
-        with open((args.data / name).with_suffix(".txt"), "w") as f:
-            f.write(data)
+    generated = data / "generated"
+    for name, value in dictionary.items():
+        with open((generated / name).with_suffix(".txt"), "w") as f:
+            f.write(value)
 
 
 def find(text: str, regex: str, error: str):
