@@ -64,6 +64,22 @@
   \end{itemize}
 }
 
+\newcommand{\oneproject}[5]{
+  \textbf{
+    \href{#2}{\large \faGithub\space #1} \hfill
+  }
+  \textcolor{annotation}{
+    \faStar\space #3 \hfill
+    \faCalendar\space #4
+  }
+  \vspace{-2.5mm}
+
+  \begin{itemize}[leftmargin=*]
+    \setlength\itemsep{0mm}
+    \item #5
+  \end{itemize}
+}
+
 % Create work entry
 %   1 - name of work
 %   2 - location of work
