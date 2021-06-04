@@ -1,3 +1,5 @@
+# Ignore local gh token for testing purposes
+token.txt
 # Ignore temporary file to run updates
 run.sh
 
