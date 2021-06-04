@@ -5,17 +5,7 @@
     \name{Szymon}{Maszke}
     % Calculate it properly
     % GitHub
-    \sidebarEnum{github}{$(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.4\Margin)$}
-      {\textcolor{background}{\Large \textbf{\faGithub\space GitHub}}}
-      {
-        {
-          \faStar/\textbf{\input{data/generated/stars.txt}}stars received,
-          \faPlus/\textbf{\input{data/generated/contributions.txt}}contributions,
-          \faUser/\textbf{\input{data/generated/followers.txt}}followers,
-        }
-      }
-
-    \sidebarEnum{stackoverflow}{$(github data.south)+(0cm, \Margin-2.8mm)$}
+    \sidebarEnum{stackoverflow}{$(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin)$}
       {
         \Large{
           \textcolor{background}{\faStackOverflow\space }
@@ -25,14 +15,21 @@
       {
         {
           \faStar/\input{data/specified/stack-special1.txt},
-          \faTrophy/\input{data/specified/stack-special2.txt},
           \faCheck/\textbf{\input{data/generated/answers.txt}}answers,
           \faThumbsUp/\textbf{\input{data/generated/points.txt}}points,
-          \faUser/\textbf{\input{data/generated/reached.txt}}reached,
         }
       }
 
-    \node (skills) at ($(stackoverflow data.south) + (0mm, \Margin-2.5mm)$)
+    \sidebarEnum{github}{$(stackoverflow data.south)+(0cm, \Margin-2.8mm)$}
+      {\textcolor{background}{\Large \textbf{\faGithub\space GitHub}}}
+      {
+        {
+          \faStar/\textbf{\input{data/generated/stars.txt}}stars received,
+          \faUser/\textbf{\input{data/generated/followers.txt}}followers,
+        }
+      }
+
+    \node (skills) at ($(github data.south) + (0mm, \Margin-2.5mm)$)
       [rectangle, fill=skills, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{background}{\Large\textbf{\faCogs\space Skills}}};
@@ -45,33 +42,41 @@
       \skillsrulefill
 
       % Machine Learning
-      \skilltag{numpy}
-      \href{https://stackoverflow.com/questions/55675788/how-can-i-lemmatize-list-of-lists-in-python-using-spacy/55676283#55676283}{\skilltag{spacy}} \skilltag{nltk}
+      \skilltag{numpy} \skilltag{coreml}
+      \href{https://stackoverflow.com/questions/55675788/how-can-i-lemmatize-list-of-lists-in-python-using-spacy/55676283#55676283}{\skilltag{spacy}}
 
-      \href{https://stackoverflow.com/questions/55009704/why-is-cross-val-predict-not-appropriate-for-measuring-the-generalisation-error/55010603#55010603}{\skilltag{scikit-learn}}
+      \href{https://stackoverflow.com/questions/55009704/why-is-cross-val-predict-not-appropriate-for-measuring-the-generalisation-error/55010603#55010603}{\skilltag{sklearn}}
       \href{https://stackoverflow.com/questions/55601928/apply-multiple-standardscalers-to-individual-groups/55602630#55602630}{\skilltag{pandas}}
+      \skilltag{onnx}
 
       \skillsrulefill
 
       % Deep Learning
-      \skilltag{pytorch}
-      \href{https://stackoverflow.com/questions/57086301/custom-neural-network-implementation-on-mnist-using-tensorflow-2-0/57136842#57136842}{\skilltag{tensorflow2.x}}
-
-      \href{https://stackoverflow.com/questions/55421290/tensorflow-2-0-keras-how-to-write-image-summaries-for-tensorboard/55754700#55754700}{\skilltag{keras}} \skilltag{tensorflow1.x}
+      \href{https://stackoverflow.com/questions/57086301/custom-neural-network-implementation-on-mnist-using-tensorflow-2-0/57136842#57136842}{\skilltag{tensorflow}}
+      {\skilltag{keras}}
 
       \skillsrulefill
 
-      \skilltag{tox} \skilltag{pytest} \skilltag{travis}
-      \skilltag{github-actions} \skilltag{dvc}
+      \skilltag{tests} \skilltag{CI} \skilltag{CD} \skilltag{dvc}
 
       \skillsrulefill
 
       % Other
       \skilltag{docker} \href{https://github.com/szymonmaszke/dotfiles}{\skilltag{linux}} \skilltag{make}
-      \skilltag{aws-lambda} \skilltag{openmp}
+      \skilltag{aws-lambda} \skilltag{prometheus}
     };
 
-    \sidebarEnum{languages}{$(skills data.south) + (0mm, -2.5mm)$}
+    \node (research) at ($(skills data.south) + (0mm, \Margin-12.5mm)$)
+      [rectangle, fill=research, below,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
+      {\textcolor{background}{\Large\textbf{\faPencil\space Research}}};
+
+    \node (research data) at ($(research.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
+      \research{\href{https://arxiv.org/abs/1910.02776}{Biologically-Inspired Spatial Neural Networks}}
+        {NeurIPS}{10/2019}
+    };
+
+    \sidebarEnum{languages}{$(research data.south) + (0mm, -2.5mm)$}
       {\textcolor{background}{\Large\textbf{\faCommenting\space Languages}}}
       {
         {
@@ -79,6 +84,7 @@
           \faVolumeUp/\textbf{English} C1
         }
       }
+
 
   \end{tikzpicture}
 \end{document}

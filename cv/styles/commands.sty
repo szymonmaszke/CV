@@ -11,7 +11,7 @@
 
 % Create Privacy compliant clause at the end of document.
 \newcommand{\clause}{
-  \begin{spacing}{0.27}
+  \begin{spacing}{0.65}
     \textcolor{clause}{
       \tiny{
         I hereby give consent for my personal data included in my application to be processed for the purposes of the recruitment process under the European Parliament's
@@ -104,6 +104,26 @@
       \faUniversity\space #2
       \hfill #3
       \hfill \faCalendar\space #4-#5
+    }
+  }
+}
+
+% Create research entry
+%   1 - name
+%   2 - university
+%   3 - release date
+
+\newcommand{\research}[3]{
+  \begin{cvtext}
+    \begin{center}
+      \textbf{\normalsize #1}
+    \end{center}
+  \end{cvtext}
+  \vspace*{-0.3cm}
+  \small{
+    \textcolor{annotation}{
+      \faUsers\space #2
+      \hfill \faCalendar\space #3
     }
   }
 }
