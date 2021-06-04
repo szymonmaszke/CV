@@ -10,9 +10,9 @@ import pathlib
 import sys
 import urllib
 
-import github as gh
 import loguru
 from bs4 import BeautifulSoup
+from github import Github
 
 
 def load_text(url: str) -> str:
@@ -61,7 +61,7 @@ def get():
 
     parser.add_argument(
         "--github-token",
-        type=lambda p: gh.Github(p).get_user(),
+        type=lambda p: Github(p).get_user(),
         required=True,
         help="Personal access token to GitHub profile data",
     )

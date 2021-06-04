@@ -9,7 +9,6 @@ def main():
     utils.setup_folders(args.data)
     dictionary = {
         "stars": foss.stars(args.github_token, args.data),
-        "contributions": foss.contributions(args.github_url),
         "followers": foss.followers(args.github_token),
         "answers": stackoverflow.answers(args.stackoverflow_url),
         "reached": stackoverflow.reached(args.stackoverflow_url),
