@@ -9,7 +9,7 @@
 
 [![full](https://img.shields.io/badge/-FULL&nbsp;CV&nbsp;+&nbsp;DOWNLOAD-43a047?style=for-the-badge)](https://github.com/szymonmaszke/CV/blob/master/cv.pdf)
  [![mail](https://img.shields.io/badge/-MAIL&nbsp;ME-DB4437?style=for-the-badge)](mailto:work@maszke.co)
- [![linkedin](https://img.shields.io/badge/-LINKEDIN-0072b1?style=for-the-badge)](https://github.com/szymonmaszke)
+ [![linkedin](https://img.shields.io/badge/-LINKEDIN-0072b1?style=for-the-badge)](www.linkedin.com/in/szymonmaszke)
  [![github](https://img.shields.io/badge/-GITHUB-333333?style=for-the-badge)](https://github.com/szymonmaszke)
  [![stackoverflow](https://img.shields.io/badge/-STACKOVERFLOW-F48024?style=for-the-badge)](https://stackoverflow.com/users/10886420/szymon-maszke?tab=profile)
 
