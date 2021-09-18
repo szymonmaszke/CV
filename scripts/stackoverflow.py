@@ -17,12 +17,12 @@ import utils
 
 def reached(text):
     """Return how many people got reached by user's answers."""
-    return utils.find(text, r"(.+)\speople reached", "reached").upper()[1:]
+    return utils.find(text, r"(.+) reached", "reached").upper()[1:]
 
 
 def answers(text):
     """Return how many answers user gave."""
-    return utils.strint(utils.find(text, r"([0-9]+)\sanswers", "answers"), "answers")
+    return utils.strint(utils.find(text, r"([0-9]+) answers", "answers"), "answers")
 
 
 def points(text):

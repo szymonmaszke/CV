@@ -37,7 +37,7 @@ def load_text(url: str) -> str:
     except urllib.error.URLError:
         loguru.logger.critical("could not get HTML {} to parse data".format(url))
         sys.exit(1)
-    return BeautifulSoup(html, "lxml").get_text()
+    return " ".join(BeautifulSoup(html, "lxml").get_text().split())
 
 
 def get():
