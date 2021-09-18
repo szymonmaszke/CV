@@ -32,7 +32,7 @@
     \node (skills) at ($(github data.south) + (0mm, \Margin-2.5mm)$)
       [rectangle, fill=skills, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{background}{\Large\textbf{\faCogs\space Skills}}};
+      {\textcolor{background}{\Large\textbf{\faCogs\space Stack}}};
     \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth] {
       \skilltag{python} \href{https://github.com/szymonmaszke/numpp}{\skilltag{C++}} \skilltag{java}
 
@@ -57,7 +57,7 @@
 
       \skillsrulefill
 
-      \skilltag{tests} \skilltag{CI} \skilltag{CD} \skilltag{dvc}
+      \skilltag{pytest} \skilltag{hypothesis} \skilltag{tox}
 
       \skillsrulefill
 
@@ -66,8 +66,13 @@
 
       \skillsrulefill
 
-      \skilltag{aws-lambda} \skilltag{prometheus}
-      \skilltag{docker} \skilltag{coremltools}
+      \skilltag{kubernetes} \skilltag{kubeflow}
+
+      \skillsrulefill
+
+      \skilltag{prometheus} \skilltag{dvc}
+      \skilltag{docker} \skilltag{pyspark}
+
     };
 
     \node (research) at ($(skills data.south) + (0mm, \Margin-12.5mm)$)
