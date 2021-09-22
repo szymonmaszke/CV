@@ -8,8 +8,14 @@
     inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
 }
 
-
 % Create Privacy compliant clause at the end of document.
+\newcommand{\generated}{
+  \textcolor{annotation}{
+    \hfill\tiny{CV automatically updated on: \DTMnow}
+  }
+}
+
+
 \newcommand{\clause}{
   \begin{spacing}{0.65}
     \textcolor{clause}{
