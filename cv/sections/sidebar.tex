@@ -34,44 +34,37 @@
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{background}{\Large\textbf{\faCogs\space Stack}}};
     \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth] {
-      \skilltag{python} \href{https://github.com/szymonmaszke/numpp}{\skilltag{C++}} \skilltag{Go}
+      % Languages
+      \skilltag{Python}\skilltag{bash}\href{https://github.com/szymonmaszke/numpp}{\skilltag{C++}\skilltag{Go}}
 
-      \skilltag{C} \href{https://github.com/szymonmaszke/xms}{\skilltag{SQL}} \skilltag{R}
-      \href{https://stackoverflow.com/questions/55206227/why-bashrc-is-not-executed-when-run-docker-container/55213158#55213158}{\skilltag{bash}}
+      \skillsrulefill
+
+      % Pipelines / Cloud
+      \skilltag{GH Actions}\skilltag{GCP}\skilltag{AWS}  
 
       \skillsrulefill
 
       % Machine Learning
-      \skilltag{numpy} \skilltag{jinja}
-      \href{https://stackoverflow.com/questions/55675788/how-can-i-lemmatize-list-of-lists-in-python-using-spacy/55676283#55676283}{\skilltag{spacy}}
-
-      \href{https://stackoverflow.com/questions/55009704/why-is-cross-val-predict-not-appropriate-for-measuring-the-generalisation-error/55010603#55010603}{\skilltag{sklearn}}
-      \href{https://stackoverflow.com/questions/55601928/apply-multiple-standardscalers-to-individual-groups/55602630#55602630}{\skilltag{pandas}}
-      \skilltag{onnx}
+      \skilltag{numpy}\href{https://stackoverflow.com/questions/55009704/why-is-cross-val-predict-not-appropriate-for-measuring-the-generalisation-error/55010603#55010603}{\skilltag{sklearn}}\href{https://stackoverflow.com/questions/55601928/apply-multiple-standardscalers-to-individual-groups/55602630#55602630}{\skilltag{pandas}}
 
       \skillsrulefill
 
       % Deep Learning
-      \href{https://stackoverflow.com/questions/57086301/custom-neural-network-implementation-on-mnist-using-tensorflow-2-0/57136842#57136842}{\skilltag{tensorflow\{1,2\}.x}}
-      {\skilltag{keras}}
+      \href{https://stackoverflow.com/questions/57086301/custom-neural-network-implementation-on-mnist-using-tensorflow-2-0/57136842#57136842}{\skilltag{tensorflow\{1,2\}.x}}{\skilltag{keras}}
 
       \skillsrulefill
 
-      \skilltag{pytest} \skilltag{hypothesis} \skilltag{tox}
+      % Testing
+      \skilltag{pytest}\skilltag{hypothesis}\skilltag{BDD}
 
       \skillsrulefill
 
       % Other
-      \href{https://github.com/szymonmaszke/dotfiles}{\skilltag{linux}} \skilltag{make} \skilltag{cmake}
+      \skilltag{docker}\href{https://github.com/szymonmaszke/dotfiles}{\skilltag{linux}}\skilltag{pulumi}
 
       \skillsrulefill
 
-      \skilltag{kubernetes} \skilltag{kubeflow}
-
-      \skillsrulefill
-
-      \skilltag{prometheus} \skilltag{dvc}
-      \skilltag{docker} \skilltag{pyspark}
+      \skilltag{nomad}\skilltag{k8s}\skilltag{pyspark}
 
     };
 
@@ -96,4 +89,7 @@
 
 
   \end{tikzpicture}
+
+  \generated
+
 \end{document}
