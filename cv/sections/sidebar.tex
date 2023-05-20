@@ -5,7 +5,17 @@
     \name{Szymon}{Maszke}
     % Calculate it properly
     % GitHub
-    \sidebarEnum{stackoverflow}{$(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin)$}
+    \sidebarEnum{github}{$(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin)$}
+      {\textcolor{background}{\Large \textbf{\faGithub\space GitHub (FOSS)}}}
+      {
+        {
+          \faStar/\textbf{\input{data/generated/stars.txt}}stars in total,
+          \faStar/\textbf{\input{data/generated/torchlayers.txt}}\href{https://github.com/szymonmaszke/torchlayers}{torchlayers},
+          \faTrophy/\href{https://devpost.com/software/torch-torchdata-torchfunc}{torchdata \& torchfunc},
+        }
+      }
+
+    \sidebarEnum{stackoverflow}{$(github data.south)+(0cm, \Margin-2.8mm)$}
       {
         \Large{
           \textcolor{background}{\faStackOverflow\space }
@@ -14,33 +24,24 @@
       }
       {
         {
-          \faStar/\input{data/specified/stack-special1.txt},
-          \faCheck/\textbf{\input{data/generated/answers.txt}}answers,
           \faThumbsUp/\textbf{\input{data/generated/points.txt}}points,
+          \faCheck/\textbf{\input{data/generated/answers.txt}}answers,
         }
       }
 
-    \sidebarEnum{github}{$(stackoverflow data.south)+(0cm, \Margin-2.8mm)$}
-      {\textcolor{background}{\Large \textbf{\faGithub\space GitHub}}}
-      {
-        {
-          \faStar/\textbf{\input{data/generated/stars.txt}}stars received,
-          \faUser/\textbf{\input{data/generated/followers.txt}}followers,
-        }
-      }
 
-    \node (skills) at ($(github data.south) + (0mm, \Margin-2.5mm)$)
+    \node (skills) at ($(stackoverflow data.south) + (0mm, \Margin-2.5mm)$)
       [rectangle, fill=skills, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{background}{\Large\textbf{\faCogs\space Stack}}};
     \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth] {
       % Languages
-      \skilltag{Python}\skilltag{bash}\href{https://github.com/szymonmaszke/numpp}{\skilltag{C++}\skilltag{Go}}
+      \skilltag{Python}\skilltag{Go}\skilltag{C++}\skilltag{bash}
 
       \skillsrulefill
 
       % Pipelines / Cloud
-      \skilltag{GH Actions}\skilltag{GCP}\skilltag{AWS}  
+      \skilltag{Google Cloud Platform}
 
       \skillsrulefill
 
@@ -60,11 +61,11 @@
       \skillsrulefill
 
       % Other
-      \skilltag{docker}\href{https://github.com/szymonmaszke/dotfiles}{\skilltag{linux}}\skilltag{pulumi}
+      \skilltag{docker}\href{https://github.com/szymonmaszke/dotfiles}{\skilltag{linux}}\skilltag{CI/CD}
 
       \skillsrulefill
 
-      \skilltag{nomad}\skilltag{k8s}\skilltag{pyspark}
+      \skilltag{nomad}\skilltag{k8s}\skilltag{IaaC}
 
     };
 

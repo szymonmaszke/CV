@@ -108,6 +108,21 @@
   \vspace{0.05cm}
 }
 
+% Create empty work entry
+%   1 - name of work
+%   2 - location of work
+%   3 - start date
+%   4 - finish date
+\newcommand{\emptyWork}[4]{
+  \textbf{
+    \large \faBriefcase\space #1 \hfill
+    \faMapMarker\space #2 \hfill
+  }
+  \textcolor{annotation}{\faCalendar\space #3-#4}
+
+  \vspace{0.2cm}
+}
+
 % Create education entry
 %   1 - name and rank
 %   2 - university
