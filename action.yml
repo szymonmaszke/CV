@@ -7,12 +7,6 @@ inputs:
   token_github:
     description: "GitHub private access token. Should allow repository read/push & user push"
     required: true
-  url_github:
-    description: "Link to GitHub overview of profile, https://github.com/<username>"
-    required: true
-  url_stackoverflow:
-    description: "Link to StackOverflow activity tab, for example: https://stackoverflow.com/users/10886420/szymon-maszke?tab=topactivity"
-    required: true
   github_repository:
     description: "Name of GitHub repository. Usually a predefined {GITHUB_REPOSITORY} constant"
     required: true
@@ -21,6 +15,4 @@ runs:
   image: "Dockerfile"
   args:
     - ${{ inputs.token_github}}
-    - ${{ inputs.url_github }}
-    - ${{ inputs.url_stackoverflow }}
     - ${{ inputs.github_repository }}

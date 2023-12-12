@@ -15,6 +15,4 @@ jobs:
       - uses: ./
         with:
           token_github: ${{ secrets.TOKEN_GITHUB }}
-          url_github: ${{ secrets.URL_GITHUB}}
-          url_stackoverflow: ${{ secrets.URL_STACKOVERFLOW }}
           github_repository: ${{ github.repository }}

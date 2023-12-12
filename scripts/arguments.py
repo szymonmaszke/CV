@@ -52,12 +52,12 @@ def get():
         See CV LaTeX source code for more information.""",
     )
 
-    parser.add_argument(
-        "--github-url",
-        type=load_text,
-        required=True,
-        help="URL to GitHub profile for example 'https://github.com/szymonmaszke'",
-    )
+    # parser.add_argument(
+    #     "--github-url",
+    #     type=load_text,
+    #     required=True,
+    #     help="URL to GitHub profile for example 'https://github.com/szymonmaszke'",
+    # )
 
     parser.add_argument(
         "--github-token",
@@ -66,13 +66,13 @@ def get():
         help="Personal access token to GitHub profile data",
     )
 
-    parser.add_argument(
-        "--stackoverflow-url",
-        type=load_text,
-        required=True,
-        help="URL to Stackoverflow activity profile, for example "
-        "'https://stackoverflow.com/users/10886420/szymon-maszke'",
-    )
+    # parser.add_argument(
+    #     "--stackoverflow-url",
+    #     type=load_text,
+    #     required=True,
+    #     help="URL to Stackoverflow activity profile, for example "
+    #     "'https://stackoverflow.com/users/10886420/szymon-maszke'",
+    # )
 
     parser.add_argument(
         "--data",

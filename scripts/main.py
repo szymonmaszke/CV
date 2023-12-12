@@ -10,9 +10,9 @@ def main():
     dictionary = {
         "stars": foss.stars(args.github_token, args.data),
         "followers": foss.followers(args.github_token),
-        "reached": stackoverflow.reached(args.stackoverflow_url),
-        "points": stackoverflow.points(args.stackoverflow_url),
-        "answers": stackoverflow.answers(args.stackoverflow_url),
+        # "reached": stackoverflow.reached(args.stackoverflow_url),
+        # "points": stackoverflow.points(args.stackoverflow_url),
+        # "answers": stackoverflow.answers(args.stackoverflow_url),
     }
     utils.save(dictionary, args.data)
 
