@@ -127,9 +127,7 @@
 %   1 - name and rank
 %   2 - university
 %   3 - Other (location, GPA)
-%   4 - Start date
-%   5 - End date
-\newcommand{\education}[5]{
+\newcommand{\educationOngoing}[3]{
   \begin{cvtext}
     \begin{center}
       \textbf{\large #1}
@@ -140,7 +138,26 @@
     \textcolor{annotation}{
       \faUniversity\space #2
       \hfill #3
-      \hfill \faCalendar\space #4-#5
+      \hfill \faCalendar\space In progress
+    }
+  }
+}
+
+% Create short education entry (without dates)
+%   1 - name and rank
+%   2 - university
+%   3 - Other (location, GPA)
+\newcommand{\educationFinished}[3]{
+  \begin{cvtext}
+    \begin{center}
+      \textbf{\large #1}
+    \end{center}
+  \end{cvtext}
+  \vspace*{-0.3cm}
+  \small{
+    \textcolor{annotation}{
+      \hfill \faUniversity\space #2
+      \hfill #3 \hfill
     }
   }
 }
