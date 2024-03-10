@@ -6,7 +6,7 @@
     % Calculate it properly
     % GitHub
     \sidebarEnum{github}{$(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin)$}
-      {\textcolor{background}{\Large \textbf{\faGithub\space GitHub (FOSS)}}}
+      {\textcolor{background}{\Large \textbf{\faGithub\space \href{https://github.com/szymonmaszke}{GitHub}}}}
       {
         {
           \faStar/\textbf{\input{data/generated/stars.txt}}stars in total,
@@ -16,9 +16,11 @@
 
     \sidebarEnum{stackoverflow}{$(github data.south)+(0cm, \Margin-2.8mm)$}
       {
-        \Large{
-          \textcolor{background}{\faStackOverflow\space }
-          \textcolor{text}{stack\textbf{overflow}}
+        \href{https://stackoverflow.com/users/10886420/szymon-maszke?tab=topactivity}{
+          \Large{
+            \textcolor{background}{\faStackOverflow\space }
+            \textcolor{text}{stack\textbf{overflow}}
+          }
         }
       }
       {
