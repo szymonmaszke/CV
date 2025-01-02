@@ -32,13 +32,13 @@
 %   1 - Name
 %   2 - Surname
 \newcommand{\name}[2]{
-  \node (username) at ($(current page.north west)+(\cvMiddleSidebar / 2, 0cm)$)
+  \node (username) at ($(current page.north west)+(\cvMiddleSidebar / 2, 0.5cm)$)
     [below, text width = \cvSideWidth]
     {
       \begin{cvtext}
         \begin{center}
 
-          \fontsize{40}{48}\selectfont #1
+          \fontsize{34}{40}\selectfont #1
           \textbf{#2}
 
         \end{center}
@@ -94,8 +94,8 @@
 %   5 - list with job descriptions
 \newcommand{\work}[5]{
   \textbf{
-    \large \faBriefcase\space #1 \hfill
-    \faMapMarker\space #2 \hfill
+    \large #1 \hfill
+    #2 \hfill
   }
   \textcolor{annotation}{\faCalendar\space #3-#4}
   \vspace{-0.1cm}
@@ -115,8 +115,8 @@
 %   4 - finish date
 \newcommand{\emptyWork}[4]{
   \textbf{
-    \large \faBriefcase\space #1 \hfill
-    \faMapMarker\space #2 \hfill
+    \large #1 \hfill
+    #2 \hfill
   }
   \textcolor{annotation}{\faCalendar\space #3-#4}
 
@@ -162,26 +162,6 @@
   }
 }
 
-% Create research entry
-%   1 - name
-%   2 - university
-%   3 - release date
-
-\newcommand{\research}[3]{
-  \begin{cvtext}
-    \begin{center}
-      \textbf{\normalsize #1}
-    \end{center}
-  \end{cvtext}
-  \vspace*{-0.3cm}
-  \small{
-    \textcolor{annotation}{
-      \faUsers\space #2
-      \hfill \faCalendar\space #3
-    }
-  }
-}
-
 % Create top bar icon
 %   1 - [optional] relative location of icon (below or east usually)
 %   2 - Name of node (and name of color)
@@ -222,4 +202,27 @@
       \end{itemize}
     }
   };
+}
+
+% Create certificate entry
+%   1 - [optional] relative location of icon (usually below)
+%   2 - Name of node (and name of color)
+%   3 - Location of icon
+%   4 - Icon
+%   5 - Text displayed to the right
+\newcommand{\twoline}[2]{
+  \begin{cvtext}
+    \begin{center}
+      \textbf{\normalsize #1}
+    \end{center}
+  \end{cvtext}
+  \vspace*{-0.6cm}
+  \small{
+    \begin{center}
+      \textcolor{annotation}{
+        #2
+      }
+    \end{center}
+  }
+  \vspace*{-0.6cm}
 }

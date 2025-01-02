@@ -4,17 +4,13 @@
   \begin{tikzpicture}[remember picture, overlay]
     % First column
     \icon{gmail}{$(current page.north west)+(\cvMiddleSidebar+\Margin,-\Margin / 2)$}
-    {\faEnvelopeO}{\href{mailto:work@maszke.co}{work@maszke.co}}
-    \icon{phone}{$(gmail.south) + (0cm, \cvTopBarIconSpacing)$}
-      {\faPhone}{Provided upon request}
-    \icon{location}{$(phone.south) + (0cm, \cvTopBarIconSpacing)$}
-      {\faMapMarker}{Poland, Kraków}
+    {\href{mailto:work@maszke.co}{\faEnvelopeO}}{\href{mailto:work@maszke.co}{work@maszke.co}}
+    \icon{location}{$(gmail.south) + (0cm, \cvTopBarIconSpacing)$}
+      {\faMapMarker}{Remote/Poland}
     % Second column
     \icon[right]{linkedin}{gmail data.east}
-      {\faLinkedin}{\href{https://www.linkedin.com/in/szymonmaszke}{Szymon Maszke}}
-    \icon{github}{$(linkedin.south) + (0cm, \cvTopBarIconSpacing)$}
-      {\faGithub}{\href{https://github.com/szymonmaszke}{szymonmaszke}}
-    \icon{stackoverflow}{$(github.south) + (0cm, \cvTopBarIconSpacing)$}
-      {\faStackOverflow}{\href{https://stackoverflow.com/users/10886420/szymon-maszke?tab=topactivity}{Szymon Maszke}}
+      {\href{https://www.linkedin.com/in/szymonmaszke}{\faLinkedin}}{\href{https://www.linkedin.com/in/szymonmaszke}{Szymon Maszke}}
+    \icon{phone}{$(linkedin.south) + (0cm, \cvTopBarIconSpacing)$}
+      {\faPhone}{Provided upon request}
   \end{tikzpicture}
 \end{document}

@@ -5,7 +5,7 @@
     \name{Szymon}{Maszke}
     % Calculate it properly
     % GitHub
-    \sidebarEnum{github}{$(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin)$}
+    \sidebarEnum{github}{$(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin+1.8cm)$}
       {\textcolor{background}{\Large \textbf{\faGithub\space \href{https://github.com/szymonmaszke}{GitHub}}}}
       {
         {
@@ -30,19 +30,25 @@
         }
       }
 
+    \node (certificates) at ($(stackoverflow data.south) + (0cm,\Margin-0.2cm)$)
+      [rectangle, fill=certificates, below,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
+      {\textcolor{background}{\Large\textbf{\faCheckSquare\space Certificates}}};
 
-    \node (skills) at ($(stackoverflow data.south) + (0mm, \Margin-2.5mm)$)
+    \node (certificates data) at ($(certificates.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
+      \twoline{{\huge\euflag}\\\href{https://www.kpk.gov.pl/wp-content/uploads/Atestat/3C8407593AB13B0CA00EC6749DDCF333C453EC90AF69FDAEA9D32178B7A37D44/dokument.pdf}{Manager Academy III (polish)}}{Horizon EU Funds Management}
+      % \twoline{\textcolor{google-blue}{G}\textcolor{google-red}{o}\textcolor{google-yellow}{o}\textcolor{google-blue}{g}\textcolor{google-green}{l}\textcolor{google-red}{e} Cloud}
+      % {Architect Engineer Digital Leader}
+    };
+
+    \node (skills) at ($(certificates data.south) + (0mm, \Margin-8mm)$)
       [rectangle, fill=skills, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{background}{\Large\textbf{\faCogs\space Stack}}};
+      {\textcolor{background}{\Large\textbf{\faCogs\space Tech Stack}}};
+
     \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth] {
-      % Languages
+      % Programming Languages
       \skilltag{Python}\skilltag{Go}\skilltag{C++}\skilltag{bash}
-
-      \skillsrulefill
-
-      % Pipelines / Cloud
-      \skilltag{Google Cloud Platform}
 
       \skillsrulefill
 
@@ -76,22 +82,20 @@
       {\textcolor{background}{\Large\textbf{\faPencil\space Research}}};
 
     \node (research data) at ($(research.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
-      \research{\href{https://arxiv.org/abs/1910.02776}{Biologically-Inspired Spatial Neural Networks}}
-        {NeurIPS}{10/2019}
+      \twoline{\href{https://arxiv.org/abs/1910.02776}{Biologically-Inspired Spatial Neural Networks}}
+        {\faUsers\space NeurIPS workshop (NeuroAI)}
     };
 
-    \sidebarEnum{languages}{$(research data.south) + (0mm, -2.5mm)$}
+    \sidebarEnum{languages}{$(research data.south) + (0mm, 0cm)$}
       {\textcolor{background}{\Large\textbf{\faCommenting\space Languages}}}
       {
         {
-          \faVolumeUp/\textbf{Polish} native,
-          \faVolumeUp/\textbf{English} C1
+          \faComment/\textbf{Polish} native,
+          \faComment/\textbf{English} C2,
+          \faComment/\textbf{French} A2
         }
       }
 
-
   \end{tikzpicture}
-
-  \generated
 
 \end{document}

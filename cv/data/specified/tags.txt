@@ -24,4 +24,4 @@ Shell MySQL R Excel
 Apache Spark Hadoop Kafka Kubernetes k8s Apache Impala PySpark
 MariaDB Anaconda
 % buzzwords
-Blockchain artificial intelligence AI microsystems
+Blockchain artificial intelligence AI
