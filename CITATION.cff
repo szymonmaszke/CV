@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: © 2024 open-nudge <https://github.com/open-nudge>
+# SPDX-FileContributor: szymonmaszke <github@maszke.co>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+---
+cff-version: "1.2.0"
+abstract: >
+  Repository containing core information about the opennudge organization
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "open-nudge"
+url: "https://github.com/open-nudge/.github"
+repository-code: "https://github.com/open-nudge/.github"
+title: "opentemplate"
+license: "Apache-2.0"
+keywords:
+  - "opennudge"
+  - "info"
+  - "organization"
+  - "markdown"
+  - "open source"
