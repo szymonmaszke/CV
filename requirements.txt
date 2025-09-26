@@ -1,4 +1,0 @@
-PyGithub>=1.53
-beautifulsoup4>=4.9.1
-lxml>=4.6.1
-loguru>=0.5.3
