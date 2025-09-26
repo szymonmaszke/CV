@@ -12,7 +12,7 @@ git config --local user.name "GitHub Action"
 printf "\n==============================COMMIT CV==============================\n\n"
 
 git add cv.pdf
-git commit -m "[AUTOMATION] Update CV"
+git commit -m "feat: update CV [noci]"
 
 printf "\n===============================PUSH CV===============================\n\n"
 

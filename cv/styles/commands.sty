@@ -8,14 +8,14 @@
     inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
 }
 
-% Create Privacy compliant clause at the end of document.
+% When the CV was generated
 \newcommand{\generated}{
   \textcolor{annotation}{
-    \hfill\tiny{CV automatically updated on: \DTMnow}
+    \hfill\tiny{CV generated at: \DTMnow}
   }
 }
 
-
+% Create Privacy compliant clause at the end of document.
 \newcommand{\clause}{
   \begin{spacing}{-0.5}
     \textcolor{clause}{
@@ -32,13 +32,13 @@
 %   1 - Name
 %   2 - Surname
 \newcommand{\name}[2]{
-  \node (username) at ($(current page.north west)+(\cvMiddleSidebar / 2, 0cm)$)
+  \node (username) at ($(current page.north west)+(\cvMiddleSidebar / 2, 0.5cm)$)
     [below, text width = \cvSideWidth]
     {
       \begin{cvtext}
         \begin{center}
 
-          \fontsize{40}{48}\selectfont #1
+          \fontsize{34}{40}\selectfont #1
           \textbf{#2}
 
         \end{center}
@@ -92,35 +92,48 @@
 %   3 - start date
 %   4 - finish date
 %   5 - list with job descriptions
-\newcommand{\work}[5]{
-  \textbf{
-    \large \faBriefcase\space #1 \hfill
-    \faMapMarker\space #2 \hfill
-  }
-  \textcolor{annotation}{\faCalendar\space #3-#4}
-  \vspace{-0.1cm}
-  \begin{itemize}[leftmargin=*]
-    \setlength\itemsep{0mm}
-    \foreach \Description in #5{
-      \item \Description
-    }
-  \end{itemize}
-  \vspace{0.05cm}
-}
+% \newcommand{\work}[5]{
+%   \textbf{
+%     \large #1 \hfill
+%     #2 \hfill
+%   }
+%   \textcolor{annotation}{\faCalendar\space #3-#4}
+%   \vspace{-0.1cm}
+%   \begin{itemize}[leftmargin=*]
+%     \setlength\itemsep{0mm}
+%     \foreach \Description in #5{
+%       \item \Description
+%     }
+%   \end{itemize}
+%   \vspace{0.05cm}
+% }
 
-% Create empty work entry
-%   1 - name of work
-%   2 - location of work
-%   3 - start date
-%   4 - finish date
-\newcommand{\emptyWork}[4]{
-  \textbf{
-    \large \faBriefcase\space #1 \hfill
-    \faMapMarker\space #2 \hfill
-  }
-  \textcolor{annotation}{\faCalendar\space #3-#4}
-
-  \vspace{0.2cm}
+\newcommand{\work}[5]{%
+  \noindent
+  \makebox[0pt][l]{%
+    \hspace{0pt}%
+    \makebox[8cm][l]{\textbf{\large \textcolor{text}{#1}}}%
+  }%
+  \hspace*{6cm}%
+  \makebox[0pt][l]{%
+    \textbf{\large \textcolor{text}{\faMapMarker\space #2}}%
+  }%
+  \hfill
+  \textcolor{annotation}{\faCalendar\space #3--#4}%
+  %
+  % Check if #5 is empty
+  \if\relax\detokenize{#5}\relax
+    \vspace{+0.2cm}
+  \else
+    \vspace{-0.1cm}
+    \begin{itemize}[leftmargin=*]
+      \setlength\itemsep{0mm}
+      \foreach \Description in #5 {
+        \item \Description
+      }
+    \end{itemize}
+    \vspace{0.05cm}
+  \fi
 }
 
 % Create education entry
@@ -143,44 +156,51 @@
   }
 }
 
+% Multiline previous version
 % Create short education entry (without dates)
 %   1 - name and rank
 %   2 - university
 %   3 - Other (location, GPA)
-\newcommand{\educationFinished}[3]{
-  \begin{cvtext}
-    \begin{center}
-      \textbf{\large #1}
-    \end{center}
-  \end{cvtext}
-  \vspace*{-0.3cm}
-  \small{
-    \textcolor{annotation}{
-      \hfill \faUniversity\space #2
-      \hfill #3 \hfill
-    }
-  }
-}
+% \newcommand{\educationFinished}[3]{
+%   \begin{cvtext}
+%     \begin{center}
+%       \textbf{\large #1}
+%     \end{center}
+%   \end{cvtext}
+%   \vspace*{-0.3cm}
+%   \small{
+%     \textcolor{annotation}{
+%       \hfill \faUniversity\space #2
+%       \hfill #3 \hfill
+%     }
+%   }
+% }
 
-% Create research entry
-%   1 - name
+% Create finished education entry
+%   1 - name of education
 %   2 - university
-%   3 - release date
+% \newcommand{\educationFinished}[2]{
+%   \textcolor{text}{
+%     \textbf{\large #1 \hfill}
+%   }
+%   \textcolor{annotation}{\faUniversity\space #2}
+% }
 
-\newcommand{\research}[3]{
-  \begin{cvtext}
-    \begin{center}
-      \textbf{\normalsize #1}
-    \end{center}
-  \end{cvtext}
-  \vspace*{-0.3cm}
-  \small{
-    \textcolor{annotation}{
-      \faUsers\space #2
-      \hfill \faCalendar\space #3
-    }
-  }
+\newcommand{\educationFinished}[2]{
+  \noindent
+  \makebox[0pt][l]{%
+    \hspace{0pt}%
+    \makebox[8cm][l]{\textbf{\large \textcolor{text}{#1}}}%
+  }%
+  \hspace*{8cm}%
+  \textcolor{annotation}{\faUniversity\space #2}
 }
+
+% \newcommand{\educationFinished}[2]{
+%   \begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
+%     \textbf{\large \textcolor{text}{#1}} & \textcolor{annotation}{\faUniversity\space #2} \\
+%   \end{tabular*}
+% }
 
 % Create top bar icon
 %   1 - [optional] relative location of icon (below or east usually)
@@ -222,4 +242,37 @@
       \end{itemize}
     }
   };
+}
+
+% Create certificate entry
+%   1 - First (main) line
+%   2 - Second line
+%   3 - Third line
+\newcommand{\sidebarLines}[3]{
+  \begin{cvtext}
+    \begin{center}
+      \textbf{\normalsize #1}
+    \end{center}
+  \end{cvtext}
+  \vspace*{-0.75cm}
+  \small{
+    \begin{center}
+      \textcolor{annotation}{
+        #2
+      }
+    \end{center}
+  }
+  \vspace*{-0.75cm}
+  \if\relax\detokenize{#3}\relax
+    % nothing if empty
+  \else
+    \small{
+      \begin{center}
+        \textcolor{annotation}{
+          #3
+        }
+      \end{center}
+    }
+    \vspace*{-0.6cm}
+  \fi
 }

@@ -10,6 +10,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % more advanced expressions in \setlength
+\usepackage{xparse}
+\usepackage{amsmath}
 \usepackage{float}
 \usepackage{calc}
 \usepackage{fontspec}
@@ -34,6 +36,7 @@
 \usepackage{anyfontsize}
 \usepackage{graphicx, calc}
 \usepackage{hyperref}
+\usepackage{euflag}
 
 \usepackage[yearmonthsep=/,monthdaysep=/,dayyearsep=/,timesep=:]{datetime2}
 
@@ -66,12 +69,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-  % Algorithmic tags
-  \input{data/specified/tags.txt}
+
   % Bar definitions
   \begin{tikzpicture}[remember picture, overlay]
     \fill[sidebar] (current page.north west) rectangle ++(\cvSideWidth+2\Margin,-\paperheight);
-    \fill[topbar] (current page.north west) rectangle +(\paperwidth, \cvTopHeightMargin);
+    \fill[topbar] (current page.north west) rectangle +(\paperwidth, \cvTopHeightMargin+1.8cm);
   \end{tikzpicture}
 
   \subfile{sections/sidebar}

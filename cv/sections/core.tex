@@ -3,81 +3,87 @@
 \begin{document}
   \begin{tikzpicture}[remember picture, overlay]
     % Education
-    \node (education) at ($(current page.north west)+(\paperwidth-\cvMiddleSidebar+\Margin / 2,\textStart)+(-0.5mm,-1.8\Margin)$)
+    \node (education) at ($(current page.north west)+(\paperwidth-\cvMiddleSidebar+\Margin / 2,\textStart)+(-0.5mm,-1.8\Margin+1.8cm)$)
       [rectangle, fill=education, minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
       {\Large \textbf{\textcolor{text}{\faGraduationCap\space Education}}};
-    \node (education data) at (education.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
-        \vspace*{-0.45cm}
-        \educationFinished{\href{https://mba.agh.edu.pl/programs/mba-executive}{MBA Executive}}
-        {\href{https://www.agh.edu.pl/en/}{AGH University}}{\faMapMarker\space Faculty of Management}
+    \node (education data) at ($(education.south) + (0cm, -2.2mm)$) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
+      \educationFinished{\href{https://mba.agh.edu.pl/programs/mba-executive}{Executive MBA}}
+      {\href{https://www.agh.edu.pl/en/}{AGH University}}
 
-        \vspace*{-0.15cm}
-        \educationFinished{M.Sc. Computer Science (Machine Learning specialization)}
-        {\href{https://en.uj.edu.pl/}{Jagiellonian University}}{\faMapMarker\space Faculty of Mathematics}
-
-        \vspace*{-0.15cm}
-        \educationFinished{B.Sc. Computer Science}
-        {\href{https://en.uj.edu.pl/}{Jagiellonian University}}{\faMapMarker\space Faculty of Physics}
+      \vspace*{3.7mm}
+      \educationFinished{MSc Computer Science}
+      {\href{https://en.uj.edu.pl/}{Jagiellonian University}}
     };
 
     % Work
-    \node (work) at ($(education data.south)+(0cm, -2.3mm)$)
+    \node (work) at ($(education data.south)+(0cm, -2.35mm)$)
       [rectangle, fill=work, below,
       minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
       {\Large \textbf{\textcolor{text}{\faBriefcase\space Work}}};
     \node (work data) at (work.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
       \begin{cvtext}
-        \work{Chief Technology Officer}{\href{https://www.inovintell.com/}{inovintell}}{07/2022}{01/2024}
+        \work{Developer and founder}{\href{https://www.opennudge.com}{opennudge}}{04/2024}{Present}
         {
           {
-            Technical and research leadership of two teams (10 people),
-            Overseeing technical staff and their development,
-            Creating and defining best practices via \href{https://github.com/inovintell}{open-source culture},
-            Establishing the company in collaboration with internal stakeholders,
-            Planning and managing business projects from a technical perspective
+            driving not-for-profit organization building open-source software,
+            creating developer-first tooling amplifying software creation,
+            spreading new best practices and paradigms in software development,
+            bridging disciplines across automation{,} AI/DL/LLM{,} and DevSecOps
           }
         }
-        \emptyWork{Technical Consultant}{\href{https://www.inovintell.com/}{inovintell}}{03/2022}{07/2022}
-        \work{Deep Learning Consultant}{\href{https://www.wincan.com/en/home/}{wincan}}{10/2022}{06/2023}
+        \work{Chief technology officer}{\href{https://www.inovintell.com}{inovintell}}{04/2022}{02/2024}
         {
           {
-            Technological and scientific planning for \href{https://blog.wincan.com/topic/ai}{company's AI offering},
-            Overseeing metrics improvements of the machine learning algorithms,
-            Helping machine learning team via code reviews and pair programming
+            established the AI-health science company with internal stakeholders,
+            directed and mentored technical and research teams (10 people),
+            defined and created a robust technical culture{,} practices{,} pipelines,
+            programmed in LLM{,} backend{,} data science{,} DevOps and cloud areas
           }
         }
-        \work{Deep Learning Consultant}{\href{https://moises.ai/}{moises.ai}}{05/2022}{07/2022}
+        \work{Deep learning advisor}{\href{https://www.wincan.com/en/home/}{wincan}}{10/2022}{06/2023}
         {
           {
-            Converting audio neural networks to mobile devices,
-            Advising on CoreML conversion in order to improve inference speed
+            co-developed technical and scientific plan for \href{https://blog.wincan.com/topic/ai}{company's AI offering},
+            guided the development of the computer vision algorithms,
+            mentored and provided strategic advice to the machine learning team
           }
         }
-        \work{Head Of Content}{\href{https://www.theaicore.com/}{AiCore}}{11/2020}{09/2021}
+        \work{Deep learning advisor}{\href{https://music.ai/}{music.ai}}{05/2022}{07/2022}
         {
           {
-            Developed and taught Linux/ML/DL/DevOps units of the course,
-            Ran mock interviews and supported student projects/development
+            optimized audio neural networks for mobile devices deployment,
+            advised on torchscript/CoreML conversion to accelerate inference
           }
         }
-        \work{Freelance Machine Learning}{\href{https://pl.artplanet.store/}{ArtPlanet}}{08/2019}{06/2020}
+        \work{Head of curriculum}{\href{https://www.theaicore.com/}{AiCore}}{11/2020}{09/2021}
         {
           {
-            Developed cost-effective neural network art tagger,
-            Released core functionalities of the tagger as open source
+            designed and delivered Python{,} Linux{,} ML{,} DL{,} and Ops course units,
+            consecutively chosen as company's best instructor by the students,
+            overviewed technical development and projects of over 100 people
+          }
+        }
+        \work{Machine learning developer}{\href{https://pl.pinterest.com/artplanet_store/}{ArtPlanet}}{08/2019}{06/2020}
+        {
+          {
+            engineered a low-maintenance cost-efficient neural network art tagger,
+            released core functionalities of the tagger as an \href{https://github.com/szymonmaszke/torchdatasets}{open source} \href{https://github.com/szymonmaszke/torchlambda}{solutions},
+            responsible for the whole SDLC including DS{,} ML{,} AWS deployment
           }
         }
 
-        \work{Machine Learning Research}{\href{https://codete.com/}{Codete}}{04/2018}{09/2018}
+        \work{Machine learning developer}{\href{https://codete.com/}{Codete}}{04/2018}{10/2018}
         {
           {
-            Developed \& tested POC Keras \faArrowsH Tensorflow neural network converter,
-            Co-created company's commercial Machine Learning \& NLP courses
+            built and validated PoC Keras \faArrowsH\space TensorFlow neural network converter,
+            co-authored the company's commercial machine learning courses,
+            responsible for ideation{,} research and development of ML solutions
           }
         }
       \end{cvtext}
       \vspace*{-0.17cm}
       \clause
+
     };
 
   \end{tikzpicture}
