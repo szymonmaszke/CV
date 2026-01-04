@@ -1,5 +1,0 @@
-torchlayers
-torchlambda
-torchdata
-vimpyter
-torchfunc

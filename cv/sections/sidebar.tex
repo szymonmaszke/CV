@@ -4,95 +4,117 @@
   \begin{tikzpicture}[remember picture, overlay]
     \name{Szymon}{Maszke}
     % Calculate it properly
-    % GitHub
-    \sidebarEnum{github}{$(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin+1.8cm)$}
-      {\textcolor{background}{\Large \textbf{\faGithub\space \href{https://github.com/szymonmaszke}{GitHub}}}}
-      {
-        {
-          \faStar/\textbf{\input{data/generated/stars.txt}}stars in total,
-          \faTrophy/\href{https://devpost.com/software/torch-torchdata-torchfunc}{torchdata \& torchfunc},
-        }
-      }
-
-    \sidebarEnum{stackoverflow}{$(github data.south)+(0cm, \Margin-2.8mm)$}
-      {
-        \href{https://stackoverflow.com/users/10886420/szymon-maszke?tab=topactivity}{
-          \Large{
-            \textcolor{background}{\faStackOverflow\space }
-            \textcolor{text}{stack\textbf{overflow}}
-          }
-        }
-      }
-      {
-        {
-          \faThumbsUp/\textbf{\input{data/generated/points.txt}}points,
-          \faCheck/\textbf{\input{data/generated/answers.txt}}answers,
-        }
-      }
-
-    \node (certificates) at ($(stackoverflow data.south) + (0cm,\Margin-0.2cm)$)
-      [rectangle, fill=certificates, below,
+    \node (postgraduate) at ($(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin+1.8cm)$)
+      [rectangle, fill=postgraduate, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{background}{\Large\textbf{\faCheckSquare\space Certificates}}};
+      {\Large\textbf{\textcolor{text}{\faGraduationCap\space Postgraduate}}};
 
-    \node (certificates data) at ($(certificates.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
-      \twoline{{\huge\euflag}\\\href{https://www.kpk.gov.pl/wp-content/uploads/Atestat/3C8407593AB13B0CA00EC6749DDCF333C453EC90AF69FDAEA9D32178B7A37D44/dokument.pdf}{Manager Academy III (polish)}}{Horizon EU Funds Management}
-      % \twoline{\textcolor{google-blue}{G}\textcolor{google-red}{o}\textcolor{google-yellow}{o}\textcolor{google-blue}{g}\textcolor{google-green}{l}\textcolor{google-red}{e} Cloud}
-      % {Architect Engineer Digital Leader}
+    \node (postgraduate data) at ($(postgraduate.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth + 14.4mm] {
+      \sidebarLines
+        {\href{https://www.sgh.waw.pl/studia-podyplomowe-i-mba/administracja-i-prawo/studia-podyplomowe-sluzba-zagraniczna}{Foreign Service}}
+        {\faUniversity\space \href{https://www.sgh.waw.pl/en}{SGH Warsaw School of Economics}}
+        {\faCalendar\space 2025-Present}
+      \sidebarLines
+        {\href{https://econ.uj.edu.pl/en_GB/studia/studia-podyplomowe/pr-bm}{PR \& Brand Management}}
+        {\faUniversity\space \href{https://en.uj.edu.pl/}{Jagiellonian University}}
+        {}
     };
 
-    \node (skills) at ($(certificates data.south) + (0mm, \Margin-8mm)$)
+
+    \node (certificates) at ($(postgraduate data.south) + (0mm, 3mm)$)
+      [rectangle, fill=certificates, below,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
+      {\textcolor{text}{\Large\textbf{\faCheckSquare\space Certificates}}};
+
+    \node (certificates data) at ($(certificates.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
+      % \sidebarLines
+      %   {\href{https://www.accaglobal.com/gb/en.html}{ACCA accounting}}
+      %   {Fundamentals (F1-F3)}{}
+      % \vspace*{-4mm}
+      % \skillsrulefill
+      % \vspace*{-4mm}
+      % \sidebarLines
+      %   {\textcolor{google-blue}{G}\textcolor{google-red}{o}\textcolor{google-yellow}{o}\textcolor{google-blue}{g}\textcolor{google-green}{l}\textcolor{google-red}{e} Cloud}
+      %   {\hspace*{-4.5mm} Architect | Engineer | Digital Leader}{}
+      % \vspace*{-7.5mm}
+      % \skillsrulefill
+      % \vspace*{-4mm}
+      \sidebarLines
+        {\href{https://www.kpk.gov.pl/wp-content/uploads/Atestat/3C8407593AB13B0CA00EC6749DDCF333C453EC90AF69FDAEA9D32178B7A37D44/dokument.pdf}{Manager Academy III (polish)}}
+        % {{\huge\euflag}\\\href{https://www.kpk.gov.pl/wp-content/uploads/Atestat/3C8407593AB13B0CA00EC6749DDCF333C453EC90AF69FDAEA9D32178B7A37D44/dokument.pdf}{Manager Academy III (polish)}}
+        {\faMapMarker\space \href{https://www.gov.pl/web/ncbr-en}{NCBR}}
+        {Horizon EU project management}
+    };
+
+    \node (skills) at ($(certificates data.south) + (0mm, 2mm)$)
       [rectangle, fill=skills, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{background}{\Large\textbf{\faCogs\space Tech Stack}}};
+      {\textcolor{text}{\Large\textbf{\faCogs\space Tech Skills}}};
 
-    \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth] {
+    \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth+14.4mm] {
       % Programming Languages
-      \skilltag{Python}\skilltag{Go}\skilltag{C++}\skilltag{bash}
+      \skilltag{python}\skilltag{go}\skilltag{C++}\skilltag{C}\skilltag{R}\skilltag{SQL}
 
       \skillsrulefill
 
       % Machine Learning
-      \skilltag{numpy}\href{https://stackoverflow.com/questions/55009704/why-is-cross-val-predict-not-appropriate-for-measuring-the-generalisation-error/55010603#55010603}{\skilltag{sklearn}}\href{https://stackoverflow.com/questions/55601928/apply-multiple-standardscalers-to-individual-groups/55602630#55602630}{\skilltag{pandas}}
+      \skilltag{numpy}\skilltag{sklearn}\skilltag{pandas}\skilltag{spacy}
+
+      \vspace{0.4ex}  % Adjust value as needed
+
+      \skilltag{matplotlib}\skilltag{nltk}\skilltag{mlflow}\skilltag{wandb}
+
+      \vspace{0.4ex}  % Adjust value as needed
+
+      % NLP
+      \href{https://stackoverflow.com/tags/pytorch/topusers}{\skilltag{\faTrophy\ pytorch}}\skilltag{huggingface}\skilltag{keras}
+
+      \vspace{0.4ex}  % Adjust value as needed
 
       \skillsrulefill
 
-      % Deep Learning
-      \href{https://stackoverflow.com/questions/57086301/custom-neural-network-implementation-on-mnist-using-tensorflow-2-0/57136842#57136842}{\skilltag{tensorflow\{1,2\}.x}}{\skilltag{keras}}
+      % Ops
+      \skilltag{bash}\skilltag{linux}\skilltag{docker}\skilltag{pytest}
+
+      \vspace{0.4ex}  % Adjust value as needed
+
+      \skilltag{GCP}\skilltag{AWS}\skilltag{kubernetes}\skilltag{pulumi}
+
+      \vspace{0.4ex}  % Adjust value as needed
+
+      \skilltag{REST}\skilltag{graphql}\skilltag{github actions}
+
+      \vspace{0.4ex}  % Adjust value as needed
+
+      \skilltag{fastapi}\skilltag{OTel}\skilltag{SLSA}\skilltag{SBOM}
 
       \skillsrulefill
 
-      % Testing
-      \skilltag{pytest}\skilltag{hypothesis}\skilltag{BDD}
+      \skilltag{openai-agents-python}\skilltag{pydantic-ai}
 
-      \skillsrulefill
+      \vspace{0.4ex}  % Adjust value as needed
 
-      % Other
-      \skilltag{docker}\href{https://github.com/szymonmaszke/dotfiles}{\skilltag{linux}}\skilltag{CI/CD}
-
-      \skillsrulefill
-
-      \skilltag{GraphQL}\skilltag{k8s}\skilltag{IaaC}
+      \skilltag{fastmcp}\skilltag{google-gen-ai}\skilltag{qdrant}
 
     };
 
-    \node (research) at ($(skills data.south) + (0mm, \Margin-12.5mm)$)
+    \node (research) at ($(skills data.south) + (0mm, -2mm)$)
       [rectangle, fill=research, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{background}{\Large\textbf{\faPencil\space Research}}};
+      {\textcolor{text}{\Large\textbf{\faPencil\space Research}}};
 
     \node (research data) at ($(research.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
-      \twoline{\href{https://arxiv.org/abs/1910.02776}{Biologically-Inspired Spatial Neural Networks}}
-        {\faUsers\space NeurIPS workshop (NeuroAI)}
+      \sidebarLines{\href{https://arxiv.org/abs/1910.02776}{Biologically-Inspired Spatial Neural Networks}}
+        {\faUsers\space NeurIPS workshops (NeuroAI)}{}
     };
 
-    \sidebarEnum{languages}{$(research data.south) + (0mm, 0cm)$}
-      {\textcolor{background}{\Large\textbf{\faCommenting\space Languages}}}
+    \sidebarEnum{languages}{$(research data.south) + (0mm, +5mm)$}
+      {\textcolor{text}{\Large\textbf{\faCommenting\space Languages}}}
       {
         {
           \faComment/\textbf{Polish} native,
           \faComment/\textbf{English} C2,
-          \faComment/\textbf{French} A2
+          \faComment/\textbf{French} B1
         }
       }
 
