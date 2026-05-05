@@ -1,0 +1,98 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+  \begin{tikzpicture}[remember picture, overlay]
+    % Education
+    \node (education) at ($(current page.north west)+(\paperwidth-\cvMiddleSidebar+\Margin / 2,\textStart)+(-0.5mm,-1.8\Margin+1.8cm)$)
+      [rectangle, fill=education, minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
+      {\Large \textbf{\textcolor{text}{\faGraduationCap\space Edukacja}}};
+    \node (education data) at ($(education.south) + (0cm, -2.2mm)$) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
+      \educationFinished{\href{https://mba.agh.edu.pl/programs/mba-executive}{Executive MBA}}
+      {\href{https://www.agh.edu.pl/en/}{AGH}}
+
+      \vspace*{3.7mm}
+      \educationFinished{Informatyka, studia magisterskie}
+      {\href{https://en.uj.edu.pl/}{Uniwersytet Jagielloński}}
+    };
+
+    % Work
+    \node (work) at ($(education data.south)+(0cm, -2.35mm)$)
+      [rectangle, fill=work, below,
+      minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
+      {\Large \textbf{\textcolor{text}{\faBriefcase\space Praca}}};
+    \node (work data) at (work.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
+      \begin{cvtext}
+        \work{Kandydat na CTO}{\href{https://softwise.ai/}{softwise.ai}}{10/2025}{Obecnie}
+        {
+          {
+            {ulepszenie wieloagentowego systemu (5× niższym opóźnieniem)},
+            {zarządzanie zespołem i sprzedażą od strony technicznej (pre-sales)}
+          }
+        }
+        {
+          {analiza wykonawców, SI, LLM, programowanie, zarządzanie, sprzedaż}
+        }
+        \work{Założyciel}{\href{https://www.opennudge.com}{opennudge}}{04/2024}{Obecnie}
+        {
+          {
+            {prowadzenie organizacji tworzącej oprogramowanie open-source},
+            {tworzenie narzędzi upraszczających tworzenie oprogramowania}
+          }
+        }
+        {
+          {FOSS, zgodność, SI, Dev(Sec)Ops, programowanie, agenci, zarządzanie}
+        }
+        \work{CTO}{\href{https://www.inovintell.com}{inovintell}}{04/2022}{02/2024}
+        {
+          {
+            założenie firmy AI–life science wraz z interesariuszami wewnętrznymi,
+            kierowanie i mentoring zespołów technicznych i badawczych (10 osób),
+            {tworzenie strategii projektowej, technologicznej i kultury firmowej}
+          }
+        }
+        {
+          {life science, SI, ML, DS, DL, NLP, LLM, programowanie, zarządzanie}
+        }
+        \work{Doradca sztucznej inteligencji}{\href{https://www.wincan.com/en/home/}{wincan}}{10/2022}{06/2023}
+        {
+          {
+            mentoring oraz doradztwo strategiczne dla zespołu machine learning,
+            wsparcie rozwoju algorytmów SI (wizja komputerowa)
+          }
+        }{}
+        \work{Doradca sztucznej inteligencji}{\href{https://music.ai/}{music.ai}}{05/2022}{07/2022}
+        {
+          {
+            optymalizacja sieci neuronowych pod wdrożenia na urządzenia mobilne,
+            doradztwo w zakresie konwersji modeli sztucznej inteligencji
+          }
+        }{}
+        \work{Szef programu nauczania}{\href{https://www.theaicore.com/}{AiCore}}{11/2020}{09/2021}
+        {
+          {
+            projektowanie i prowadzenie modułów kursów Python{,} Linux i AI,
+            wielokrotnie wybierany przez studentów jako najlepszy instruktor firmy,
+            nadzór nad rozwojem technicznym i projektami ponad 100 studentów
+          }
+        }{}
+        \work{Programista machine learning}{\href{https://pl.pinterest.com/artplanet_store/}{ArtPlanet}}{08/2019}{06/2020}
+        {
+          {
+            zaprojektowanie niskokosztowej sieci kategoryzującej sztukę,
+            odpowiedzialność za cały SDLC w tym DS oraz ML{,} wdrożenie na AWS
+          }
+        }{}
+        \work{Programista machine learning}{\href{https://codete.com/}{Codete}}{04/2018}{10/2018}
+        {
+          {
+            budowa i walidacja prototypu konwertera sieci neuronowych,
+            współautor komercyjnych kursów machine learning firmy,
+          }
+        }{}
+      \end{cvtext}
+      \vspace*{-0.6cm}
+      \plclause
+    };
+
+  \end{tikzpicture}
+\end{document}

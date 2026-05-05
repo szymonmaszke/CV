@@ -1,0 +1,84 @@
+% !TEX TS-program = xelatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                               GENERAL PACKAGES
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% more advanced expressions in \setlength
+\usepackage{xparse}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{calc}
+\usepackage{fontspec}
+% \defaultfontfeatures{Extension = .otf}
+% \defaultfontfeatures{
+%     Path = /usr/share/texmf-dist/fonts/opentype/public/fontawesome/FontAwesome.otf
+% }
+% workaround for XeTeX and fontawesome
+\usepackage{fontawesome}
+% \newfontfamily{\FA}{/usr/share/texmf-dist/fonts/opentype/public/fontawesome/FontAwesome.otf}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,backgrounds,matrix}
+
+% load external fonts
+\usepackage[default]{lato}
+
+% No page numbering
+\usepackage{nopageno}
+\usepackage{anyfontsize}
+\usepackage{graphicx, calc}
+\usepackage{hyperref}
+\usepackage{euflag}
+
+\usepackage[yearmonthsep=/,monthdaysep=/,dayyearsep=/,timesep=:]{datetime2}
+
+\usepackage{subfiles}
+
+\newlength\Margin
+\setlength\Margin{1cm}
+
+\usepackage[margin=0.5\Margin,noheadfoot,a4paper]{geometry}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                             CV CUSTOM PACKAGES
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{styles/colors}
+\usepackage{styles/variables}
+\usepackage{styles/environments}
+\usepackage{styles/rulers}
+\usepackage{styles/commands}
+
+\color{text}
+\pagecolor{background}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                 DOCUMENT
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+  % Bar definitions
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[sidebar] (current page.north west) rectangle ++(\cvSideWidth+2\Margin,-\paperheight);
+    \fill[topbar] (current page.north west) rectangle +(\paperwidth, \cvTopHeightMargin+1.8cm);
+  \end{tikzpicture}
+
+  \subfile{sections/sidebar}
+  \subfile{sections/top}
+  \subfile{sections/core}
+
+  % Main section
+\end{document}

@@ -43,6 +43,17 @@
   \end{spacing}
 }
 
+% Create Privacy compliant clause at the end of document.
+\newcommand{\plclause}{
+  \begin{spacing}{-0.5}
+    \textcolor{clause}{
+      \tiny{Wyrażam zgodę na przetwarzanie moich danych osobowych w celu rekrutacji zgodnie z art. 6 ust. 1 lit. a Rozporządzenia Parlamentu Europejskiego
+        i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie
+        swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (ogólne rozporządzenie o ochronie danych)}
+    }
+  \end{spacing}
+}
+
 % Create name and surname at top left corner
 %   1 - Name
 %   2 - Surname
@@ -101,13 +112,14 @@
   \end{itemize}
 }
 
-% Create work entry layout
+% Create work entry
 %   1 - name of work
 %   2 - location of work
-%   3 - right-side annotation
-%   4 - list with job descriptions
-%   5 - list with tags
-\newcommand{\workentry}[5]{%
+%   3 - start date
+%   4 - finish date
+%   5 - list with job descriptions
+
+\newcommand{\work}[6]{%
   \noindent
   \makebox[0pt][l]{%
     \hspace{0pt}%
@@ -118,17 +130,17 @@
     \textbf{\large \textcolor{text}{\faMapMarker\space #2}}%
   }%
   \hfill
-  \textcolor{annotation}{#3}%
+  \textcolor{annotation}{\faCalendar\space #3--#4}%
   \par
   %
   % ---- TAGS LINE ----
   \vspace{0.03cm}
-  \if\relax\detokenize{#5}\relax
+  \if\relax\detokenize{#6}\relax
     \vspace{-0.1cm}
   \else
     \vspace{0.1cm}
     {\centering
-      \foreach \Tag in #5 {%
+      \foreach \Tag in #6 {%
         \worktag{\Tag}\hspace{0.4em}%
       }%
       \par
@@ -137,39 +149,18 @@
   \fi
   %
   % ---- DESCRIPTION LIST ----
-  \if\relax\detokenize{#4}\relax
+  \if\relax\detokenize{#5}\relax
     \vspace{0.15cm}
   \else
     \vspace{-0.1cm}
     \begin{itemize}[leftmargin=*]
       \setlength\itemsep{0mm}
-      \foreach \Description in #4 {%
+      \foreach \Description in #5 {%
         \item \Description
       }
     \end{itemize}
     \vspace{-0.1cm}
   \fi
-}
-
-% Create work entry
-%   1 - name of work
-%   2 - location of work
-%   3 - start date
-%   4 - finish date
-%   5 - list with job descriptions
-%   6 - list with tags
-\newcommand{\work}[6]{%
-  \workentry{#1}{#2}{\faCalendar\space #3--#4}{#5}{#6}%
-}
-
-% Create work entry with custom right-side annotation
-%   1 - name of work
-%   2 - location of work
-%   3 - annotation text
-%   4 - list with job descriptions
-%   5 - list with tags
-\newcommand{\workconcurrent}[5]{%
-  \workentry{#1}{#2}{#3}{#4}{#5}%
 }
 
 % \newcommand{\work}[5]{%

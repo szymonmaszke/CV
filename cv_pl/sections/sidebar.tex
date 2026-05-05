@@ -7,16 +7,16 @@
     \node (postgraduate) at ($(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin+1.8cm)$)
       [rectangle, fill=postgraduate, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\Large\textbf{\textcolor{text}{\faGraduationCap\space Postgraduate}}};
+      {\Large\textbf{\textcolor{text}{\faGraduationCap\space Podyplomowe}}};
 
     \node (postgraduate data) at ($(postgraduate.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth + 14.4mm] {
       \sidebarLines
-        {\href{https://www.sgh.waw.pl/studia-podyplomowe-i-mba/administracja-i-prawo/studia-podyplomowe-sluzba-zagraniczna}{Foreign Service}}
-        {\faUniversity\space \href{https://www.sgh.waw.pl/en}{SGH Warsaw School of Economics}}
-        {\faCalendar\space 2025-Present}
+	{\href{https://www.sgh.waw.pl/studia-podyplomowe-i-mba/administracja-i-prawo/studia-podyplomowe-sluzba-zagraniczna}{Służba Zagraniczna}}
+	{\faUniversity\space \href{https://www.sgh.waw.pl}{Szkoła Główna Handlowa}}
+        {\faCalendar\space 2025-Obecnie}
       \sidebarLines
         {\href{https://econ.uj.edu.pl/en_GB/studia/studia-podyplomowe/pr-bm}{PR \& Brand Management}}
-        {\faUniversity\space \href{https://en.uj.edu.pl/}{Jagiellonian University}}
+        {\faUniversity\space \href{https://en.uj.edu.pl/}{Uniwersytet Jagielloński}}
         {}
     };
 
@@ -24,7 +24,7 @@
     \node (certificates) at ($(postgraduate data.south) + (0mm, 3mm)$)
       [rectangle, fill=certificates, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{text}{\Large\textbf{\faCheckSquare\space Certificates}}};
+	  {\textcolor{text}{\Large\textbf{\faCheckSquare\space Certyfikaty}}};
 
     \node (certificates data) at ($(certificates.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
       % \sidebarLines
@@ -40,16 +40,16 @@
       % \skillsrulefill
       % \vspace*{-4mm}
       \sidebarLines
-        {\href{https://www.kpk.gov.pl/wp-content/uploads/Atestat/3C8407593AB13B0CA00EC6749DDCF333C453EC90AF69FDAEA9D32178B7A37D44/dokument.pdf}{Manager Academy III (polish)}}
+        {\href{https://www.kpk.gov.pl/wp-content/uploads/Atestat/3C8407593AB13B0CA00EC6749DDCF333C453EC90AF69FDAEA9D32178B7A37D44/dokument.pdf}{Akademia Managera III}}
         % {{\huge\euflag}\\\href{https://www.kpk.gov.pl/wp-content/uploads/Atestat/3C8407593AB13B0CA00EC6749DDCF333C453EC90AF69FDAEA9D32178B7A37D44/dokument.pdf}{Manager Academy III (polish)}}
         {\faMapMarker\space \href{https://www.gov.pl/web/ncbr-en}{NCBR}}
-        {Horizon EU project management}
+	{projekty Horyzont Europa}
     };
 
     \node (skills) at ($(certificates data.south) + (0mm, 2mm)$)
       [rectangle, fill=skills, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{text}{\Large\textbf{\faCogs\space Tech Skills}}};
+	{\textcolor{text}{\Large\textbf{\faCogs\space Technologie}}};
 
     \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth+14.4mm] {
       % Programming Languages
@@ -74,7 +74,7 @@
       \skillsrulefill
 
       % Ops
-      \skilltag{bash}\skilltag{linux}\skilltag{docker}\skilltag{airflow}
+      \skilltag{bash}\skilltag{linux}\skilltag{docker}\skilltag{pytest}
 
       \vspace{0.4ex}  % Adjust value as needed
 
@@ -86,7 +86,7 @@
 
       \vspace{0.4ex}  % Adjust value as needed
 
-      \skilltag{fastapi}\skilltag{OTel}\skilltag{pytest}\skilltag{SLA/SLO}
+      \skilltag{fastapi}\skilltag{OTel}\skilltag{SLSA}\skilltag{SBOM}
 
       \skillsrulefill
 
@@ -96,29 +96,25 @@
 
       \skilltag{fastmcp}\skilltag{google-gen-ai}\skilltag{qdrant}
 
-      \skillsrulefill
-
-      \skilltag{neovim}\skilltag{codex}\skilltag{claude code}
-
     };
 
     \node (research) at ($(skills data.south) + (0mm, -2mm)$)
       [rectangle, fill=research, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{text}{\Large\textbf{\faPencil\space Research}}};
+      {\textcolor{text}{\Large\textbf{\faPencil\space Prace naukowe}}};
 
     \node (research data) at ($(research.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
       \sidebarLines{\href{https://arxiv.org/abs/1910.02776}{Biologically-Inspired Spatial Neural Networks}}
-        {\faUsers\space NeurIPS workshops (NeuroAI)}{}
+        {\faUsers\space workshopy NeurIPS (NeuroAI)}{}
     };
 
     \sidebarEnum{languages}{$(research data.south) + (0mm, +5mm)$}
-      {\textcolor{text}{\Large\textbf{\faCommenting\space Languages}}}
+      {\textcolor{text}{\Large\textbf{\faCommenting\space Języki}}}
       {
         {
-          \faComment/\textbf{Polish} native,
-          \faComment/\textbf{English} C2,
-          \faComment/\textbf{French} B1
+		\faComment/\textbf{Polish} natywny,
+		\faComment/\textbf{Angielski} C2,
+		\faComment/\textbf{Francuski} B1
         }
       }
 
