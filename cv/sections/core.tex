@@ -3,8 +3,8 @@
 \begin{document}
   \begin{tikzpicture}[remember picture, overlay]
     % Education
-    \node (education) at ($(current page.north west)+(\paperwidth-\cvMiddleSidebar+\Margin / 2,\textStart)+(-0.5mm,-1.8\Margin+1.8cm)$)
-      [rectangle, fill=education, minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
+    \node (education) at ($(summary.north)+(0.5\paperwidth-1mm,0cm)$)
+      [rectangle, fill=education, anchor=north, minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
       {\Large \textbf{\textcolor{text}{\faGraduationCap\space Education}}};
     \node (education data) at ($(education.south) + (0cm, -2.2mm)$) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
       \educationFinished{\href{https://mba.agh.edu.pl/programs/mba-executive}{Executive MBA}}
@@ -16,8 +16,8 @@
     };
 
     % Work
-    \node (work) at ($(education data.south)+(0cm, -3.28mm)$)
-      [rectangle, fill=work, below,
+    \node (work) at ($(fractional.north)+(0.5\paperwidth-1mm,0cm)$)
+      [rectangle, fill=work, anchor=north,
       minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
       {\Large \textbf{\textcolor{text}{\faBriefcase\space Experience}}};
     \node (work data) at (work.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
