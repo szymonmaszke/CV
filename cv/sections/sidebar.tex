@@ -10,7 +10,7 @@
     \node (summary) at (summary top)
       [rectangle, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\Large\textbf{\textcolor{text}{\faUser\space Executive Summary}}};
+      {\Large\textbf{\textcolor{text}{Executive Summary}}};
 
     \node (summary data) at ($(summary.south)+(0cm, -1mm)$) [below, text width = \cvSideWidth + 10mm, align=left] {
       \footnotesize\textcolor{text}{Engineering leader across LLM, ML, tooling, backend and infrastructure. Ex-CTO with a record of building teams and production systems in diverse environments.}
@@ -22,7 +22,7 @@
     \node (fractional) at (fractional top)
       [rectangle, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\Large\textbf{\textcolor{text}{\faBriefcase\space Fractional Work}}};
+      {\Large\textbf{\textcolor{text}{Fractional Work}}};
 
     \node (fractional data) at ($(fractional.south)+(0cm, -1mm)$) [below, text width = \cvSideWidth + 15mm] {
       {\small\color{text}
@@ -36,7 +36,7 @@
     \node (postgraduate) at ($(fractional data.south)+(0cm, +2mm)$)
       [rectangle, fill=postgraduate, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\Large\textbf{\textcolor{text}{\faGraduationCap\space Postgraduate}}};
+      {\Large\textbf{\textcolor{text}{Postgraduate}}};
 
     \node (postgraduate data) at ($(postgraduate.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth + 14.4mm] {
       \sidebarLines
@@ -49,7 +49,7 @@
     \node (research) at ($(postgraduate data.south) + (0mm, +2.5mm)$)
       [rectangle, fill=research, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{text}{\Large\textbf{\faPencil\space Research}}};
+      {\textcolor{text}{\Large\textbf{Research}}};
 
     \node (research data) at ($(research.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
       \sidebarLines{\href{https://arxiv.org/abs/1910.02776}{Biologically-Inspired Spatial Neural Networks}}
@@ -59,7 +59,7 @@
     \node (skills) at ($(research data.south) + (0mm, 6mm)$)
       [rectangle, fill=skills, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{text}{\Large\textbf{\faCogs\space Tech Skills}}};
+      {\textcolor{text}{\Large\textbf{Tech Skills}}};
 
     \node (skills data) at ($(skills.south)+(4mm, -3mm)$) [below, text width = \cvSideWidth+22mm] {
       \small
@@ -83,13 +83,13 @@
     \node (languages) at ($(skills data.south) + (-4mm, -3mm)$)
       [rectangle, fill=languages, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{text}{\Large\textbf{\faCommenting\space Languages}}};
+      {\textcolor{text}{\Large\textbf{Languages}}};
 
-    \node (languages data) at ($(languages.south) + (0cm, -2mm)$) [below, text width = \cvSideWidth] {
+    \node (languages data) at ($(languages.south) + (0cm, -2mm)$) [below, text width = \cvSideWidth, align=center] {
       \small\textcolor{text}{
-        \faComment\space \textbf{Polish} native\\[1mm]
-        \faComment\space \textbf{English} C2\\[1mm]
-        \faComment\space \textbf{French} B1
+        \textbf{Polish} native\\[1mm]
+        \textbf{English} C2\\[1mm]
+        \textbf{French} B1
       }
     };
 
