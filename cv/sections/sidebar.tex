@@ -4,16 +4,21 @@
   \begin{tikzpicture}[remember picture, overlay]
     \name{Szymon}{Maszke}
     % Calculate it properly
-    \node (postgraduate) at ($(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin+1.8cm)$)
+    \node (summary) at ($(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin+1.8cm)$)
+      [rectangle, fill=certificates, below,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
+      {\Large\textbf{\textcolor{text}{\faUser\space Executive Summary}}};
+
+    \node (summary data) at ($(summary.south)+(0cm, -1mm)$) [below, text width = \cvSideWidth + 10mm, align=left] {
+      \footnotesize\textcolor{text}{Engineering leader across LLM, ML, tooling, backend and infrastructure. Ex-CTO with a record of building teams and production systems in diverse environments.}
+    };
+
+    \node (postgraduate) at ($(summary data.south)+(0cm, -1mm)$)
       [rectangle, fill=postgraduate, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\Large\textbf{\textcolor{text}{\faGraduationCap\space Postgraduate}}};
 
     \node (postgraduate data) at ($(postgraduate.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth + 14.4mm] {
-      \sidebarLines
-        {\href{https://www.sgh.waw.pl/studia-podyplomowe-i-mba/administracja-i-prawo/studia-podyplomowe-sluzba-zagraniczna}{Foreign Service}}
-        {\faUniversity\space \href{https://www.sgh.waw.pl/en}{SGH Warsaw School of Economics}}
-        {\faCalendar\space 2025-Present}
       \sidebarLines
         {\href{https://econ.uj.edu.pl/en_GB/studia/studia-podyplomowe/pr-bm}{PR \& Brand Management}}
         {\faUniversity\space \href{https://en.uj.edu.pl/}{Jagiellonian University}}
@@ -21,88 +26,7 @@
     };
 
 
-    \node (certificates) at ($(postgraduate data.south) + (0mm, 3mm)$)
-      [rectangle, fill=certificates, below,
-      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{text}{\Large\textbf{\faCheckSquare\space Certificates}}};
-
-    \node (certificates data) at ($(certificates.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth] {
-      % \sidebarLines
-      %   {\href{https://www.accaglobal.com/gb/en.html}{ACCA accounting}}
-      %   {Fundamentals (F1-F3)}{}
-      % \vspace*{-4mm}
-      % \skillsrulefill
-      % \vspace*{-4mm}
-      % \sidebarLines
-      %   {\textcolor{google-blue}{G}\textcolor{google-red}{o}\textcolor{google-yellow}{o}\textcolor{google-blue}{g}\textcolor{google-green}{l}\textcolor{google-red}{e} Cloud}
-      %   {\hspace*{-4.5mm} Architect | Engineer | Digital Leader}{}
-      % \vspace*{-7.5mm}
-      % \skillsrulefill
-      % \vspace*{-4mm}
-      \sidebarLines
-        {\href{https://www.kpk.gov.pl/wp-content/uploads/Atestat/3C8407593AB13B0CA00EC6749DDCF333C453EC90AF69FDAEA9D32178B7A37D44/dokument.pdf}{Manager Academy III (polish)}}
-        % {{\huge\euflag}\\\href{https://www.kpk.gov.pl/wp-content/uploads/Atestat/3C8407593AB13B0CA00EC6749DDCF333C453EC90AF69FDAEA9D32178B7A37D44/dokument.pdf}{Manager Academy III (polish)}}
-        {\faMapMarker\space \href{https://www.gov.pl/web/ncbr-en}{NCBR}}
-        {Horizon EU project management}
-    };
-
-    \node (skills) at ($(certificates data.south) + (0mm, 2mm)$)
-      [rectangle, fill=skills, below,
-      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\textcolor{text}{\Large\textbf{\faCogs\space Tech Skills}}};
-
-    \node (skills data) at ($(skills.south)+(0cm, -2mm)$) [below, text width = \cvSideWidth+14.4mm] {
-      % Programming Languages
-      \skilltag{python}\skilltag{go}\skilltag{C++}\skilltag{C}\skilltag{R}\skilltag{SQL}
-
-      \skillsrulefill
-
-      % Machine Learning
-      \skilltag{numpy}\skilltag{sklearn}\skilltag{pandas}\skilltag{spacy}
-
-      \vspace{0.4ex}  % Adjust value as needed
-
-      \skilltag{matplotlib}\skilltag{nltk}\skilltag{mlflow}\skilltag{wandb}
-
-      \vspace{0.4ex}  % Adjust value as needed
-
-      % NLP
-      \href{https://stackoverflow.com/tags/pytorch/topusers}{\skilltag{\faTrophy\ pytorch}}\skilltag{huggingface}\skilltag{keras}
-
-      \vspace{0.4ex}  % Adjust value as needed
-
-      \skillsrulefill
-
-      % Ops
-      \skilltag{bash}\skilltag{linux}\skilltag{docker}\skilltag{airflow}
-
-      \vspace{0.4ex}  % Adjust value as needed
-
-      \skilltag{GCP}\skilltag{AWS}\skilltag{kubernetes}\skilltag{pulumi}
-
-      \vspace{0.4ex}  % Adjust value as needed
-
-      \skilltag{REST}\skilltag{graphql}\skilltag{github actions}
-
-      \vspace{0.4ex}  % Adjust value as needed
-
-      \skilltag{fastapi}\skilltag{OTel}\skilltag{pytest}\skilltag{SLA/SLO}
-
-      \skillsrulefill
-
-      \skilltag{openai-agents-python}\skilltag{pydantic-ai}
-
-      \vspace{0.4ex}  % Adjust value as needed
-
-      \skilltag{fastmcp}\skilltag{google-gen-ai}\skilltag{qdrant}
-
-      \vspace{0.4ex}  % Adjust value as needed
-
-      \skilltag{neovim}\skilltag{codex}\skilltag{claude code}
-
-    };
-
-    \node (research) at ($(skills data.south) + (0mm, -2mm)$)
+    \node (research) at ($(postgraduate data.south) + (0mm, 3mm)$)
       [rectangle, fill=research, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{text}{\Large\textbf{\faPencil\space Research}}};
@@ -112,15 +36,42 @@
         {\faUsers\space NeurIPS workshops (NeuroAI)}{}
     };
 
-    \sidebarEnum{languages}{$(research data.south) + (0mm, +5mm)$}
-      {\textcolor{text}{\Large\textbf{\faCommenting\space Languages}}}
-      {
-        {
-          \faComment/\textbf{Polish} native,
-          \faComment/\textbf{English} C2,
-          \faComment/\textbf{French} B1
-        }
+    \node (skills) at ($(research data.south) + (0mm, 5mm)$)
+      [rectangle, fill=skills, below,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
+      {\textcolor{text}{\Large\textbf{\faCogs\space Tech Skills}}};
+
+    \node (skills data) at ($(skills.south)+(4mm, -2mm)$) [below, text width = \cvSideWidth+22mm] {
+      \small
+      {\scriptsize\textcolor{text}{\textbf{Languages}}}\par\vspace{0.5ex}
+      \skilltag{Python}\skilltag{Go}\skilltag{C++}\skilltag{C}\skilltag{R}\skilltag{SQL}\par\vspace{1.2ex}
+
+      {\scriptsize\textcolor{text}{\textbf{Machine Learning}}}\par\vspace{0.5ex}
+      \skilltag{PyTorch}\skilltag{scikit-learn}\skilltag{Hugging Face}\par\vspace{0.5ex}
+      \skilltag{pandas}\skilltag{NumPy}\skilltag{spaCy}\skilltag{MLflow}\par\vspace{1.2ex}
+
+      {\scriptsize\textcolor{text}{\textbf{Artificial Intelligence}}}\par\vspace{0.5ex}
+      \skilltag{PydanticAI}\skilltag{OpenAI Agents}\skilltag{Qdrant}\par\vspace{0.5ex}
+      \skilltag{FastMCP}\skilltag{Codex}\skilltag{Claude Code}\par\vspace{1.2ex}
+
+      {\scriptsize\textcolor{text}{\textbf{Infrastructure}}}\par\vspace{0.5ex}
+      \skilltag{GCP}\skilltag{AWS}\skilltag{Docker}\skilltag{Kubernetes}\par\vspace{0.5ex}
+      \skilltag{GitHub Actions}\skilltag{OpenTelemetry}\skilltag{SLSA}\par\vspace{0.5ex}
+
+    };
+
+    \node (languages) at ($(skills data.south) + (-4mm, -1mm)$)
+      [rectangle, fill=languages, below,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
+      {\textcolor{text}{\Large\textbf{\faCommenting\space Languages}}};
+
+    \node (languages data) at ($(languages.south) + (0cm, -2mm)$) [below, text width = \cvSideWidth] {
+      \small\textcolor{text}{
+        \faComment\space \textbf{Polish} native\\[1mm]
+        \faComment\space \textbf{English} C2\\[1mm]
+        \faComment\space \textbf{French} B1
       }
+    };
 
   \end{tikzpicture}
 
