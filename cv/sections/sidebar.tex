@@ -5,7 +5,7 @@
     \name{Szymon}{Maszke}
     % Calculate it properly
     \node (summary) at ($(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin+1.8cm)$)
-      [rectangle, fill=certificates, below,
+      [rectangle, fill=summary, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\Large\textbf{\textcolor{text}{\faUser\space Executive Summary}}};
 
@@ -13,12 +13,26 @@
       \footnotesize\textcolor{text}{Engineering leader across LLM, ML, tooling, backend and infrastructure. Ex-CTO with a record of building teams and production systems in diverse environments.}
     };
 
-    \node (postgraduate) at ($(summary data.south)+(0cm, -1mm)$)
+    \node (fractional) at ($(summary data.south)+(0cm, -1mm)$)
+      [rectangle, fill=fractional, below,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
+      {\Large\textbf{\textcolor{text}{\faBriefcase\space Fractional Work}}};
+
+    \node (fractional data) at ($(fractional.south)+(0cm, -1mm)$) [below, text width = \cvSideWidth + 15mm, align=left] {
+      \small\textcolor{text}{
+        \textbf{Advisor} \faMapMarker\space\href{https://www.wincan.com/en/home/}{wincan} \textcolor{annotation}{\faCalendar\space 10/2022--06/2023}\\[+2mm]
+        computer vision, mentoring, tech strategy\\[3mm]
+        \textbf{Advisor} \faMapMarker\space\href{https://music.ai/}{music.ai} \textcolor{annotation}{\faCalendar\space 05/2022--08/2022}\\[+2mm]
+        CoreML audio neural network optimization
+      }
+    };
+
+    \node (postgraduate) at ($(fractional data.south)+(0cm, +2mm)$)
       [rectangle, fill=postgraduate, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\Large\textbf{\textcolor{text}{\faGraduationCap\space Postgraduate}}};
 
-    \node (postgraduate data) at ($(postgraduate.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth + 14.4mm] {
+    \node (postgraduate data) at ($(postgraduate.south)+(0cm, +3mm)$) [below, text width = \cvSideWidth + 14.4mm] {
       \sidebarLines
         {\href{https://econ.uj.edu.pl/en_GB/studia/studia-podyplomowe/pr-bm}{PR \& Brand Management}}
         {\faUniversity\space \href{https://en.uj.edu.pl/}{Jagiellonian University}}
@@ -26,7 +40,7 @@
     };
 
 
-    \node (research) at ($(postgraduate data.south) + (0mm, 3mm)$)
+    \node (research) at ($(postgraduate data.south) + (0mm, +3mm)$)
       [rectangle, fill=research, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{text}{\Large\textbf{\faPencil\space Research}}};
@@ -36,12 +50,12 @@
         {\faUsers\space NeurIPS workshops (NeuroAI)}{}
     };
 
-    \node (skills) at ($(research data.south) + (0mm, 5mm)$)
+    \node (skills) at ($(research data.south) + (0mm, 6mm)$)
       [rectangle, fill=skills, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{text}{\Large\textbf{\faCogs\space Tech Skills}}};
 
-    \node (skills data) at ($(skills.south)+(4mm, -2mm)$) [below, text width = \cvSideWidth+22mm] {
+    \node (skills data) at ($(skills.south)+(4mm, -3mm)$) [below, text width = \cvSideWidth+22mm] {
       \small
       {\scriptsize\textcolor{text}{\textbf{Languages}}}\par\vspace{0.5ex}
       \skilltag{Python}\skilltag{Go}\skilltag{C++}\skilltag{C}\skilltag{R}\skilltag{SQL}\par\vspace{1.2ex}
@@ -60,7 +74,7 @@
 
     };
 
-    \node (languages) at ($(skills data.south) + (-4mm, -1mm)$)
+    \node (languages) at ($(skills data.south) + (-4mm, -3mm)$)
       [rectangle, fill=languages, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{text}{\Large\textbf{\faCommenting\space Languages}}};
