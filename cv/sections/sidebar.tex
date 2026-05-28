@@ -12,9 +12,12 @@
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\Large\textbf{\textcolor{text}{Executive Summary}}};
 
-    \node (summary data) at ($(summary.south)+(0cm, -1mm)$) [below, text width = \cvSideWidth + 10mm, align=left] {
+    \node (summary data) at ($(summary.south)+(0cm, -1mm)$) [below, text width = \cvSideWidth + 10mm, align=center] {
+      \hyphenpenalty=10000
+      \exhyphenpenalty=10000
+      \sloppy
       \footnotesize\textbf{\textcolor{text}{Engineering leader across LLM, ML, tooling, backend and infrastructure.
-        Ex-CTO with a record of building teams and production systems in diverse environments.}}
+        Former CTO with a record of building teams and production systems in diverse environments.}}\par
     };
 
     \coordinate (fractional top) at ($(summary data.south)+(0cm, -1mm)$);
