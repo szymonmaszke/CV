@@ -16,11 +16,12 @@
 }
 
 % Create skill tags in skills bar
-%   1 - Name of skill tag
-\newcommand{\skilltag}[1]{%
-  \tikz[baseline]\node[anchor=base,fill=skilltag,opacity=.1,
+%   1 - [optional] fill color of the tag
+%   2 - Name of skill tag
+\newcommand{\skilltag}[2][skilltag]{%
+  \tikz[baseline]\node[anchor=base,fill=#1,opacity=.1,
     text opacity=1., rounded corners,
-    inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
+    inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#2};
 }
 
 % When the CV was generated
@@ -200,24 +201,24 @@
 %   \fi
 % }
 
-% Create education entry
-%   1 - name and rank
-%   2 - university
-%   3 - Other (location, GPA)
-\newcommand{\educationOngoing}[3]{
-  \begin{cvtext}
-    \begin{center}
-      \textbf{\large #1}
-    \end{center}
-  \end{cvtext}
-  \vspace*{-0.3cm}
-  \small{
-    \textcolor{annotation}{
-      \faUniversity\space #2
-      \hfill #3
-      \hfill \faCalendar\space In progress
-    }
-  }
+% Create on-going education entry
+%   1 - [optional] specialization
+%   2 - name of education
+%   3 - university
+\newcommand{\educationOngoing}[3][]{
+  \unskip\noindent
+  \makebox[0pt][l]{%
+    \hspace{0pt}%
+    \makebox[8cm][l]{%
+      \textbf{\large \textcolor{text}{#2}}%
+      \if\relax\detokenize{#1}\relax\else
+        \textcolor{annotation}{\small\space\textperiodcentered\space #1}%
+      \fi
+      \textcolor{annotation}{\small\space\textperiodcentered\space On-going}%
+    }%
+  }%
+  \hspace*{8cm}%
+  \textcolor{annotation}{\faUniversity\space #3}
 }
 
 % Multiline previous version
@@ -241,8 +242,9 @@
 % }
 
 % Create finished education entry
-%   1 - name of education
-%   2 - university
+%   1 - [optional] specialization
+%   2 - name of education
+%   3 - university
 % \newcommand{\educationFinished}[2]{
 %   \textcolor{text}{
 %     \textbf{\large #1 \hfill}
@@ -250,14 +252,19 @@
 %   \textcolor{annotation}{\faUniversity\space #2}
 % }
 
-\newcommand{\educationFinished}[2]{
-  \noindent
+\newcommand{\educationFinished}[3][]{
+  \unskip\noindent
   \makebox[0pt][l]{%
     \hspace{0pt}%
-    \makebox[8cm][l]{\textbf{\large \textcolor{text}{#1}}}%
+    \makebox[8cm][l]{%
+      \textbf{\large \textcolor{text}{#2}}%
+      \if\relax\detokenize{#1}\relax\else
+        \textcolor{annotation}{\small\space\textperiodcentered\space #1}%
+      \fi
+    }%
   }%
   \hspace*{8cm}%
-  \textcolor{annotation}{\faUniversity\space #2}
+  \textcolor{annotation}{\faUniversity\space #3}
 }
 
 % \newcommand{\educationFinished}[2]{

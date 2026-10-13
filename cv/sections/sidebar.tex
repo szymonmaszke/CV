@@ -4,7 +4,27 @@
   \begin{tikzpicture}[remember picture, overlay]
     \name{Szymon}{Maszke}
     % Calculate it properly
-    \coordinate (summary top) at ($(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin+1.8cm)$);
+    \coordinate (postgraduate top) at ($(current page.north west)+(\cvMiddleSidebar / 2,\textStart)+(0cm,-1.2\Margin+1.8cm)$);
+    \path[fill=postgraduate] ($(current page.north west |- postgraduate top)+(-1mm,0cm)$)
+      rectangle ($(current page.north east |- postgraduate top)+(1mm,-\cvSectionHeight)$);
+    \node (postgraduate) at (postgraduate top)
+      [rectangle, below,
+      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
+      {\Large\textbf{\textcolor{text}{Postgraduate}}};
+
+    \node (postgraduate data) at ($(postgraduate.south)+(0cm, +4.5mm)$) [below, text width = \cvSideWidth + 14.4mm] {
+      \sidebarLines
+        {\href{https://www.sgh.waw.pl/studia-podyplomowe-i-mba/administracja-i-prawo/studia-podyplomowe-sluzba-zagraniczna}{Foreign Service}}
+        {\faUniversity\space \href{https://en.uj.edu.pl/}{SGH Warsaw School of Economics}}
+        {}
+      \vspace{2mm}
+      \sidebarLines
+        {\href{https://econ.uj.edu.pl/en_GB/studia/studia-podyplomowe/pr-bm}{PR \& Brand Management}}
+        {\faUniversity\space \href{https://en.uj.edu.pl/}{Jagiellonian University}}
+        {}
+    };
+
+    \coordinate (summary top) at ($(postgraduate data.south)+(0cm, +2mm)$);
     \path[fill=summary] ($(current page.north west |- summary top)+(-1mm,0cm)$)
       rectangle ($(current page.north east |- summary top)+(1mm,-\cvSectionHeight)$);
     \node (summary) at (summary top)
@@ -17,40 +37,25 @@
       \exhyphenpenalty=10000
       \sloppy
       \footnotesize\textbf{\textcolor{text}{Engineering leader across LLM, ML, tooling, backend and infrastructure.
-        Former CTO with a record of building teams and production systems in diverse environments.}}\par
+        CTO with a record of building teams and production systems in diverse environments.}}\par
     };
 
-    \coordinate (fractional top) at ($(summary data.south)+(0cm, -1mm)$);
-    \path[fill=fractional] ($(current page.north west |- fractional top)+(-1mm,0cm)$)
-      rectangle ($(current page.north east |- fractional top)+(1mm,-\cvSectionHeight)$);
-    \node (fractional) at (fractional top)
-      [rectangle, below,
+    \node (fractional) at ($(summary data.south)+(0cm, -1mm)$)
+      [rectangle, fill=fractional, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\Large\textbf{\textcolor{text}{Advisory Work}}};
 
     \node (fractional data) at ($(fractional.south)+(0cm, -1mm)$) [below, text width = \cvSideWidth + 15mm] {
       {\small\color{text}
         \noindent\makebox[\linewidth][c]{\faMapMarker\space\href{https://www.wincan.com/en/home/}{wincan}\quad\textcolor{annotation}{\faCalendar\space 10/2022--06/2023}}\par\vspace{2mm}
-        computer vision, mentoring, tech strategy\par\vspace{3mm}
+        \textit{computer vision | mentoring | tech strategy}\par\vspace{3mm}
         \noindent\makebox[\linewidth][c]{\faMapMarker\space\href{https://music.ai/}{music.ai}\quad\textcolor{annotation}{\faCalendar\space 05/2022--08/2022}}\par\vspace{2mm}
-        CoreML audio neural network optimization
+        \textit{audio | neural net optimization | CoreML}
       }
     };
 
-    \node (postgraduate) at ($(fractional data.south)+(0cm, +2mm)$)
-      [rectangle, fill=postgraduate, below,
-      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
-      {\Large\textbf{\textcolor{text}{Postgraduate}}};
 
-    \node (postgraduate data) at ($(postgraduate.south)+(0cm, +4mm)$) [below, text width = \cvSideWidth + 14.4mm] {
-      \sidebarLines
-        {\href{https://econ.uj.edu.pl/en_GB/studia/studia-podyplomowe/pr-bm}{PR \& Brand Management}}
-        {\faUniversity\space \href{https://en.uj.edu.pl/}{Jagiellonian University}}
-        {}
-    };
-
-
-    \node (research) at ($(postgraduate data.south) + (0mm, +2.5mm)$)
+    \node (research) at ($(fractional data.south) + (0mm, -1.5mm)$)
       [rectangle, fill=research, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{text}{\Large\textbf{Research}}};
@@ -65,9 +70,9 @@
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{text}{\Large\textbf{Tech Skills}}};
 
-    \node (skills data) at ($(skills.south)+(4mm, -3mm)$) [below, text width = \cvSideWidth+22mm] {
+    \node (skills data) at ($(skills.south)+(4mm, -3mm)$) [below, text width = \cvSideWidth+23mm] {
       \small
-      \par\vspace{-2.3ex}{\scriptsize\textcolor{text}{\textbf{Languages}}}\par\vspace{1ex}
+      \par\vspace{-2.3ex}{\scriptsize\textcolor{text}{\textbf{Programming Languages}}}\par\vspace{1ex}
       \skilltag{Python}\skilltag{Go}\skilltag{C++}\skilltag{C}\skilltag{R}\skilltag{SQL}\par\vspace{1.2ex}
 
       {\scriptsize\textcolor{text}{\textbf{Machine Learning}}}\par\vspace{1ex}
@@ -75,26 +80,21 @@
       \skilltag{pandas}\skilltag{NumPy}\skilltag{spaCy}\skilltag{MLflow}\par\vspace{1.2ex}
 
       {\scriptsize\textcolor{text}{\textbf{Artificial Intelligence}}}\par\vspace{1ex}
-      \skilltag{PydanticAI}\skilltag{OpenAI Agents}\skilltag{Qdrant}\par\vspace{0.5ex}
-      \skilltag{FastMCP}\skilltag{Codex}\skilltag{Claude Code}\par\vspace{1.2ex}
+      \skilltag{PydanticAI}\skilltag{FastMCP}\skilltag{Qdrant}\skilltag{Codex}\par\vspace{1.2ex}
 
-      {\scriptsize\textcolor{text}{\textbf{Infrastructure}}}\par\vspace{1.3ex}
-      \skilltag{GCP}\skilltag{AWS}\skilltag{Docker}\skilltag{Kubernetes}\par\vspace{0.5ex}
-      \skilltag{GitHub Actions}\skilltag{OpenTelemetry}\skilltag{SLSA}\par\vspace{0.5ex}
+      {\scriptsize\textcolor{text}{\textbf{Backend}}}\par\vspace{1.3ex}
+      \skilltag{Docker}\skilltag{Kubernetes}\skilltag{OpenTelemetry}\par\vspace{0.5ex}
+      \skilltag{GCP}\skilltag{AWS}\skilltag{GitHub Actions}\skilltag{FastAPI}\par\vspace{0.5ex}
 
     };
 
-    \node (languages) at ($(skills data.south) + (-4mm, -3mm)$)
+    \node (languages) at ($(skills data.south) + (-4mm, -1mm)$)
       [rectangle, fill=languages, below,
       minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight]
       {\textcolor{text}{\Large\textbf{Languages}}};
 
-    \node (languages data) at ($(languages.south) + (0cm, -2mm)$) [below, text width = \cvSideWidth, align=center] {
-      \small\textcolor{text}{
-        \textbf{Polish} native\\[1mm]
-        \textbf{English} C2\\[1mm]
-        \textbf{French} B1
-      }
+    \node (languages data) at ($(languages.south) + (0cm, -2mm)$) [below, text width = \cvSideWidth + 15mm, align=center] {
+      {\large\skilltag[langtag]{\textbf{English} C2}\skilltag[langtag]{\textbf{Polish} native}}
     };
 
   \end{tikzpicture}
