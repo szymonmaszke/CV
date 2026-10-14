@@ -19,7 +19,9 @@
 % \defaultfontfeatures{
 %     Path = /usr/share/texmf-dist/fonts/opentype/public/fontawesome/FontAwesome.otf
 % }
-% workaround for XeTeX and fontawesome
+% workaround for XeTeX and fontawesome: load the font by file name, as
+% fontconfig does not index TeX Live fonts
+\defaultfontfeatures[FontAwesome]{Extension = .otf}
 \usepackage{fontawesome}
 % \newfontfamily{\FA}{/usr/share/texmf-dist/fonts/opentype/public/fontawesome/FontAwesome.otf}
 \usepackage{enumitem}
