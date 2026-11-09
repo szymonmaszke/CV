@@ -2,9 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Builds the site and the CV (light and dark, cv/) on every push and pull
-# request; deploys `main` to GitHub Pages (maszke.co). Also rebuilt daily, so
-# the GitHub and StackOverflow numbers (`npm run update:stats`, refreshed on
-# every deploy) stay current.
+# request; deploys `main` to GitHub Pages (maszke.co) and releases the deployed
+# commit as the next vX.Y.Z (conventional commits). Also rebuilt daily, so the
+# GitHub and StackOverflow numbers (`npm run update:stats`, refreshed on every
+# deploy) stay current.
 # Actions are pinned to commit SHAs (Dependabot keeps them up to date).
 
 ---
@@ -160,4 +161,86 @@ jobs:
       - name: "Deploy to GitHub Pages"
         id: "deployment"
         uses: "actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346" # v5.0.1
+
+  # Version lives in tags only: main accepts squash-merged pull requests, so
+  # no bump can be committed back (package.json stays 0.0.0). The daily run
+  # reaches this job too, but releases nothing without new feat or fix commits
+  # (and catches up on a release a failed push run missed).
+  release:
+    name: "Release"
+    needs: "deploy"
+    if: "github.event_name != 'pull_request' && github.ref == 'refs/heads/main'"
+    runs-on: "ubuntu-latest"
+    timeout-minutes: 5
+    permissions:
+      contents: "write" # create the vX.Y.Z tag and its GitHub release
+    steps:
+      - name: "Harden runner"
+        uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
+        with:
+          disable-sudo-and-containers: true
+          egress-policy: "block"
+          # Only the host the steps call (gh api, gh release); harden-runner
+          # allows GitHub Actions' own (results, cache, artifacts, OIDC, codeload)
+          allowed-endpoints: >
+            api.github.com:443
+
+      # Commits since the latest vX.Y.Z tag (or all of them, starting from
+      # 0.0.0): `!` or BREAKING CHANGE bumps major, feat minor, fix patch
+      - name: "Compute version"
+        env:
+          GH_TOKEN: "${{ github.token }}"
+        # enq: shell indentation is more readable
+        # yamllint disable rule:indentation rule:line-length
+        run: |
+          number='(0|[1-9][0-9]*)'
+          latest="$(
+            gh api --paginate "repos/${GITHUB_REPOSITORY}/git/matching-refs/tags/v" \
+              --jq '.[].ref | ltrimstr("refs/tags/v")' \
+              | { grep -E "^${number}\.${number}\.${number}$" || true; } \
+              | sort -V \
+              | tail -n 1
+          )"
+          # Bump of a commit message: 3 major, 2 minor, 1 patch, 0 none
+          level='
+            (split("\n")[0]) as $header
+            | if ($header | test("^[a-z]+([(][^)]*[)])?!: "))
+                or test("(^|\n)BREAKING[ -]CHANGE: ") then 3
+              elif ($header | test("^feat([(][^)]*[)])?: ")) then 2
+              elif ($header | test("^fix([(][^)]*[)])?: ")) then 1
+              else 0 end'
+          if [[ -n "${latest}" ]]; then
+            levels="$(
+              gh api --paginate "repos/${GITHUB_REPOSITORY}/compare/v${latest}...${GITHUB_SHA}" \
+                --jq ".commits[].commit.message | ${level}"
+            )"
+          else
+            levels="$(
+              gh api --paginate "repos/${GITHUB_REPOSITORY}/commits?sha=${GITHUB_SHA}&per_page=100" \
+                --jq ".[].commit.message | ${level}"
+            )"
+          fi
+          bump="$(sort -n <<< "${levels}" | tail -n 1)"
+          IFS=. read -r major minor patch <<< "${latest:-0.0.0}"
+          case "${bump:-0}" in
+            3) major=$((major + 1)); minor=0; patch=0 ;;
+            2) minor=$((minor + 1)); patch=0 ;;
+            1) patch=$((patch + 1)) ;;
+            *)
+              echo "::notice title=No release::No feat, fix or breaking commits since v${latest:-0.0.0}"
+              exit 0
+              ;;
+          esac
+          echo "TAG=v${major}.${minor}.${patch}" >> "${GITHUB_ENV}"
+        # yamllint enable rule:indentation rule:line-length
+
+      # Creates the tag too; fails if it exists or violates the tag rulesets
+      - name: "Create release"
+        if: "env.TAG != ''"
+        env:
+          GH_TOKEN: "${{ github.token }}"
+          GH_REPO: "${{ github.repository }}"
+        run: >
+          gh release create "${TAG}" --target "${GITHUB_SHA}"
+          --title "${TAG}" --generate-notes --latest
 ...
