@@ -17,8 +17,9 @@ import ThemeToggle from "./ThemeToggle.astro";
 <header class="site-header">
   <div class="wrap bar">
     {/* the name, shown once the page's own title (the hero h1) has scrolled
-        under the bar; hidden from screen readers, the h1 already says it */}
-    <span class="name" aria-hidden="true">{site.name}</span>
+        under the bar: a plain link back to the top of the site (a fresh /,
+        not a #hash, which the section tabs would take as a section) */}
+    <a href="/" class="name">{site.name}</a>
 
     <div class="tools">
       <a href={site.cv.light} download class="cv" aria-label={site.ui.cvLabel}>
@@ -67,7 +68,7 @@ import ThemeToggle from "./ThemeToggle.astro";
       of the page dims (::backdrop), a tap there closes it */}
   <div id="site-menu" class="menu" popover>
     <div class="wrap menu-bar">
-      <span class="name" aria-hidden="true">{site.name}</span>
+      <a href="/" class="name">{site.name}</a>
       <div class="tools">
         <ThemeToggle />
         <button
@@ -181,11 +182,14 @@ if (!title) {
 
 /* the name: section heading type (h2: bold, tight), small; fades and rises
    in once the hero title is gone (script above). Until then it isn't there
-   at all (visibility: not selectable, not draggable); visibility flips at
-   the start of the fade-in and the end of the fade-out. */
+   at all (visibility: not selectable, not focusable, hidden from screen
+   readers, which have the h1); visibility flips at the start of the fade-in
+   and the end of the fade-out. A link back to the top: underlined on hover
+   only, like the other links' underline. */
 .name {
   min-width: 0;
   overflow: hidden;
+  text-decoration-color: transparent;
   /* near the h2 (up to 1.5rem); narrower on phones, where the tools need
      the room */
   font-size: var(--fs-title, clamp(1.125rem, 4.5vw, 1.3125rem));
@@ -207,6 +211,17 @@ if (!title) {
   visibility: visible;
   opacity: 1;
   transform: none;
+}
+
+@media (hover: hover) {
+  .name:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+/* overflow (the ellipsis) would clip a ring drawn outside */
+.name:focus-visible {
+  outline-offset: -2px;
 }
 
 .tools {
