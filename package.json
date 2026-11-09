@@ -27,7 +27,7 @@
     "build:cv": "sh scripts/build-cv.sh"
   },
   "dependencies": {
-    "astro": "7.3.5",
+    "astro": "7.4.4",
     "marked": "18.1.1",
     "yaml": "2.9.1"
   },
