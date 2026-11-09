@@ -38,7 +38,20 @@ jobs:
       - name: "Harden runner"
         uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
         with:
-          egress-policy: "audit"
+          # sudo stays: apt-get installs XeLaTeX
+          egress-policy: "block"
+          # Only the hosts the steps call: checkout, npm ci, the stats refresh
+          # (GitHub, StackExchange) and apt-get (the runner's three apt
+          # sources); harden-runner allows GitHub Actions' own (results, cache,
+          # artifacts, OIDC, codeload)
+          allowed-endpoints: >
+            api.github.com:443
+            api.stackexchange.com:443
+            azure.archive.ubuntu.com:80
+            esm.ubuntu.com:443
+            github.com:443
+            packages.microsoft.com:443
+            registry.npmjs.org:443
 
       - name: "Checkout"
         uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" # v7.0.1
@@ -136,7 +149,13 @@ jobs:
       - name: "Harden runner"
         uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
         with:
-          egress-policy: "audit"
+          disable-sudo-and-containers: true
+          egress-policy: "block"
+          # Only the host the step calls (the Pages deployment API); the OIDC
+          # token comes from GitHub Actions' own hosts, which harden-runner
+          # allows (results, cache, artifacts, OIDC, codeload)
+          allowed-endpoints: >
+            api.github.com:443
 
       - name: "Deploy to GitHub Pages"
         id: "deployment"

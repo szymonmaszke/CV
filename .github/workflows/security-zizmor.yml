@@ -45,14 +45,13 @@ jobs:
           # disable-sudo-and-containers impossible
           disable-sudo: true
           egress-policy: "block"
+          # Only the hosts the steps call (checkout, zizmor's image pull, its
+          # online audits); harden-runner allows GitHub Actions' own (results,
+          # cache, artifacts, OIDC, codeload)
           allowed-endpoints: >
-            *.actions.githubusercontent.com:443
-            codeload.github.com:443
-            results-receiver.actions.githubusercontent.com:443
-            *.blob.core.windows.net:443
             api.github.com:443
-            github.com:443
             ghcr.io:443
+            github.com:443
             pkg-containers.githubusercontent.com:443
       - name: "Checkout repository"
         uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" # v7.0.1

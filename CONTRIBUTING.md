@@ -250,7 +250,7 @@ issued.
 
 1. Create a
    [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new):
-   only the `szymonmaszke/CV` repository, expiring the next day, repository
+   only the `szymonmaszke/website` repository, expiring the next day, repository
    permissions _Administration_ and _Pages_: read and write.
 1. Add it as the `HARDEN_GITHUB_TOKEN` repository secret (_Settings → Secrets
    and variables → Actions_).
