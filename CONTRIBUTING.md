@@ -173,6 +173,15 @@ artifact. Pushes to `main` are then deployed to GitHub Pages at `maszke.co`.
 Deployment needs no secrets: the workflow's own token, with the `pages` and
 `id-token` permissions, publishes it.
 
+Every deployment is then released: the _Release_ job tags the deployed commit as
+the next `vX.Y.Z` and publishes a GitHub release with generated notes. The bump
+comes from the commits since the previous tag (the first release counts from
+`0.0.0`): `feat:` bumps the minor version, `fix:` the patch version, and `!`
+after the type (`feat!:`) or a `BREAKING CHANGE:` line in the description the
+major version. Without such commits (e.g. the daily rebuild) nothing is
+released. The version lives in tags only: `main` accepts pull requests only, so
+`package.json` stays at `0.0.0`.
+
 First deployment:
 
 1. **Verify the domain** (proves `maszke.co` is yours, so no other GitHub
@@ -212,10 +221,10 @@ First deployment:
 The scripts in `.github/tools/harden/` apply the repository settings once the
 repository is public, either locally or through `.github/workflows/harden.yml`:
 squash merges only, the rulesets in `.github/rulesets/` (signed commits, no
-force pushes, pull requests and checks required on `main`), GitHub Pages with
-the custom domain, deployments from `main` only, secret scanning with push
-protection, Dependabot alerts and security updates, private vulnerability
-reporting and CodeQL.
+force pushes, pull requests and checks required on `main`, only `vX.Y.Z` release
+tags, never moved or deleted), GitHub Pages with the custom domain, deployments
+from `main` only, secret scanning with push protection, Dependabot alerts and
+security updates, private vulnerability reporting and CodeQL.
 
 ### Locally
 

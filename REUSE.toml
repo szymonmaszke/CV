@@ -5,15 +5,11 @@
 # Everything else carries its own SPDX header or a .license file next to it.
 version = 1
 
-# Served as-is (a comment header would be served too): social image; it
-# carries the opennudge mark (below), unmodified
+# Served as-is (a comment header would be served too): social image
 [[annotations]]
 path = "public/og.png"
-SPDX-FileCopyrightText = [
-  "© 2026 Szymon Maszke <https://github.com/szymonmaszke>",
-  "© 2026 open-nudge <https://github.com/open-nudge>",
-]
-SPDX-License-Identifier = "Apache-2.0 AND LicenseRef-opennudge-brand"
+SPDX-FileCopyrightText = "© 2026 Szymon Maszke <https://github.com/szymonmaszke>"
+SPDX-License-Identifier = "Apache-2.0"
 
 # opennudge brand: not Apache-2.0, © open-nudge, all rights reserved,
 # used unmodified:

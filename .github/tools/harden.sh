@@ -21,6 +21,11 @@ esac
 cd "$(git rev-parse --show-toplevel)"
 harden=.github/tools/harden
 
+# Resolve the repository once: without GH_REPO, gh looks it up (GraphQL) for
+# every {owner}/{repo} placeholder of every script, one more call to time out
+GH_REPO=${GH_REPO:-$(gh repo view --json nameWithOwner --jq '.nameWithOwner')}
+export GH_REPO
+
 # Rulesets, Pages, secret scanning and code scanning are free
 # for public repositories only
 visibility=$(gh repo view --json visibility --jq '.visibility')
@@ -31,9 +36,15 @@ fi
 
 "${harden}/settings.sh"
 "${harden}/pages.sh"
-# Fails until DNS points to GitHub Pages and the certificate is issued
-"${harden}/pages-https.sh" \
-    || echo "warning: HTTPS not enforced yet, re-run ${harden}/pages-https.sh once the certificate is issued" >&2
+# Fails until DNS points to GitHub Pages and the certificate is issued; any
+# other error (network, permissions) stops the run
+if ! error=$("${harden}/pages-https.sh" 2>&1); then
+    if [[ "${error,,}" != *certificate* ]]; then
+        echo "${error}" >&2
+        exit 1
+    fi
+    echo "warning: HTTPS not enforced yet, re-run ${harden}/pages-https.sh once the certificate is issued" >&2
+fi
 "${harden}/pages-main.sh"
 "${harden}/vulnerability-alerts.sh"
 "${harden}/private-vulnerability-reporting.sh"
