@@ -72,7 +72,11 @@ jobs:
 
       - name: "Install XeLaTeX"
         # Ubuntu's TeX Live packages: XeTeX plus the fonts (Lato, FontAwesome)
-        # and LaTeX packages cv/main.tex loads
+        # and LaTeX packages cv/main.tex loads. Ubuntu's texlive-fonts-extra
+        # strips FontAwesome.otf and Lato-*.ttf (shipped by fonts-font-awesome
+        # and fonts-lato, only recommended, so skipped by
+        # --no-install-recommends): install them explicitly.
+        # texlive-fonts-recommended: pzdr (ZapfDingbats), loaded by hyperref
         run: >
           sudo apt-get update
           && sudo apt-get install --yes --no-install-recommends
@@ -81,7 +85,10 @@ jobs:
           texlive-latex-extra
           texlive-pictures
           texlive-plain-generic
+          texlive-fonts-recommended
           texlive-fonts-extra
+          fonts-font-awesome
+          fonts-lato
 
       - name: "Build CV (light and dark)"
         # public/szymon-maszke-cv.pdf and public/szymon-maszke-cv-dark.pdf,
