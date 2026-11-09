@@ -1,33 +1,50 @@
-# Curriculum Vitae
+<!--
+SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+SPDX-License-Identifier: Apache-2.0
+-->
 
-<p align=center>
-  Click icons below to contact me or know more
-</p>
+# maszke.co
 
-[![full](https://img.shields.io/badge/-FULL&nbsp;CV&nbsp;+&nbsp;DOWNLOAD-43a047?style=for-the-badge)](https://raw.githubusercontent.com/szymonmaszke/CV/master/cv.pdf)
-[![mail](https://img.shields.io/badge/-MAIL&nbsp;ME-DB4437?style=for-the-badge)](mailto:work@maszke.co)
-[![github](https://img.shields.io/badge/-GITHUB-333333?style=for-the-badge)](https://github.com/szymonmaszke)
-[![stackoverflow](https://img.shields.io/badge/-STACKOVERFLOW-F48024?style=for-the-badge)](https://stackoverflow.com/users/10886420/szymon-maszke?tab=profile)
-[![linkedin](https://img.shields.io/badge/-LINKEDIN-0072b1?style=for-the-badge)](https://www.linkedin.com/in/szymonmaszke/)
+Source of [maszke.co](https://maszke.co), the personal website of Szymon Maszke:
+experience, open source, StackOverflow, education and a downloadable CV, and of
+that CV itself (LaTeX, `cv/`).
 
-- __Business inquiries - please email me at [work@maszke.co](mailto:work@maszke.co)__
-- Click [here](https://raw.githubusercontent.com/szymonmaszke/CV/master/cv.pdf) to download full CV in PDF format
+A small static site built with [Astro](https://astro.build), published to GitHub
+Pages on every push to `main`, together with the CV built from `cv/`.
 
-## Code description
+## Features
 
-### LaTeX files (`/cv`)
+- **No JavaScript framework**, no trackers, cookies, web fonts or third-party
+  requests. The page is about 16 KB gzipped.
+- **Same design system as [opennudge.com](https://opennudge.com)**: soft greys,
+  light and dark.
+- **Content is data**: every section lives in a YAML file in `src/content/`,
+  validated at build time. GitHub and StackOverflow numbers are refreshed by
+  `npm run update:stats` on every deploy, and the site is deployed daily.
+- **CV in both themes**: `cv/` compiles (XeLaTeX) to a light and a dark PDF; the
+  site's download links serve the one matching the current theme.
+- **Agent-friendly**: [`/llms.txt`](https://maszke.co/llms.txt) is a plain text
+  version of the page, generated from the same data.
 
-Inside `/cv` you can find core CV source code created mainly via `TikZ` package.
+## Quick start
 
-__See `/cv/README.md` for more information__
+Requires Node.js 22.12 or newer.
 
-__Warning:__ LaTeX files are currently quite inflexible and are adjusted manually in
-a few places. You would have to play around with them to fit your needs (any help and PRs
-to make this into real & easy template are more than welcome, thanks).
+```sh
+npm run setup   # install the exact dependency versions and the git hooks
+npm run dev     # live preview at http://localhost:4321
+npm run build:cv  # the CV, light and dark, into public/ (needs XeLaTeX)
+```
 
-### Makefile (`/Makefile`)
+[CONTRIBUTING.md](CONTRIBUTING.md) explains how the site is organized, how to
+change it, and how it is checked and deployed.
 
-Makefile helps with compiling and running stuff inside this repo.
-- `make all` - updates statistics (see below), compiles LaTeX and creates `cv.pdf`
-- `make cv` - compiles LaTeX and creates `cv.pdf`
-- `make clean` - cleans LaTeX build artifacts
+## License
+
+[Apache-2.0](LICENSE). Every file states its license
+([REUSE](https://reuse.software)).
+
+Except the opennudge brand files (the site icons, the opennudge mark and the
+social image that carries it): © open-nudge, all rights reserved, used with
+permission, under
+[LicenseRef-opennudge-brand](LICENSES/LicenseRef-opennudge-brand.txt).

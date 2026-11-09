@@ -1,0 +1,40 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+# Weekly, grouped updates. `cooldown` waits 7 days after a release before
+# proposing it (supply-chain hardening). `fix` commit prefix: pull request titles
+# pass the Pull Request check (pull-request.yml). prek hooks are updated by prek
+# itself (prek.toml, `npm run update:hooks`).
+
+---
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: "fix"
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+      development:
+        dependency-type: "development"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    commit-message:
+      prefix: "fix"
+    groups:
+      actions:
+        patterns:
+          - "*"
+...

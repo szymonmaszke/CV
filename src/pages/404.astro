@@ -1,0 +1,29 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+import Arrow from "../components/Arrow.astro";
+import Markdown from "../components/Markdown.astro";
+import Base from "../layouts/Base.astro";
+import { site } from "../site.config";
+---
+
+<Base title={site.notFound.title} noindex>
+  <section class="wrap notfound">
+    <p class="eyebrow">{site.notFound.code}</p>
+    <h1><Markdown inline text={site.notFound.heading} /></h1>
+    <Markdown class="lead muted" text={site.notFound.text} />
+    <p>
+      <a class="button primary" href={site.links.home}>
+        <Arrow direction="right" bounce />
+        {site.notFound.action}
+      </a>
+    </p>
+  </section>
+</Base>
+
+<style>
+.notfound {
+  padding-block: clamp(4rem, 14vw, 9rem);
+}
+</style>

@@ -1,55 +1,41 @@
-.codex
-# Ignore local gh token for testing purposes
-token.txt
-# Ignore temporary file to run updates
-run.sh
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
 
-*.acn
-*.acr
-*.alg
-*.aux
-*.bak
-*.bbl
-*.bcf
-*.blg
-*.brf
-*.bst
-*.dvi
-*.fdb_latexmk
-*.fls
-*.glg
-*.glo
-*.gls
-*.idx
-*.ilg
-*.ind
-*.ist
-*.lof
-*.log
-*.lol
-*.lot
-*.maf
-*.mtc
-*.mtc1
-*.nav
-*.nlo
-*.nls
-*.out
-*.pdf
-# Except cv.pdf
-!cv.pdf
-*.pyg
-*.run.xml
-*.snm
-*.synctex.gz
-*.tex.backup
-*.tex~
-*.thm
-*.toc
-*.vrb
-*.xdy
-*.xml
-*blx.bib
-.bak
-.mtc
-build/
+# build output
+dist/
+.astro/
+
+# CV PDFs, built from cv/ by `npm run build:cv` (scripts/build-cv.sh)
+public/szymon-maszke-cv*.pdf
+
+# LaTeX build artifacts (cv/)
+cv/*.aux
+cv/*.fdb_latexmk
+cv/*.fls
+cv/*.log
+cv/*.out
+cv/*.pdf
+cv/*.synctex.gz
+cv/*.xdv
+# latexindent backups and log (.latexindent.yaml)
+*.bak[0-9]*
+indent.log
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+
+# environment variables
+.env
+.env.*
+!.env.example
+
+# editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# link checker cache (lychee.toml)
+.lycheecache

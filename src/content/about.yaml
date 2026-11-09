@@ -1,0 +1,98 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+#
+# Text of the page: the heading of every section (tab), in
+# page order. The entries themselves live in their own files (experience.yaml,
+# opensource.yaml, ...). `id` is the anchor: /#experience opens that tab.
+---
+summary:
+  id: "summary"
+  tab: "summary"
+  title: "summary"
+  prose: |-
+    Engineering leader across LLM, ML, tooling, backend and infrastructure:
+
+    - __Founder of [opennudge](https://opennudge.com)__ (since 2024): FOSS Python tooling for
+    supply chain security and AI agents - SLSA L3 builds, attestations, linters
+    - __Interim CTO at [Softwise.AI](https://softwise.ai/)__ (2025-2026): cut product-core latency over
+    fivefold across 30+ streaming agents, refocused the product on B2B
+    - __Co-founder and CTO of [InovIntell](https://www.inovintell.com)__ (2022-2024): built and led two
+    teams of 10+ engineers in a 30-person life-sciences ML company
+
+    Earlier: Projects with 1,500+ GitHub stars and 500+ Stack Overflow answers.
+  facts:
+    - key: "based in"
+      value: "Poland, remote"
+    - key: "languages"
+      value: "Polish (native), English (C2)"
+    - key: "cv"
+      value: "One page: [download](/szymon-maszke-cv.pdf)"
+
+opensource:
+  id: "open-source"
+  tab: "open source"
+  title: "open source"
+  text: "Created libraries and tools."
+  stats:
+    stars: "GitHub stars"
+    forks: "forks"
+    repos: "public repositories"
+    since: "first commit"
+  featured:
+    eyebrow: "current"
+    title: "opennudge"
+    text: >-
+      Open source tooling for __supply chain security__ and __agentic AI__: a Python template with SLSA L3
+      builds and attested SBOMs and MCP-enabled linters.
+    note: "Improve the quality of your software with no extra effort."
+    website:
+      label: "opennudge.com"
+      href: "https://opennudge.com"
+    github:
+      label: "github.com/open-nudge"
+      href: "https://github.com/open-nudge"
+  current: "projects"
+  past: "earlier"
+  pastText: "Mostly PyTorch and machine learning libraries."
+  more: "[See more on my GitHub](https://github.com/szymonmaszke)"
+
+stackoverflow:
+  id: "stackoverflow"
+  tab: "stackoverflow"
+  title: "stackoverflow"
+  text: "Answers on PyTorch, Python, machine and deep learning, data science, DevOps, C++ and CI/CD."
+  stats:
+    reputation: "reputation"
+    answers: "answers"
+    badges: "badges"
+    since: "member since"
+  facts: "some facts"
+  tags: "other tags"
+  selected: "a few answers"
+  more: "[See more on Stack Overflow](https://stackoverflow.com/users/10886420/szymon-maszke?tab=answers)"
+
+experience:
+  id: "experience"
+  tab: "experience"
+  title: "experience"
+  advisory: "advisory"
+  advisoryText: "Part-time, alongside the roles above."
+
+education:
+  id: "education"
+  tab: "education"
+  title: "education"
+  degrees: "degrees"
+  postgraduate: "postgraduate"
+  research: "research"
+
+certificates:
+  id: "certificates"
+  tab: "certificates"
+  title: "certificates"
+
+technologies:
+  id: "technologies"
+  tab: "technologies"
+  title: "technologies"
+...

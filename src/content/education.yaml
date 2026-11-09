@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+---
+degrees:
+  - title: "MSc Computer Science"
+    detail: "Machine Learning"
+    school: "Jagiellonian University"
+    url: "https://en.uj.edu.pl/"
+  - title: "MA Economics"
+    school: "University of Warsaw"
+    url: "https://en.uw.edu.pl/"
+    inProgress: true
+  - title: "Executive MBA"
+    school: "AGH University"
+    url: "https://mba.agh.edu.pl/programs/mba-executive"
+
+postgraduate:
+  - title: "Foreign Service"
+    school: "SGH Warsaw School of Economics"
+    url: "https://www.sgh.waw.pl/en"
+  - title: "PR & Brand Management"
+    school: "Jagiellonian University"
+    url: "https://en.uj.edu.pl/"
+
+research:
+  - title: "Biologically-Inspired Spatial Neural Networks"
+    url: "https://arxiv.org/abs/1910.02776"
+    venue: "NeurIPS workshops (NeuroAI)"
+    year: 2019
+...

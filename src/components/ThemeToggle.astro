@@ -1,0 +1,104 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+import { site } from "../site.config";
+
+// Light/dark switch. Without a stored choice the site follows the OS setting;
+// the stored choice is applied before first paint by the script in Base.astro.
+// Every CV link (any <a> to either PDF, Markdown ones included) follows the
+// theme too: the dark page downloads the dark CV.
+---
+
+<button
+  type="button"
+  class="icon-button theme-toggle"
+  data-theme-toggle
+  data-cv-light={site.cv.light}
+  data-cv-dark={site.cv.dark}
+  aria-label={site.ui.darkMode}
+  aria-pressed="false"
+>
+  <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">
+    <circle cx="8" cy="8" r="6.25" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+    <path d="M8 1.75a6.25 6.25 0 0 1 0 12.5z" fill="currentColor"></path>
+  </svg>
+</button>
+
+<script>
+const root = document.documentElement;
+const media = globalThis.matchMedia("(prefers-color-scheme: dark)");
+const reducedMotion = globalThis.matchMedia("(prefers-reduced-motion: reduce)");
+const isDark = () => (root.dataset.theme ? root.dataset.theme === "dark" : media.matches);
+
+// More than one switch (the bar's, the phone menu's): one script runs them all.
+const buttons = document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]");
+const [first] = buttons;
+const themeColors = document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]');
+const cv = { light: first?.dataset.cvLight ?? "", dark: first?.dataset.cvDark ?? "" };
+const cvLinks = document.querySelectorAll<HTMLAnchorElement>(
+  `a[href="${CSS.escape(cv.light)}"], a[href="${CSS.escape(cv.dark)}"]`,
+);
+const sync = () => {
+  for (const button of buttons) {
+    button.setAttribute("aria-pressed", String(isDark()));
+  }
+  // The phone's browser bar follows the page, not only the OS setting.
+  const background = getComputedStyle(document.body).backgroundColor;
+  for (const meta of themeColors) {
+    meta.content = background;
+  }
+  const file = isDark() ? cv.dark : cv.light;
+  for (const link of cvLinks) {
+    link.setAttribute("href", file);
+  }
+};
+const apply = (theme: string) => {
+  root.dataset.theme = theme;
+  try {
+    localStorage.setItem("theme", theme);
+  } catch {
+    // storage unavailable (private mode): the choice lasts for this page only
+  }
+  sync();
+};
+
+const toggle = () => {
+  const next = isDark() ? "light" : "dark";
+  // data-switching turns off per-element transitions (global.css): the whole
+  // page cross-fades at once where view transitions exist, else it flips.
+  root.dataset.switching = "";
+  const done = () => delete root.dataset.switching;
+  if (document.startViewTransition && !reducedMotion.matches) {
+    document.startViewTransition(() => apply(next)).finished.finally(done);
+  } else {
+    apply(next);
+    requestAnimationFrame(() => requestAnimationFrame(done));
+  }
+};
+for (const button of buttons) {
+  button.addEventListener("click", toggle);
+}
+media.addEventListener("change", sync);
+sync();
+</script>
+
+<style>
+/* Its own layer in the page cross-fade, which turns it (global.css). Without
+   view transitions, or with reduced motion, it flips with the page. */
+.theme-toggle svg {
+  view-transition-name: theme-icon;
+}
+
+/* The half moon turns inside the svg, never the svg itself: Firefox applies a
+   transform on the layer's own element twice (in the snapshot and on its
+   group), so the turn ended half a turn off and snapped back. */
+.theme-toggle path {
+  transform-box: view-box;
+  transform-origin: center;
+}
+
+.theme-toggle[aria-pressed="true"] path {
+  transform: rotate(180deg);
+}
+</style>

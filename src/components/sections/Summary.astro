@@ -1,0 +1,62 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// Summary: a few paragraphs, a few facts beside them.
+import { about } from "../../lib/data";
+import Markdown from "../Markdown.astro";
+import Section from "../Section.astro";
+---
+
+<Section section={about.summary}>
+  <div class="summary">
+    <Markdown class="summary-text" text={about.summary.prose} />
+    <dl class="group facts">
+      {about.summary.facts.map((fact) => (
+        <div class="row">
+          <dt>{fact.key}</dt>
+          <dd>
+            <Markdown text={fact.value} />
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</Section>
+
+<style>
+.summary {
+  display: grid;
+  gap: 1.5rem 3rem;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.summary :global(.summary-text) {
+  margin: 0;
+  max-width: 40rem;
+}
+
+.facts dt {
+  font-size: var(--fs-small, 0.8125rem);
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: 0.1rem 0 0;
+}
+
+.facts :global(.prose) {
+  margin: 0;
+}
+
+.facts :global(a) {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 48rem) {
+  .summary {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

@@ -1,17 +1,19 @@
+% SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+% SPDX-License-Identifier: Apache-2.0
 \documentclass[../main.tex]{subfiles}
 
 \begin{document}
   \begin{tikzpicture}[remember picture, overlay]
     % Education
     \node (education) at ($(postgraduate.north)+(0.5\paperwidth,0cm)$)
-      [rectangle, anchor=north, minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
-      {\Large \textbf{\textcolor{text}{Education}}};
+    [rectangle, anchor=north, minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
+    {\Large \textbf{\textcolor{text}{Education}}};
     \node (education data) at ($(education.south) + (0cm, -2.2mm)$) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
       \educationFinished[Machine Learning]{MSc Computer Science}
       {\href{https://en.uj.edu.pl/}{Jagiellonian University}}
 
       \vspace*{3.4mm}
-      \educationOngoing{Economics}
+      \educationOngoing{MA Economics}
       {\href{https://en.uw.edu.pl/}{University of Warsaw}}
 
       \vspace*{3.4mm}
@@ -22,47 +24,47 @@
     % Work
     \coordinate (work top) at (education.north |- summary top);
     \node (work) at (work top)
-      [rectangle, anchor=north,
+    [rectangle, anchor=north,
       minimum width=\paperwidth-\cvMiddleSidebar, minimum height=\cvSectionHeight]
-      {\Large \textbf{\textcolor{text}{Experience}}};
+    {\Large \textbf{\textcolor{text}{Experience}}};
     \node (work data) at (work.south) [below, text width = \paperwidth-\cvMiddleSidebar-\Margin] {
       \begin{cvtext}
         \work{Founder}{\href{https://www.opennudge.com}{opennudge}}{03/2026}{Present}
         {
           {
-            {Building a harness to generate RLVR data for improving LLMs’ coding},
-            {Validating commercial fit and shifting from build to sales phase}
-          }
+              {Building a harness to generate RLVR data for improving LLMs’ coding},
+              {Validating commercial fit and shifting from build to sales phase}
+            }
         }
         {}
-        \work{Interim CTO}{\href{https://softwise.ai/}{softwise.ai}}{10/2025}{03/2026}
+        \work{Interim CTO}{\href{https://softwise.ai/}{Softwise.AI}}{10/2025}{03/2026}
         {
           {
-            {Led developers and introduced engineering best practices, e.g. ADRs},
-            {Cut product-core latency over fivefold in 30+ streaming agents},
-            {Owned technical discovery, pre-sales, and key account relationships},
-            {Refocused the product on B2B by removing redundant B2C systems}
-          }
+              {Led developers and introduced engineering best practices, e.g. ADRs},
+              {Cut product-core latency over fivefold in 30+ streaming agents},
+              {Owned technical discovery, pre-sales, and key account relationships},
+              {Refocused the product on B2B by removing redundant B2C systems}
+            }
         }
         {}
         \work{Founder}{\href{https://www.opennudge.com}{opennudge}}{03/2024}{10/2025}
         {
           {
-            {Created a Python template for SLSA L3 Build, attested SBOMs and CI},
-            {Architected MCP-enabled cross-language linting framework and tools},
-            {Built a \textasciitilde{}100-workflow FOSS Python quality and security platform}
-          }
+              {Created a Python template for SLSA L3 Build, attested SBOMs and CI},
+              {Architected MCP-enabled cross-language linting framework and tools},
+              {Built a \textasciitilde{}100-workflow FOSS Python quality and security platform}
+            }
         }
         {}
-        \work{CTO}{\href{https://www.inovintell.com}{inovintell}}{04/2022}{02/2024}
+        \work{CTO}{\href{https://www.inovintell.com}{InovIntell}}{04/2022}{02/2024}
         {
           {
-            {Co-founded a 30-person life-sciences machine-learning company},
-            {Owned technical roadmap, direction, culture, and best practices},
-            {Built and led 2 teams (research and development) of 10+ engineers},
-            {Translated domain and business requirements into technical tasks},
-            {Designed tools to improve velocity and reliability across teams}
-          }
+              {Co-founded a 30-person life-sciences machine-learning company},
+              {Owned technical roadmap, direction, culture, and best practices},
+              {Built and led 2 teams (research and development) of 10+ engineers},
+              {Translated domain and business requirements into technical tasks},
+              {Designed tools to improve velocity and reliability across teams}
+            }
         }
         {
           {life science, AI, ML, DS, DL, NLP, LLM, research, leadership}
@@ -70,23 +72,23 @@
         \work{Head of Curriculum}{\href{https://www.theaicore.com/}{AiCore}}{11/2020}{09/2021}
         {
           {
-            {Led technical delivery of UK government-backed AI upskilling program},
-            {Designed and delivered courses on Python{,} Linux{,} ML{,} DL{,} and Ops},
-            {Supervised 100+ learners through the curriculum and their projects}
-          }
+              {Led technical delivery of UK government-backed AI upskilling program},
+              {Designed and delivered courses on Python{,} Linux{,} ML{,} DL{,} and Ops},
+              {Supervised 100+ learners through the curriculum and their projects}
+            }
         }{}
         \work{Machine Learning Developer}{\href{https://pl.pinterest.com/artplanet_store/}{ArtPlanet}}{08/2019}{06/2020}
         {
           {
-            {Owned the full SDLC, from data science and ML to AWS deployment},
-            {Built a low-maintenance, serverless neural network art tagger}
-          }
+              {Owned the full SDLC, from data science and ML to AWS deployment},
+              {Built a low-maintenance, serverless neural network art tagger}
+            }
         }{}
         \work{Machine Learning Developer}{\href{https://codete.com/}{Codete}}{04/2018}{10/2018}
         {
           {
-            {Co-created commercial machine-learning courses for O’Reilly}
-          }
+              {Co-created commercial machine-learning courses for O’Reilly}
+            }
         }{}
       \end{cvtext}
       \vspace*{-2mm}

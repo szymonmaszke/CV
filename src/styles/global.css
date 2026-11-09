@@ -1,0 +1,863 @@
+/*
+ * SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Design tokens + base styles, shared with opennudge.com:
+ * the greys of Chrome on iOS (Chromium's iOS color assets), so the page sits
+ * seamlessly under the browser's toolbars. No accent color, never pure black
+ * or white; raised boxes, capsule controls, "the nudge" on hover.
+ */
+/* ---------------------------------------------------------------- tokens */
+
+/* Every color is light-dark(light, dark): the OS setting picks one, and the
+   theme switch forces one through color-scheme (data-theme on <html>). */
+:root {
+  color-scheme: light dark;
+
+  /* Chrome iOS names: grey_100 / background_color (the dark toolbar) */
+  --bg: light-dark(#f1f3f4, #353739);
+  /* cards, code: raised above --bg (grey_50) */
+  --surface: light-dark(#f8f9fa, #3c4043);
+  /* between grey_800 and grey_700 (Google Search's body grey): softer on the
+     eyes than grey_800, still about 7:1 on --bg */
+  --text: light-dark(#4d5156, #e8eaed); /* - / toolbar_button_color */
+  --muted: light-dark(#5f6368, #bdc1c6); /* grey_700 / grey_500 */
+  --line: light-dark(#dadce0, #474c50); /* grey_300 / separator_color */
+  --line-strong: light-dark(#9aa0a6, #5f6368); /* grey_500 / grey_200 */
+  /* primaries and selected states: the other mode's box, its surface and
+     its text (dark in light mode, light in dark mode) */
+  --inverse: light-dark(#3c4043, #f8f9fa);
+  --on-inverse: light-dark(#e8eaed, #4d5156);
+  --inverse-hover: color-mix(in srgb, var(--inverse) 85%, var(--bg));
+  --shadow: light-dark(rgb(60 64 67 / 0.2), rgb(0 0 0 / 0.5)); /* hover lift */
+
+  /* Everything that isn't the page is "raised": boxes, buttons, tab tracks,
+     tags and code alike, on the page or inside a box. One lighter surface,
+     a faint 1px ring and a soft shadow, instead of a hard gray border (whose
+     rounded corners show their pixels). Lines inside a box use the opaque
+     --divider. */
+  --surface-hover: color-mix(in srgb, var(--text) 6%, var(--surface)); /* raised controls' hover */
+  --ring: light-dark(rgb(60 64 67 / 0.1), rgb(255 255 255 / 0.07));
+  --ring-strong: light-dark(rgb(60 64 67 / 0.18), rgb(255 255 255 / 0.13));
+  --soft: light-dark(rgb(60 64 67 / 0.1), rgb(0 0 0 / 0.3));
+  --raised: 0 0 0 1px var(--ring), 0 1px 2px var(--soft), 0 2px 6px -2px var(--soft);
+  --divider: color-mix(in srgb, var(--text) 12%, var(--surface));
+
+  /* system fonts: nothing to download */
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Chrome iOS shapes: boxes get a wide radius (like its new tab page
+     modules), controls are capsules, and both draw with fills instead of
+     outlines (a 1px border shows its pixels on a curve). */
+  --radius: 16px; /* boxes: cards, code, terminals */
+  --pill: 999px; /* controls: buttons, pills, switches, icon buttons */
+  --page: 68rem;
+  --gutter: clamp(1rem, 4vw, 2rem);
+  /* the gutter, widened by the notch / rounded corners in landscape */
+  --gutter-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  --gutter-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  /* sticky top bar; the section tabs stick right under it */
+  --header: calc(3.5rem + env(safe-area-inset-top, 0px));
+  --nudge: 2px;
+
+  /* motion: quick to arrive, slow to settle back (as on opennudge.com) */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --fast: 160ms;
+  --slow: 360ms;
+}
+
+/* Phones and small tablets (under 768px, GitHub's breakpoint) use GitHub's
+   mobile type scale (Primer). Each font-size reads var(--fs-<tier>, <its
+   desktop size>), so these tiers are set only here; desktop keeps its own. */
+@media (max-width: 48rem) {
+  :root {
+    --fs-h1: 1.625rem; /* 26px: Primer h1 on phones */
+    --fs-h2: 1.25rem; /* 20px: title-medium (section titles, numbers) */
+    --fs-h3: 1.125rem; /* 18px: Primer h3 on phones (subsections) */
+    --fs-title: 1rem; /* 16px: title-small (role, card, bar titles) */
+    --fs-lead: 1rem; /* 16px: body-large (intro text, motto) */
+    --fs-body: 0.875rem; /* 14px: body (text, buttons, menu) */
+    --fs-small: 0.75rem; /* 12px: body-small (meta, captions, tags) */
+    --lh-body: 1.5;
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ base */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  /* biome-ignore lint/complexity/noImportantStyles: hidden must win over any display set by a class */
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* the page color reaches past the edges when a phone over-scrolls */
+  background: var(--bg);
+  /* in-page links land under the sticky bars (header, section tabs) */
+  scroll-padding-top: calc(var(--header) + 4.5rem);
+  /* the scrollbar's space is kept on short pages too, so the header doesn't
+     jump sideways between long and short pages */
+  scrollbar-gutter: stable;
+}
+
+/* desktop: exactly under the section tabs' bar (Tabs.astro: 0.5rem above
+   and 1rem below a capsule as tall as the hero's buttons, 2.4rem + 2px;
+   2.75rem for thumbs), so a section lands its scroll margin below it, as
+   the page lays it out (index.astro: --panel-gap) */
+@media (min-width: 48.0625rem) {
+  html {
+    scroll-padding-top: calc(var(--header) + 3.9rem + 2px);
+  }
+}
+
+@media (min-width: 48.0625rem) and (pointer: coarse) {
+  html {
+    scroll-padding-top: calc(var(--header) + 4.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: var(--fs-body, 1rem) / var(--lh-body, 1.6) var(--sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+}
+
+/* one text font everywhere: buttons don't inherit it by default */
+button {
+  font-family: inherit;
+}
+
+/* no blue tap flash on phones: fills and underlines show the touch */
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--fs-h1, clamp(2.25rem, 5vw, 3rem));
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--fs-h2, clamp(1.375rem, 2.5vw, 1.5rem));
+}
+
+h3,
+h4 {
+  font-size: var(--fs-title, 1.0625rem);
+}
+
+p {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--line-strong);
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Everything that reacts to the pointer fades instead of snapping: quick on
+   the way in, slower on the way back. */
+a,
+button,
+.card,
+.nudge {
+  transition-property:
+    color, background-color, border-color, text-decoration-color, opacity, transform, box-shadow;
+  transition-duration: var(--slow);
+  transition-timing-function: var(--ease);
+}
+
+:is(a, button, .card, .nudge):is(:hover, :focus-visible) {
+  transition-duration: var(--fast);
+}
+
+/* While the theme switches, colors change at once (or inside the view
+   transition), not each element at its own pace. */
+:root[data-switching] * {
+  /* biome-ignore lint/complexity/noImportantStyles: must win over every component transition */
+  transition: none !important;
+}
+
+/* The light/dark switch cross-fades the page (ThemeToggle.astro). */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease-in-out);
+}
+
+/* The theme icon is not cross-faded: only the new one shows, and the view
+   transition turns it half a turn, from its old angle to the one it now rests
+   at (the snapshot already shows that one). On the transition's clock, not a
+   CSS transition of its own: that one was copied into the snapshot frame by
+   frame and handed over mid-turn, so it stuttered (ThemeToggle.astro). */
+::view-transition-old(theme-icon) {
+  display: none;
+}
+
+::view-transition-group(theme-icon) {
+  animation: none;
+}
+
+::view-transition-new(theme-icon) {
+  animation: theme-icon-turn 450ms var(--ease-in-out);
+}
+
+/* back to light, it turns back */
+:root[data-theme="light"]::view-transition-new(theme-icon) {
+  animation-name: theme-icon-turn-back;
+}
+
+@keyframes theme-icon-turn {
+  from {
+    transform: rotate(-180deg);
+  }
+}
+
+@keyframes theme-icon-turn-back {
+  from {
+    transform: rotate(180deg);
+  }
+}
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* text links get a slightly rounded ring; capsules keep their own shape
+   (the outline follows their radius) */
+a:not(.button, .icon-button):focus-visible {
+  border-radius: 2px;
+}
+
+code,
+pre {
+  font-family: var(--mono);
+  font-size: 0.88em;
+}
+
+pre code {
+  font-size: inherit;
+}
+
+pre,
+code {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+  /* a sideways swipe through a long line stays inside it */
+  overscroll-behavior-x: contain;
+}
+
+:not(pre) > code {
+  background: var(--surface);
+  box-shadow: var(--raised);
+  border-radius: 4px;
+  padding: 0.05em 0.35em;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--inverse);
+  color: var(--on-inverse);
+}
+
+/* Markdown (<Markdown>): a paragraph box around paragraphs and lists */
+.prose {
+  margin: 0 0 1em;
+  text-wrap: pretty;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose > :last-child {
+  margin-bottom: 0;
+}
+
+.prose p {
+  text-wrap: inherit;
+}
+
+.prose :is(ul, ol) {
+  padding-left: 1.25em;
+}
+
+:is(dd, li) > .prose {
+  margin: 0;
+  text-wrap: wrap;
+}
+
+/* ---------------------------------------------------------------- layout */
+
+.wrap {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter-left) var(--gutter-right);
+}
+
+/* A section's title, its short description stacked under it: one left edge. */
+.section-head {
+  margin-bottom: 1.5rem;
+}
+
+.section-head > :is(h2, h3) {
+  margin: 0;
+}
+
+.section-head > .prose {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+}
+
+/* A part of a section under its own (smaller) title. */
+.subsection {
+  margin-top: clamp(2rem, 6vw, 3rem);
+}
+
+.subsection .section-head h3 {
+  font-size: var(--fs-h3, 1.125rem);
+}
+
+/* "See more on my GitHub": small, centered under the subsection */
+.subsection .more-link {
+  margin: 1.25rem 0 0;
+  color: var(--muted);
+  font-size: var(--fs-small, 0.875rem);
+  text-align: center;
+}
+
+.subsection .more-link p {
+  margin: 0;
+}
+
+.eyebrow,
+.caption {
+  margin: 0 0 0.5rem;
+  font-size: var(--fs-small, 0.85rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* a caption over a grouped list starts where the rows' text starts */
+.caption {
+  padding-inline: 1.15rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.lead {
+  font-size: var(--fs-lead, clamp(1.0625rem, 2vw, 1.125rem));
+  max-width: 38rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  z-index: 100;
+  padding: 0.5rem 0.75rem;
+  background: var(--inverse);
+  color: var(--on-inverse);
+  border-radius: var(--pill);
+}
+
+.skip:focus {
+  top: calc(0.5rem + env(safe-area-inset-top, 0px));
+}
+
+/* ------------------------------------------------------------ components */
+
+/* Grouped list: one raised box, rows inside with --divider lines inset to
+   where the text starts. Rows are the direct children; a row that is a link
+   carries class .row on its <a>, gets a chevron and fills while pressed. */
+.group {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--raised);
+  overflow: hidden;
+}
+
+.group > * {
+  position: relative;
+}
+
+.group > * + *::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.15rem;
+  right: 0;
+  border-top: 1px solid var(--divider);
+  pointer-events: none;
+}
+
+.row {
+  display: block;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.15rem;
+}
+
+/* a whole row is one link: text on the left, a chevron on the right */
+a.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  a.row:hover {
+    background: var(--surface-hover);
+  }
+
+  a.row:hover > svg {
+    color: var(--text);
+    transform: translateX(var(--nudge));
+  }
+}
+
+a.row:active {
+  background: var(--surface-hover);
+}
+
+a.row:focus-visible {
+  outline-offset: -2px;
+  border-radius: var(--radius);
+}
+
+a.row > svg {
+  color: var(--muted);
+  transition:
+    transform var(--slow) var(--ease),
+    color var(--slow) var(--ease);
+}
+
+.row-title {
+  display: block;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.row-sub {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--muted);
+  font-size: var(--fs-small, 0.9375rem);
+  line-height: 1.4;
+}
+
+/* Where an entry comes from (a school, an issuer), under its title. */
+.where {
+  margin: 0.15rem 0 0;
+  font-size: var(--fs-small, 0.9375rem);
+}
+
+/* "the nudge": a 2px shift to the right on hover. Only where a pointer
+   hovers: on touch screens a tap would leave cards stuck nudged. */
+.nudge {
+  position: relative;
+}
+
+@media (hover: hover) {
+  .nudge {
+    will-change: transform; /* text stays crisp, no re-render when it settles */
+  }
+
+  .nudge:hover {
+    transform: translateX(var(--nudge));
+  }
+
+  /* While nudged, an invisible strip fills the gap left behind, so a pointer
+     resting on the left edge stays on the card (instead of flickering). */
+  .nudge:hover::before {
+    content: "";
+    position: absolute;
+    inset-block: -1px;
+    left: calc(-1px - var(--nudge));
+    width: calc(var(--nudge) + 1px);
+  }
+
+  /* clickable cards lift off the page: their shadow grows */
+  .card.nudge:hover {
+    box-shadow:
+      0 0 0 1px var(--ring-strong),
+      0 2px 4px -1px var(--shadow),
+      0 14px 28px -10px var(--shadow);
+  }
+}
+
+/* landed on from a link (#torchlayers): the border lights up, then fades */
+.card:target {
+  animation: target 2s var(--ease);
+}
+
+@keyframes target {
+  from,
+  40% {
+    box-shadow: 0 0 0 2px var(--text);
+  }
+}
+
+/* Arrows that point somewhere bounce (Arrow.astro), opennudge.com's
+   bouncing arrow around where it rests (the text's middle): up a little
+   over it, down a little under it, a smaller hop up, then still. Units are
+   the arrow's 24 (at 18px, 4 units is 3px). The path moves inside the SVG,
+   not the box: it is redrawn as a vector every frame, so it moves smoothly
+   and stays sharp at any zoom; the cost is repainting the arrow's few
+   pixels per frame. Reduced motion stops it (below), at rest. */
+.bounce path {
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-4px);
+  }
+
+  55% {
+    transform: translateY(2px);
+  }
+
+  70% {
+    transform: translateY(-1px);
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.15rem 1.25rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--raised);
+}
+
+/* Pills raised like the boxes (the same surface, ring and shadow), on the
+   page and inside boxes alike. */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  font-size: var(--fs-small, 0.8rem);
+  line-height: 1.4;
+  padding: 0.15rem 0.65rem;
+  border-radius: var(--pill);
+  background: var(--surface);
+  box-shadow: var(--raised);
+  color: var(--text);
+}
+
+/* A list with one set for desktop, one for phones (the hero's pills, Stack
+   Overflow's tags): only one shows (same breakpoint as the header's menu).
+   After .tags, so these win over its display. */
+.only-mobile {
+  display: none;
+}
+
+@media (max-width: 40rem) {
+  .only-desktop {
+    display: none;
+  }
+
+  .only-mobile {
+    display: flex;
+  }
+}
+
+/* Capsules: secondary buttons are raised like the boxes (the same surface,
+   ring and shadow), primary ones the other mode's box (--inverse). No
+   outlines: a dark
+   1px curve shows its pixels. (The transparent border keeps both the same
+   size.) */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.15rem;
+  border: 1px solid transparent;
+  border-radius: var(--pill);
+  background: var(--surface);
+  box-shadow: var(--raised);
+  font-weight: 700;
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.button.primary {
+  --hover: var(--inverse-hover);
+  background: var(--inverse);
+  color: var(--on-inverse);
+  box-shadow: none;
+}
+
+/* Buttons stay put on hover (moving the box under the cursor makes it
+   flicker at the edge); only the fill changes. On touch screens the fill
+   shows while the finger is down (:active), so it doesn't stick after a tap. */
+@media (hover: hover) {
+  .button:hover {
+    background: var(--surface-hover);
+  }
+
+  .button.primary:hover {
+    background: var(--hover);
+    border-color: var(--hover);
+  }
+}
+
+.button:active {
+  background: var(--surface-hover);
+}
+
+.button.primary:active {
+  background: var(--hover);
+  border-color: var(--hover);
+}
+
+/* A row of buttons (the hero's, opennudge's) */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 0;
+}
+
+/* phones: the buttons share their row evenly, no ragged wrap (the hero's
+   CV button takes a row of its own: Hero.astro) */
+@media (max-width: 30rem) {
+  .actions > * {
+    flex: 1 1 0;
+  }
+}
+
+/* Round icon buttons (links or buttons), like Chrome's toolbar: only the
+   icon, until hovered or pressed. */
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--pill);
+  background: none;
+  color: var(--text);
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .icon-button:hover {
+    background: var(--surface);
+    box-shadow: var(--raised);
+  }
+}
+
+.icon-button:active {
+  background: var(--surface);
+  box-shadow: var(--raised);
+}
+
+/* thumbs need 44px targets */
+@media (pointer: coarse) {
+  .button {
+    min-height: 2.75rem;
+  }
+
+  .icon-button {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
+/* Spec sheet: one raised box of cells, small keys, large values. Each cell
+   draws its dividers into the 1px gaps; the outer ones are clipped. Four
+   cells: one row on wide screens, 2 × 2 below. */
+.spec {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin: 0;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--raised);
+  overflow: hidden;
+}
+
+@media (min-width: 52rem) {
+  .spec {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.spec > div {
+  padding: 0.85rem 1.15rem;
+  box-shadow: 0 0 0 1px var(--divider);
+}
+
+.spec dt {
+  font-size: var(--fs-small, 0.85rem);
+  color: var(--muted);
+}
+
+.spec dd {
+  margin: 0.15rem 0 0;
+  color: var(--muted);
+  font-size: var(--fs-small, 0.875rem);
+  line-height: 1.35;
+}
+
+.spec strong {
+  display: block;
+  color: var(--text);
+  font-size: var(--fs-h2, 1.5rem);
+  font-weight: 700;
+  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A state that will change ("in progress", "archived"): a small raised
+   capsule in --muted, next to a title. */
+.status {
+  display: inline-block;
+  padding: 0.05rem 0.55rem;
+  border: 1px solid transparent;
+  background: var(--surface);
+  box-shadow: var(--raised);
+  border-radius: var(--pill);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  vertical-align: 0.15em;
+  white-space: nowrap;
+}
+
+/* Numbers that line up (dates, counters) use tabular figures, not mono. */
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+/* A section shown by the tabs (src/scripts/tabs.ts) fades in. */
+[data-panel][data-enter] {
+  animation: enter var(--slow) var(--ease);
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ----------------------------------------------------------- reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore-start lint/complexity/noImportantStyles: reduced motion must win over every component */
+    transition: none !important;
+    animation: none !important;
+    /* biome-ignore-end lint/complexity/noImportantStyles: reduced motion must win over every component */
+  }
+
+  .nudge:hover,
+  a.row:hover > svg {
+    transform: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    /* biome-ignore lint/complexity/noImportantStyles: reduced motion must win over the default view transition */
+    animation: none !important;
+  }
+}

@@ -1,0 +1,90 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// Education: degrees, postgraduate studies and research, in columns.
+import { about, education } from "../../lib/data";
+import { site } from "../../site.config";
+import Section from "../Section.astro";
+---
+
+<Section section={about.education}>
+  <div class="columns">
+    {[
+      { title: about.education.degrees, items: education.degrees },
+      { title: about.education.postgraduate, items: education.postgraduate },
+    ].map((group) => (
+      <div>
+        <h3 class="caption">{group.title}</h3>
+        <ul class="group entries">
+          {group.items.map((item) => (
+            <li class="row">
+              <h4>
+                {item.title}
+                {item.inProgress && <span class="status">{site.ui.inProgress}</span>}
+              </h4>
+              <p class="where">
+                {item.detail && <span class="muted">{item.detail}, </span>}
+                <a href={item.url}>{item.school}</a>
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+    <div>
+      <h3 class="caption">{about.education.research}</h3>
+      <ul class="group entries">
+        {education.research.map((paper) => (
+          <li class="row">
+            <h4>
+              <a href={paper.url}>{paper.title}</a>
+            </h4>
+            <p class="where">
+              {paper.venue}, <span class="num">{paper.year}</span>
+            </p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</Section>
+
+<style>
+.columns {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  align-items: start;
+}
+
+/* wide: degrees get the widest column, so "Machine Learning, Jagiellonian
+   University" stays on one line */
+@media (min-width: 60rem) {
+  .columns {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .columns > :first-child .where {
+    white-space: nowrap;
+  }
+}
+
+.entries h4 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 0.5rem;
+  margin: 0;
+  font-size: var(--fs-body, 1rem);
+  line-height: 1.3;
+}
+
+.entries h4 a {
+  text-decoration-color: transparent;
+}
+
+.entries h4 a:hover {
+  text-decoration-color: currentColor;
+}
+</style>

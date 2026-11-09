@@ -1,0 +1,126 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+#
+# `stats`, `topTags` and each answer's `score` and `views` are refreshed by
+# `npm run update:stats` (scripts/update-stats.ts). The deploy refreshes them
+# daily; the values here are the fallback.
+# Which answers are shown, and their order, is chosen by hand: add or remove
+# entries by `id` (the number in https://stackoverflow.com/a/<id>). `facts`,
+# `title`, `tags` (the question's tags) and `topics` (the badges on the right)
+# are written by hand too.
+# `facts` and `topTags` each have a `desktop` and a `mobile` (phones) set.
+# Each `topTags` set leaves out the tags in its own `facts` and keeps as many
+# entries as it lists now.
+---
+userId: 10886420
+stats:
+  reputation: 25275
+  answers: 510
+  since: 2019
+  badges:
+    gold: 4
+    silver: 55
+    bronze: 93
+facts:
+  desktop:
+    - tag: "pytorch"
+      note: "🏆 top 10 all time"
+    - tag: "pytorch"
+      note: "gold"
+    - tag: "python"
+      note: "gold"
+  mobile:
+    - tag: "pytorch"
+      note: "🏆 top 10 all time"
+    - tag: "pytorch"
+      note: "gold"
+topTags:
+  desktop:
+    - tag: "machine-learning"
+      answers: 85
+      score: 414
+    - tag: "tensorflow"
+      answers: 68
+      score: 358
+    - tag: "deep-learning"
+      answers: 74
+      score: 306
+    - tag: "keras"
+      answers: 39
+      score: 151
+  mobile:
+    - tag: "python"
+      answers: 275
+      score: 1154
+    - tag: "machine-learning"
+      answers: 85
+      score: 414
+    - tag: "tensorflow"
+      answers: 68
+      score: 358
+    - tag: "deep-learning"
+      answers: 74
+      score: 306
+    - tag: "keras"
+      answers: 39
+      score: 151
+answers:
+  - id: 55895411
+    title: "How to correct unstable loss and accuracy during training?"
+    score: 58
+    views: 39977
+    tags:
+      - "tensorflow"
+      - "machine-learning"
+      - "classification"
+    topics:
+      - "recipe"
+      - "know-how"
+      - "heuristics"
+  - id: 66630301
+    title: "L1/L2 regularization in PyTorch"
+    score: 58
+    views: 283220
+    tags:
+      - "pytorch"
+      - "machine-learning"
+      - "loss-function"
+    topics:
+      - "math"
+      - "gradient"
+      - "graph optimization"
+  - id: 57136842
+    title: "Custom Neural Network Implementation on MNIST using Tensorflow 2.0?"
+    score: 34
+    views: 4868
+    tags:
+      - "tensorflow"
+      - "tensorflow2.0"
+      - "neural-network"
+    topics:
+      - "code design"
+      - "modularity"
+      - "tutorial"
+  - id: 61396543
+    title: "PyTorch: Speed up data loading"
+    score: 26
+    views: 33690
+    tags:
+      - "pytorch"
+      - "dataloader"
+    topics:
+      - "preprocessing"
+      - "caching"
+      - "augmentations"
+  - id: 54517941
+    title: "How to efficiently search list elements in a string in python"
+    score: 26
+    views: 6068
+    tags:
+      - "python"
+      - "list"
+    topics:
+      - "algorithms"
+      - "Big O"
+      - "optimization"
+...

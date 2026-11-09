@@ -1,0 +1,175 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// One selected Stack Overflow answer: its title (a link to it), votes, views
+// and the question's tags, then its topics.
+import { long, short, type stackoverflow } from "../lib/data";
+import { site } from "../site.config";
+import Icon from "./Icon.astro";
+import Markdown from "./Markdown.astro";
+
+interface Props {
+  /** One entry of `answers` in src/content/stackoverflow.yaml. */
+  answer: (typeof stackoverflow.answers)[number];
+}
+
+const { answer } = Astro.props;
+
+const answerUrl = (id: number) => `https://stackoverflow.com/a/${id}`;
+const questionTagUrl = (tag: string) =>
+  `https://stackoverflow.com/questions/tagged/${encodeURIComponent(tag)}`;
+---
+
+<li class="row answer">
+  <span class="answer-text">
+    {/* the title's link covers the whole row (::after); the
+        question tags are links of their own, above it */}
+    <a class="answer-link" href={answerUrl(answer.id)}>
+      <span class="answer-title">
+        <Markdown inline text={answer.title} />
+      </span>
+    </a>
+    <span class="row-sub answer-meta">
+      <span class="num" title={`${answer.score} ${site.ui.votes}`}>
+        <Icon name="vote" size={11} />
+        {answer.score} {site.ui.votes}
+      </span>
+      <span class="num" title={`${long(answer.views)} ${site.ui.views}`}>
+        <Icon name="eye" size={12} />
+        {short(answer.views)} {site.ui.views}
+      </span>
+      <span class="question-tags">
+        {answer.tags.map((tag, index) => (
+          <>
+            {index > 0 && ", "}
+            <a href={questionTagUrl(tag)}>{tag}</a>
+          </>
+        ))}
+      </span>
+    </span>
+  </span>
+  <ul class="tags topics">
+    {answer.topics.map((topic) => <li>{topic}</li>)}
+  </ul>
+  <Icon name="chevron" size={14} />
+</li>
+
+<style>
+.answer-title {
+  display: block;
+  line-height: 1.35;
+}
+
+.answer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.125rem 1rem;
+  font-size: var(--fs-small, 0.8125rem);
+}
+
+.answer-meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* A row like a.row (text, topic badges, chevron), but the row itself is not
+   a link: the title's link stretches over it, so the question tags can be
+   links of their own. */
+.answer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  column-gap: 0.75rem;
+  transition: background-color var(--slow) var(--ease);
+}
+
+.answer-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.answer-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.answer-link:focus-visible {
+  outline: none;
+}
+
+.answer-link:focus-visible::after {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+  border-radius: var(--radius);
+}
+
+/* above the stretched link */
+.question-tags a {
+  position: relative;
+  z-index: 1;
+}
+
+/* plain text with commas, not a flex row with gaps; always on a line of
+   its own, under the votes and views */
+.answer-meta > .question-tags {
+  display: block;
+  flex-basis: 100%;
+}
+
+.answer > :global(svg) {
+  color: var(--muted);
+  transition:
+    transform var(--slow) var(--ease),
+    color var(--slow) var(--ease);
+}
+
+/* fills like a.row, only when the answer link (not a tag) is under the pointer */
+@media (hover: hover) {
+  .answer:has(.answer-link:hover) {
+    background: var(--surface-hover);
+  }
+
+  .answer:has(.answer-link:hover) > :global(svg) {
+    color: var(--text);
+    transform: translateX(var(--nudge));
+  }
+}
+
+.answer:has(.answer-link:active) {
+  background: var(--surface-hover);
+}
+
+.topics {
+  justify-content: flex-end;
+  max-width: 24rem;
+}
+
+/* phones: the topic badges go under the text */
+@media (max-width: 40rem) {
+  .answer {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "text chevron"
+      "topics chevron";
+    row-gap: 0.5rem;
+  }
+
+  .answer-text {
+    grid-area: text;
+  }
+
+  .topics {
+    grid-area: topics;
+    justify-content: flex-start;
+    max-width: none;
+  }
+
+  .answer > :global(svg) {
+    grid-area: chevron;
+  }
+}
+</style>

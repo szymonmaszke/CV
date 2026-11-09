@@ -1,0 +1,24 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// Content Markdown (already validated by the schemas) rendered to HTML.
+import { renderMarkdown } from "../lib/markdown";
+
+interface Props {
+  /** The Markdown text. */
+  text: string;
+  /** Extra class on the `.prose` wrapper (not used when inline). */
+  class?: string;
+  /** Render without a wrapper or `<p>`, for use inside a heading or label. */
+  inline?: boolean;
+}
+const { text, class: className, inline = false } = Astro.props;
+---
+
+{inline ? (
+  // biome-ignore lint/correctness/noUndeclaredVariables: Astro provides Fragment for wrapper-free HTML
+  <Fragment set:html={renderMarkdown(text, true)} />
+) : (
+  <div class:list={["prose", className]} set:html={renderMarkdown(text)} />
+)}

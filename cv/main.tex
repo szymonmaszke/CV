@@ -1,3 +1,6 @@
+% SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+% SPDX-License-Identifier: Apache-2.0
+
 % !TEX TS-program = xelatex
 % !TEX encoding = UTF-8 Unicode
 
@@ -15,15 +18,10 @@
 \usepackage{float}
 \usepackage{calc}
 \usepackage{fontspec}
-% \defaultfontfeatures{Extension = .otf}
-% \defaultfontfeatures{
-%     Path = /usr/share/texmf-dist/fonts/opentype/public/fontawesome/FontAwesome.otf
-% }
 % workaround for XeTeX and fontawesome: load the font by file name, as
 % fontconfig does not index TeX Live fonts
-\defaultfontfeatures[FontAwesome]{Extension = .otf}
+\defaultfontfeatures[FontAwesome]{Extension=.otf}
 \usepackage{fontawesome}
-% \newfontfamily{\FA}{/usr/share/texmf-dist/fonts/opentype/public/fontawesome/FontAwesome.otf}
 \usepackage{enumitem}
 \usepackage{setspace}
 \usepackage{xcolor}
@@ -38,9 +36,8 @@
 \usepackage{anyfontsize}
 \usepackage{graphicx, calc}
 \usepackage{hyperref}
-\usepackage{euflag}
-
-\usepackage[yearmonthsep=/,monthdaysep=/,dayyearsep=/,timesep=:]{datetime2}
+\hypersetup{hidelinks}
+\usepackage[normalem]{ulem}
 
 \usepackage{subfiles}
 
@@ -55,10 +52,11 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Theme: light unless the build defines \cvtheme first (scripts/build-cv.sh)
+\providecommand{\cvtheme}{light}
 \usepackage{styles/colors}
 \usepackage{styles/variables}
 \usepackage{styles/environments}
-\usepackage{styles/rulers}
 \usepackage{styles/commands}
 
 \color{text}
@@ -82,5 +80,4 @@
   \subfile{sections/top}
   \subfile{sections/core}
 
-  % Main section
 \end{document}

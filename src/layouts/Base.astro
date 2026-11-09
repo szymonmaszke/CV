@@ -1,0 +1,84 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { site } from "../site.config";
+
+interface Props {
+  /** Page title; the site name is appended automatically. */
+  title?: string;
+  /** Keep the page out of search engines (404), instead of a canonical link. */
+  noindex?: boolean;
+}
+
+const { title, noindex = false } = Astro.props;
+
+const fullTitle = title ? `${title} · ${site.name}` : site.title;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL("/og.png", Astro.site);
+---
+
+<!doctype html>
+<html lang={site.language}>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>{fullTitle}</title>
+    <meta name="description" content={site.description}>
+    <meta name="author" content={site.name}>
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+    <!-- Apply the stored light/dark choice before the first paint (no flash). -->
+    <script is:inline>
+    try {
+      const root = document.documentElement;
+      const theme = localStorage.getItem("theme");
+      if (theme === "light" || theme === "dark") {
+        root.dataset.theme = theme;
+      }
+    } catch {
+      // storage unavailable (private mode): follow the OS setting
+    }
+    </script>
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f1f3f4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#353739" media="(prefers-color-scheme: dark)">
+
+    <!-- opennudge's icons. Browsers keep a site's icon for a long time: the
+         ?v= makes them fetch these instead of the old "SM" one they cached;
+         raise it whenever the icons change. -->
+    <link rel="icon" href="/favicon.ico?v=2" sizes="32x32">
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+    <link rel="alternate" type="text/plain" title="llms.txt" href={site.links.llms}>
+    <slot name="head" />
+
+    <meta property="og:type" content="profile">
+    <meta property="profile:first_name" content={site.name.split(" ")[0]}>
+    <meta property="profile:last_name" content={site.name.split(" ").slice(1).join(" ")}>
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content={site.name}>
+    <meta property="og:title" content={fullTitle}>
+    <meta property="og:description" content={site.description}>
+    <meta property="og:url" content={canonical}>
+    <meta property="og:image" content={imageUrl}>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content={`${site.name}: ${site.hero.motto}`}>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content={fullTitle}>
+    <meta name="twitter:description" content={site.description}>
+    <meta name="twitter:image" content={imageUrl}>
+  </head>
+  <body>
+    <a class="skip" href="#main">{site.ui.skip}</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
