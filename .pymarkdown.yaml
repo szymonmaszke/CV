@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+---
+plugins:
+  # Disabled as it does not play well with GitHub admonitions
+  md007:
+    enabled: false
+  md028:
+    enabled: false
+  md033:
+    enabled: false
+  md034:
+    enabled: false
+  # Disabled as the first line is SPDX license header
+  md041:
+    enabled: false
+  md042:
+    enabled: false
+  # Disabled as it conflicts with mdformat around pyml pragmas
+  # (pymarkdownlnt counts the pragma line as blank)
+  md012:
+    enabled: false
+...

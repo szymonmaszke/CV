@@ -1,0 +1,44 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// Technologies: one row per group, its items as pills.
+import { about, technologies } from "../../lib/data";
+import Section from "../Section.astro";
+---
+
+<Section section={about.technologies}>
+  <dl class="group tech">
+    {technologies.map((group) => (
+      <div class="row">
+        <dt>{group.group}</dt>
+        <dd>
+          <ul class="tags">
+            {group.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </dd>
+      </div>
+    ))}
+  </dl>
+</Section>
+
+<style>
+.tech {
+  margin: 0;
+}
+
+.tech .row {
+  padding-block: 0.75rem 0.875rem;
+}
+
+.tech dt {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.tech dd {
+  margin: 0;
+}
+</style>

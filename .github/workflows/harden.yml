@@ -1,0 +1,171 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+# Applies repository settings, security features, GitHub Pages and rulesets
+# (.github/rulesets) once the repository is public, adapted from opentemplate.
+# Every step is a script in .github/tools/harden, which can also be run
+# locally (.github/tools/harden.sh, see CONTRIBUTING.md). Run manually with
+# a short-lived HARDEN_GITHUB_TOKEN, re-runnable (e.g. to change the number
+# of contributors).
+
+---
+name: "Harden"
+
+on:
+  workflow_dispatch:
+    inputs:
+      contributors:
+        description: "Number of contributors (including you)"
+        type: "choice"
+        default: "1 (solo)"
+        options:
+          - "1 (solo)"
+          - "2"
+          - "3 (or more)"
+        required: true
+
+# enq: the only way to set permissions to none in GH Actions
+permissions: {} # yamllint disable-line rule:braces
+
+concurrency:
+  group: >
+    ${{ github.workflow_ref }}
+
+jobs:
+  harden:
+    name: "Harden"
+    if: >
+      github.ref == 'refs/heads/main'
+    permissions:
+      contents: "read" # Needed to checkout the scripts and rulesets
+      actions: "write" # Needed to run the Security Scorecard workflow
+    timeout-minutes: 10
+    runs-on: "ubuntu-latest"
+    env:
+      # Resolves {owner}/{repo} of gh api calls in the scripts
+      GH_REPO: "${{ github.repository }}"
+      DOMAIN: "maszke.co"
+    steps:
+      - name: "Harden Runner"
+        uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
+        with:
+          disable-sudo-and-containers: true
+          egress-policy: "block"
+          allowed-endpoints: >
+            *.actions.githubusercontent.com:443
+            codeload.github.com:443
+            results-receiver.actions.githubusercontent.com:443
+            *.blob.core.windows.net:443
+            api.github.com:443
+            github.com:443
+      - name: "Require a public repository"
+        # Rulesets, Pages, secret scanning and code scanning are free
+        # for public repositories only
+        if: >
+          github.event.repository.visibility != 'public'
+        run: >
+          echo "::error::Make the repository public before hardening it" && exit 1
+      - name: "Normalize contributors"
+        id: "contributors"
+        env:
+          CONTRIBUTORS: "${{ inputs.contributors }}"
+        # Required pull request approvals (author excluded)
+        # enq: indentation disabled to aid bash script readability
+        # yamllint disable rule:indentation
+        run: |
+          case "${CONTRIBUTORS}" in
+            "1 (solo)")
+              echo "approvals=0" >> "${GITHUB_OUTPUT}"
+              ;;
+            "2")
+              echo "approvals=1" >> "${GITHUB_OUTPUT}"
+              ;;
+            *)
+              echo "approvals=2" >> "${GITHUB_OUTPUT}"
+              ;;
+          esac
+        # yamllint enable rule:indentation
+      - name: "Checkout repository"
+        uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" # v7.0.1
+        with:
+          sparse-checkout: |
+            .github/rulesets
+            .github/tools/harden
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - name: "Apply general settings for the repository"
+        # Administration write
+        # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#update-a-repository
+        env:
+          # enq: short-lived token (1 day), removed from secrets after hardening
+          GH_TOKEN: "${{ secrets.HARDEN_GITHUB_TOKEN }}" # zizmor: ignore[secrets-outside-env]
+        run: "./.github/tools/harden/settings.sh"
+      - name: "Enable GitHub Pages with the custom domain"
+        # Administration AND Pages write, deployed by deploy.yml
+        # https://docs.github.com/en/rest/pages/pages?apiVersion=2022-11-28#create-a-github-pages-site
+        env:
+          # enq: short-lived token (1 day), removed from secrets after hardening
+          GH_TOKEN: "${{ secrets.HARDEN_GITHUB_TOKEN }}" # zizmor: ignore[secrets-outside-env]
+        run: "./.github/tools/harden/pages.sh"
+      - name: "Enforce HTTPS for GitHub Pages (best effort)"
+        # Fails until DNS points to GitHub Pages and the certificate is issued,
+        # re-run the workflow or tick "Enforce HTTPS" in Settings -> Pages
+        continue-on-error: true
+        env:
+          # enq: short-lived token (1 day), removed from secrets after hardening
+          GH_TOKEN: "${{ secrets.HARDEN_GITHUB_TOKEN }}" # zizmor: ignore[secrets-outside-env]
+        run: "./.github/tools/harden/pages-https.sh"
+      - name: "Allow GitHub Pages deployments from main only"
+        # Administration write
+        # https://docs.github.com/en/rest/deployments/environments?apiVersion=2022-11-28#create-or-update-an-environment
+        env:
+          # enq: short-lived token (1 day), removed from secrets after hardening
+          GH_TOKEN: "${{ secrets.HARDEN_GITHUB_TOKEN }}" # zizmor: ignore[secrets-outside-env]
+        run: "./.github/tools/harden/pages-main.sh"
+      - name: "Enable vulnerability alerts and security updates"
+        # Administration write
+        # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#enable-vulnerability-alerts
+        # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#enable-dependabot-security-updates
+        env:
+          # enq: short-lived token (1 day), removed from secrets after hardening
+          GH_TOKEN: "${{ secrets.HARDEN_GITHUB_TOKEN }}" # zizmor: ignore[secrets-outside-env]
+        run: "./.github/tools/harden/vulnerability-alerts.sh"
+      - name: "Enable private vulnerability reporting"
+        # Administration write
+        # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#enable-private-vulnerability-reporting-for-a-repository
+        env:
+          # enq: short-lived token (1 day), removed from secrets after hardening
+          GH_TOKEN: "${{ secrets.HARDEN_GITHUB_TOKEN }}" # zizmor: ignore[secrets-outside-env]
+        run: "./.github/tools/harden/private-vulnerability-reporting.sh"
+      - name: "Enable security features (best effort)"
+        # One request per feature, so an unavailable one does not block the rest
+        # Administration write
+        # https://docs.github.com/en/rest/repos/repos?apiVersion=2022-11-28#update-a-repository
+        env:
+          # enq: short-lived token (1 day), removed from secrets after hardening
+          GH_TOKEN: "${{ secrets.HARDEN_GITHUB_TOKEN }}" # zizmor: ignore[secrets-outside-env]
+        run: "./.github/tools/harden/security.sh"
+      - name: "Enable CodeQL default setup"
+        # Required by the code_scanning rule of rulesets/branch-default.json
+        # Administration write
+        # https://docs.github.com/en/rest/code-scanning/code-scanning?apiVersion=2022-11-28#update-a-code-scanning-default-setup-configuration
+        env:
+          # enq: short-lived token (1 day), removed from secrets after hardening
+          GH_TOKEN: "${{ secrets.HARDEN_GITHUB_TOKEN }}" # zizmor: ignore[secrets-outside-env]
+        run: "./.github/tools/harden/codeql.sh"
+      - name: "Apply rulesets"
+        # Updates rulesets of the same name, so the workflow can be re-run
+        # Administration write
+        # https://docs.github.com/en/rest/repos/rules?apiVersion=2022-11-28#create-a-repository-ruleset
+        env:
+          REVIEWERS: "${{ steps.contributors.outputs.approvals }}"
+          # enq: short-lived token (1 day), removed from secrets after hardening
+          GH_TOKEN: "${{ secrets.HARDEN_GITHUB_TOKEN }}" # zizmor: ignore[secrets-outside-env]
+        run: "./.github/tools/harden/rulesets.sh \"${REVIEWERS}\" .github/rulesets"
+      - name: "Run Security Scorecard"
+        # Hardening increases the score significantly
+        env:
+          GH_TOKEN: "${{ github.token }}"
+        run: >
+          gh workflow run security-scorecard.yml --ref main
+...

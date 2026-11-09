@@ -1,0 +1,110 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// Stack Overflow: the numbers, some facts and top tags, selected answers.
+import { about, long, screens, stackoverflow } from "../../lib/data";
+import Answer from "../Answer.astro";
+import Markdown from "../Markdown.astro";
+import Section from "../Section.astro";
+
+// a top tag links to my answers in it
+const tagUrl = (tag: string) => `https://stackoverflow.com/search?q=user:${stackoverflow.userId}+[${tag}]`;
+---
+
+<Section section={about.stackoverflow} text={about.stackoverflow.text}>
+  <dl class="spec">
+    <div>
+      <dt>{about.stackoverflow.stats.reputation}</dt>
+      <dd><strong>{long(stackoverflow.stats.reputation)}</strong></dd>
+    </div>
+    <div>
+      <dt>{about.stackoverflow.stats.answers}</dt>
+      <dd><strong>{long(stackoverflow.stats.answers)}</strong></dd>
+    </div>
+    <div>
+      <dt>{about.stackoverflow.stats.badges}</dt>
+      <dd>
+        <strong>
+          {stackoverflow.stats.badges.gold +
+            stackoverflow.stats.badges.silver +
+            stackoverflow.stats.badges.bronze}
+        </strong>
+      </dd>
+    </div>
+    <div>
+      <dt>{about.stackoverflow.stats.since}</dt>
+      <dd><strong>{stackoverflow.stats.since}</strong></dd>
+    </div>
+  </dl>
+
+  <dl class="so-tags">
+    <div>
+      <dt class="caption">{about.stackoverflow.facts}</dt>
+      <dd class="tag-box">
+        {screens.map((screen) => (
+          <ul class:list={["tags", `only-${screen}`]}>
+            {stackoverflow.facts[screen].map((fact) => (
+              <li>
+                {fact.tag} <span class="muted">{fact.note}</span>
+              </li>
+            ))}
+          </ul>
+        ))}
+      </dd>
+    </div>
+    <div>
+      <dt class="caption">{about.stackoverflow.tags}</dt>
+      <dd class="tag-box">
+        {screens.map((screen) => (
+          <ul class:list={["tags", `only-${screen}`]}>
+            {stackoverflow.topTags[screen].map((tag) => (
+              <li>
+                <a href={tagUrl(tag.tag)}>{tag.tag}</a> <span class="muted num">{tag.answers}</span>
+              </li>
+            ))}
+          </ul>
+        ))}
+      </dd>
+    </div>
+  </dl>
+
+  <div class="subsection">
+    <h3 class="caption">{about.stackoverflow.selected}</h3>
+    <ol class="group">
+      {stackoverflow.answers.map((answer) => <Answer answer={answer} />)}
+    </ol>
+    <Markdown class="more-link" text={about.stackoverflow.more} />
+  </div>
+</Section>
+
+<style>
+.so-tags {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem 1.5rem;
+  margin: 1.5rem 0 0;
+}
+
+/* side by side; "other tags" a little wider, so its pills stay on one line */
+@media (min-width: 48rem) {
+  .so-tags {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  }
+}
+
+.tag-box {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.so-tags a {
+  text-decoration: none;
+}
+
+.so-tags a:hover {
+  text-decoration: underline;
+}
+</style>

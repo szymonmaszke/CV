@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+# latexindent (prek: LaTeX format) for cv/: two spaces, like .editorconfig.
+# Only indentation changes; line breaks stay as written (no -m switch).
+---
+defaultIndent: "  "
+# the document environment is indented in cv/ (main.tex, sections/)
+noAdditionalIndent:
+  document: 0
+indentPreamble: 0
+...

@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+---
+feat:
+  - "(feat)"
+fix:
+  - "(fix)"
+"fix!":
+  - "(fix!)"
+"feat!":
+  - "(feat!)"
+...

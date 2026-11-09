@@ -1,0 +1,41 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// A small stroke icon (src/lib/icons.ts), or a filled mark (GitHub, StackOverflow, vote).
+import { githubMark, iconAttributes, icons, stackoverflowMark, voteMark } from "../lib/icons";
+
+const marks = {
+  github: { viewBox: "0 0 16 16", d: githubMark },
+  stackoverflow: { viewBox: "0 0 24 24", d: stackoverflowMark },
+  vote: { viewBox: "0 0 16 16", d: voteMark },
+};
+
+interface Props {
+  /** A stroke icon from src/lib/icons.ts, or `github` / `stackoverflow` / `vote`. */
+  name: keyof typeof icons | keyof typeof marks;
+  /** Width and height, in pixels. */
+  size?: number;
+}
+
+const { name, size = 14 } = Astro.props;
+const mark = name in marks ? marks[name as keyof typeof marks] : undefined;
+---
+
+{mark ? (
+  <svg viewBox={mark.viewBox} width={size} height={size} aria-hidden="true" class="icon">
+    <path fill="currentColor" d={mark.d} />
+  </svg>
+) : (
+  <svg {...iconAttributes(size)} class="icon">
+    {icons[name as keyof typeof icons].map((d) => (
+      <path d={d} />
+    ))}
+  </svg>
+)}
+
+<style>
+.icon {
+  flex: none;
+}
+</style>

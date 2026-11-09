@@ -1,0 +1,139 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+import { site } from "../site.config";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap cols">
+    <div class="about">
+      <p>
+        <strong>{site.name}</strong><br>
+        <span class="muted">{site.hero.motto}</span>
+      </p>
+    </div>
+
+    <div class="contact">
+      <h2>{site.footer.contact}</h2>
+      <ul>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>{site.footer.elsewhere}</h2>
+      <ul>
+        <li><a href={site.links.github}>GitHub</a></li>
+        <li><a href={site.links.stackoverflow}>Stack Overflow</a></li>
+        <li><a href={site.links.opennudge}>opennudge</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>{site.footer.files}</h2>
+      <ul>
+        <li><a href={site.links.llms}>{site.footer.llms}</a></li>
+        <li><a href={site.cv.light} download>{site.ui.cvLabel}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="legal">
+      <span>© {year} {site.name}</span>
+      <span>{site.footer.license}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding-block: 2.5rem calc(1.75rem + env(safe-area-inset-bottom, 0px));
+  font-size: var(--fs-body, 0.9375rem);
+}
+
+.cols {
+  display: grid;
+  gap: 1.75rem 2rem;
+  grid-template-columns: 1.5fr repeat(3, 1fr);
+}
+
+.about p {
+  margin: 0;
+  line-height: 1.45;
+}
+
+h2 {
+  font-size: var(--fs-small, 0.8125rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.375rem;
+}
+
+/* long links (the email address) break instead of overflowing */
+a {
+  overflow-wrap: anywhere;
+}
+
+/* phones: each link a comfortable touch target */
+@media (pointer: coarse) {
+  ul {
+    gap: 0;
+  }
+
+  li a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+  }
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1.5rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: var(--fs-small, 0.8125rem);
+}
+
+@media (max-width: 48rem) {
+  .cols {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* full rows: the name, and the long email link (in a half column it
+     would break mid-word); the other two lists share a row */
+  .about,
+  .contact {
+    grid-column: 1 / -1;
+  }
+}
+
+/* small phones: one column, one left edge */
+@media (max-width: 30rem) {
+  .cols {
+    grid-template-columns: 1fr;
+  }
+
+  .legal {
+    flex-direction: column;
+  }
+}
+</style>

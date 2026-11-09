@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+# Dead link checking (prek only, hosts often block CI runners as bots)
+# See https://lychee.cli.rs/guides/config/ for all options
+
+no_progress = true
+include_fragments = "full"
+# Root-relative links (e.g. /SECURITY.md) resolve against the repository root
+root_dir = "."
+
+cache = true
+max_cache_age = "1d"
+
+# Local development server (npm run dev)
+exclude_loopback = true
+
+# Regexes matched against full URLs; remove these after the first deployment
+# (and once the repository is public) to validate all links
+exclude = [
+  # Website, served by this repository only after the first deployment
+  '^https://maszke\.co',
+]

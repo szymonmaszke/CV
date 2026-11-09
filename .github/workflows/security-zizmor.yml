@@ -1,0 +1,69 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+# zizmor (https://docs.zizmor.sh) audits GitHub Actions workflows, same
+# version and persona as the prek hook (prek.toml)
+
+---
+name: "Security zizmor"
+
+on:
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - ".github/workflows/*.yml"
+      - ".github/dependabot.yml"
+  push:
+    branches:
+      - "main"
+    paths:
+      - ".github/workflows/*.yml"
+      - ".github/dependabot.yml"
+  workflow_dispatch:
+
+# enq: the only way to set permissions to none in GH Actions
+permissions: {} # yamllint disable-line rule:braces
+
+concurrency:
+  group: >
+    ${{ github.workflow_ref }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  security-zizmor:
+    name: "Security zizmor"
+    timeout-minutes: 10
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: "read"
+    steps:
+      - name: "Harden Runner"
+        uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
+        with:
+          # Runs zizmor in a docker container,
+          # disable-sudo-and-containers impossible
+          disable-sudo: true
+          egress-policy: "block"
+          allowed-endpoints: >
+            *.actions.githubusercontent.com:443
+            codeload.github.com:443
+            results-receiver.actions.githubusercontent.com:443
+            *.blob.core.windows.net:443
+            api.github.com:443
+            github.com:443
+            ghcr.io:443
+            pkg-containers.githubusercontent.com:443
+      - name: "Checkout repository"
+        uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" # v7.0.1
+        with:
+          persist-credentials: false
+      - name: "Run zizmor"
+        uses: "zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482" # v0.6.4
+        with:
+          version: "1.30.1"
+          persona: "auditor"
+          # Fail on findings (also in private repositories without code scanning)
+          advanced-security: false
+          annotations: true
+...

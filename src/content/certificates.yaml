@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+#
+# Most recent first. `inProgress: true` shows an "in progress" pill.
+---
+- title: "Economics and Finance"
+  issuer: "Open Economic University, SGH Warsaw School of Economics"
+  url: "https://www.sgh.waw.pl/en"
+  topic: "Core economic knowledge"
+  inProgress: true
+  note: "Growth, labor markets, public and personal finance, financial risk."
+- title: "Manager Academy III"
+  issuer: "NCBR, National Centre for Research and Development"
+  url: "https://www.gov.pl/web/ncbr-en"
+  topic: "Horizon Europe project management"
+  note: "Preparing and managing EU-funded (Horizon Europe) projects."
+...

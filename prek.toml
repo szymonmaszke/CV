@@ -1,0 +1,613 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+# Local quality checks (https://prek.j178.dev), same as opentemplate's prek.toml.
+# Tools come from their upstream hook repositories (prek builds each one an
+# isolated environment) or from npm (package.json scripts), no Python project.
+# Install with `npm run setup`, run everything with `npm run fix`.
+
+default_stages = [
+  "pre-commit",
+]
+default_install_hook_types = [
+  "pre-commit",
+  "commit-msg",
+  "pre-push",
+]
+fail_fast = true
+
+# Hooks of the same priority run concurrently: fixers that may change the same
+# files get distinct priorities, checks reading them run after the fixers
+
+[update]
+cooldown_days = 7
+freeze = true
+
+# Patch releases every few days, minor releases are enough
+[update.repos."https://github.com/trufflesecurity/trufflehog"]
+include_tags = ["v*.*.0"]
+
+# Older v* tags and lychee-lib-v* tags are not lychee releases
+[update.repos."https://github.com/lycheeverse/lychee"]
+include_tags = ["lychee-v*"]
+
+##############################################################################
+#
+#                               GENERIC CHECKS
+#
+##############################################################################
+
+[[repos]]
+repo = "builtin"
+
+  [[repos.hooks]]
+  id = "trailing-whitespace"
+  verbose = true
+  name = "<<<FIX>>> Trailing whitespace"
+  exclude = "^(LICENSE|LICENSES/.*)$"
+  priority = 60
+
+  [[repos.hooks]]
+  id = "end-of-file-fixer"
+  alias = "eof-fixer"
+  verbose = true
+  name = "<<<FIX>>> End of file"
+  exclude = "^(LICENSE|LICENSES/.*)$"
+  priority = 64
+
+  [[repos.hooks]]
+  id = "mixed-line-ending"
+  verbose = true
+  args = ["--fix=lf"]
+  name = "<<<FIX>>> Mixed line endings"
+  exclude = "^(LICENSE|LICENSES/.*)$"
+  priority = 66
+
+  [[repos.hooks]]
+  id = "check-added-large-files"
+  alias = "large-files"
+  verbose = true
+  name = "<<<CHECK>>> No large files"
+  priority = 10
+
+  [[repos.hooks]]
+  id = "check-case-conflict"
+  alias = "case-conflict"
+  verbose = true
+  name = "<<<CHECK>>> Case conflict"
+  priority = 10
+
+  [[repos.hooks]]
+  id = "check-symlinks"
+  alias = "symlinks"
+  verbose = true
+  name = "<<<CHECK>>> Symlinks"
+  priority = 10
+
+  [[repos.hooks]]
+  id = "check-merge-conflict"
+  alias = "merge-conflict"
+  verbose = true
+  name = "<<<CHECK>>> Merge conflicts"
+  priority = 10
+
+  [[repos.hooks]]
+  id = "no-commit-to-branch"
+  alias = "main-branch"
+  verbose = true
+  name = "<<<CHECK>>> Main branch"
+  priority = 10
+
+  [[repos.hooks]]
+  id = "check-executables-have-shebangs"
+  alias = "executables"
+  verbose = true
+  name = "<<<CHECK>>> Executables"
+  priority = 10
+
+  # Language specific checks
+  [[repos.hooks]]
+  id = "check-json"
+  alias = "json"
+  verbose = true
+  name = "<<<CHECK>>> JSON syntax"
+  priority = 10
+
+  [[repos.hooks]]
+  id = "check-toml"
+  alias = "toml"
+  verbose = true
+  name = "<<<CHECK>>> TOML syntax"
+  priority = 10
+
+  [[repos.hooks]]
+  id = "check-xml"
+  alias = "xml"
+  verbose = true
+  name = "<<<CHECK>>> XML syntax"
+  priority = 10
+
+[[repos]]
+repo = "meta"
+
+  [[repos.hooks]]
+  id = "check-useless-excludes"
+  alias = "prek-useless"
+  verbose = true
+  name = "<<<CHECK>>> prek Useless excludes"
+  priority = 10
+
+##############################################################################
+#
+#                          COMMITS, SECRETS, SECURITY
+#
+##############################################################################
+
+[[repos]]
+repo = "https://github.com/siderolabs/conform"
+rev = "57c5cc3cabc0c9219d69673cfa8faa49c2db76fb" # frozen: v0.1.0-alpha.32
+
+  [[repos.hooks]]
+  id = "conform"
+  alias = "policy"
+  name = "<<<CHECK>>> Policy"
+  verbose = true
+  stages = [
+    "pre-push",
+  ]
+  entry = "conform enforce"
+  pass_filenames = false
+  priority = 10
+
+[[repos]]
+repo = "https://github.com/compilerla/conventional-pre-commit"
+rev = "33b50eb042bee26eac0ee96ad84aa9c1b4dccdd8"  # frozen: v4.5.0
+
+  # Only feat and fix commits, without scopes (as in opentemplate)
+  [[repos.hooks]]
+  id = "conventional-pre-commit"
+  alias = "commit"
+  name = "<<<CHECK>>> Commit"
+  verbose = true
+  args = ["--strict", "--scopes", "", "feat", "fix", "feat!", "fix!"]
+  priority = 30
+
+[[repos]]
+repo = "https://github.com/trufflesecurity/trufflehog"
+rev = "e76dff8a7e57d6df0c60ad8cbf5d5cba505a8fc9" # frozen: v3.99.2
+
+  [[repos.hooks]]
+  id = "trufflehog"
+  alias = "secrets"
+  name = "<<<CHECK>>> Secrets"
+  verbose = true
+  priority = 10
+
+[[repos]]
+repo = "https://github.com/semgrep/pre-commit"
+rev = "a19f9deb8c211c43e469e994fa8ee15178bc1b1d" # frozen: v1.183.0
+
+  [[repos.hooks]]
+  id = "semgrep"
+  alias = "security"
+  name = "<<<CHECK>>> Security"
+  # Python 3.15 crashes semgrep-core on Linux (RLIM_INFINITY stack limit),
+  # see https://github.com/semgrep/semgrep/issues/11979
+  language_version = "3.14"
+  args = [
+    "scan",
+    "--exclude=package-lock.json",
+    "--config=p/javascript",
+    "--config=p/typescript",
+    "--config=p/secrets",
+    "--config=p/security-audit",
+    "--config=p/ci",
+    "--config=p/github-actions",
+    "--config=p/gitleaks",
+    "--config=p/trailofbits",
+    "--error",
+    "--metrics=off",
+    "--severity=INFO",
+    "--strict",
+    ".",
+  ]
+  verbose = true
+  pass_filenames = false
+  require_serial = true
+  priority = 80
+
+##############################################################################
+#
+#                                   LEGAL
+#
+##############################################################################
+
+[[repos]]
+repo = "https://github.com/fsfe/reuse-tool"
+rev = "ea739bff9c6daa1c4c8a5c5dfd069f3fb0374728"  # frozen: v6.3.0
+
+  [[repos.hooks]]
+  id = "reuse"
+  alias = "check-legal"
+  name = "<<<CHECK>>> Legal"
+  verbose = true
+  priority = 80
+
+[[repos]]
+repo = "local"
+
+  [[repos.hooks]]
+  id = "dco"
+  verbose = true
+  name = "<<<CHECK>>> DCO"
+  language = "fail"
+  entry = """
+  Changing DCO is prohibited according to the DCO itself.
+  If you wish to change/remove it, please do so in a separate commit
+  and disable this check.
+  """
+  files = "^DCO.md$"
+  # Should never be touched, indifferent to all the checks
+  priority = 30
+
+  # /LICENSE must be a regular file (GitHub's license detection skips
+  # symlinks) identical to its copy in LICENSES/ (REUSE)
+  [[repos.hooks]]
+  id = "license"
+  verbose = true
+  name = "<<<CHECK>>> License"
+  entry = "cmp LICENSE LICENSES/Apache-2.0.txt"
+  pass_filenames = false
+  language = "system"
+  files = "^(LICENSE|LICENSES/.*)$"
+  priority = 10
+
+  # Two-line SPDX header (.reuse/templates/header.jinja2) for every new file
+  # without one; existing headers are left as they are. Files reuse cannot
+  # comment (JSON, images) are skipped and reported by the REUSE check: add
+  # a .license file next to them. Excluded: .astro (header goes in the
+  # frontmatter, unknown to reuse) and public/ (served as-is, REUSE.toml)
+  [[repos.hooks]]
+  id = "fix-legal"
+  name = "<<<FIX>>> Legal"
+  language = "python"
+  additional_dependencies = ["reuse==6.2.0"]
+  entry = """
+  reuse annotate
+    --license=Apache-2.0
+    --copyright='Szymon Maszke <https://github.com/szymonmaszke>'
+    --copyright-prefix=spdx-symbol
+    --template=header
+    --skip-existing
+    --skip-unrecognised
+  """
+  require_serial = true
+  exclude = """(?x)^(
+    DCO.md|LICENSE|LICENSES/.*|REUSE.toml|.*\\.license|
+    .*\\.astro|public/.*|src/assets/brand/.*
+  )$"""
+  priority = 50
+
+  # npm dependencies, allowed licenses in .github/tools/licenses.ts
+  [[repos.hooks]]
+  id = "licenses"
+  verbose = true
+  name = "<<<CHECK>>> Licenses"
+  entry = "npm run --silent check:licenses"
+  pass_filenames = false
+  language = "system"
+  files = "^package(-lock)?.json$"
+  priority = 30
+
+##############################################################################
+#
+#                       DOCUMENTATION, TEXT AND CONFIGURATION
+#
+##############################################################################
+
+[[repos]]
+repo = "https://github.com/codespell-project/codespell"
+rev = "57b21406f092110c18776e39b0bda50d37c945c8"  # frozen: v2.4.3
+
+  [[repos.hooks]]
+  id = "codespell"
+  alias = "text"
+  name = "<<<FIX>>> Text"
+  verbose = true
+  args = ["--write-changes"]
+  exclude = "^(LICENSE|LICENSES/.*)$"
+  priority = 62
+
+[[repos]]
+repo = "https://github.com/errata-ai/vale"
+rev = "e2d4374b1c66c8a1dd6d912bebc135040d8833fa" # frozen: v3.26.0
+
+  [[repos.hooks]]
+  id = "vale"
+  alias = "setup-natural-language"
+  entry = "vale sync"
+  name = "<<<SETUP>>> Natural language"
+  verbose = true
+  pass_filenames = false
+  require_serial = true
+  types = ["markdown"]
+  priority = 10
+
+  [[repos.hooks]]
+  id = "vale"
+  alias = "natural-language"
+  name = "<<<CHECK>>> Natural language"
+  verbose = true
+  types = ["markdown"]
+  priority = 20
+
+[[repos]]
+repo = "https://github.com/hukkin/mdformat"
+rev = "82912cdaea4fb830f751504486a7879c70526547"  # frozen: 1.0.0
+
+  # Configured in .mdformat.toml (wrapped at 80 columns)
+  [[repos.hooks]]
+  id = "mdformat"
+  alias = "markdown"
+  name = "<<<FIX>>> Markdown"
+  verbose = true
+  additional_dependencies = [
+    "mdformat-footnote==0.1.3",
+    "mdformat-frontmatter==2.1.2",
+    "mdformat-gfm==1.0.0",
+    "mdformat-gfm-alerts==2.1.0",
+  ]
+  exclude = "^(DCO.md|LICENSE|LICENSES/.*)$"
+  require_serial = true
+  priority = 70
+
+[[repos]]
+repo = "https://github.com/jackdewinter/pymarkdown"
+rev = "25eba0fb2eb4bd1d59dc69a59cb9976d821106e7"  # frozen: v0.9.41
+
+  # Configured in .pymarkdown.yaml, runs after mdformat
+  [[repos.hooks]]
+  id = "pymarkdown"
+  alias = "markdown-fix"
+  name = "<<<FIX>>> Markdown lint"
+  verbose = true
+  args = ["--config", ".pymarkdown.yaml", "fix"]
+  exclude = "^(DCO.md|LICENSE|LICENSES/.*)$"
+  require_serial = true
+  priority = 75
+
+  [[repos.hooks]]
+  id = "pymarkdown"
+  alias = "markdown-check"
+  name = "<<<CHECK>>> Markdown lint"
+  verbose = true
+  args = ["--config", ".pymarkdown.yaml", "scan"]
+  exclude = "^(DCO.md|LICENSE|LICENSES/.*)$"
+  require_serial = true
+  priority = 80
+
+[[repos]]
+repo = "https://github.com/lycheeverse/lychee"
+rev = "2bba271688c1abb1503097a064e6c3bc1d1b6a9b"  # frozen: lychee-v0.24.2
+
+  # Built from the pinned source (cargo install --locked), configured in lychee.toml
+  [[repos.hooks]]
+  id = "lychee-system"
+  alias = "links"
+  name = "<<<CHECK>>> Links"
+  language = "rust"
+  verbose = true
+  types = ["markdown"]
+  exclude = "^(DCO.md|LICENSE|LICENSES/.*)$"
+  priority = 80
+
+##############################################################################
+#
+#                                    LATEX
+#
+##############################################################################
+
+# The CV (cv/). Both tools ship with TeX Live (Arch: texlive-binextra, plus
+# perl-yaml-tiny and perl-file-homedir for latexindent), see CONTRIBUTING.md
+[[repos]]
+repo = "local"
+
+  # Indentation only (no line breaks changed), configured in .latexindent.yaml
+  [[repos.hooks]]
+  id = "latexindent"
+  alias = "latex-format"
+  name = "<<<FIX>>> LaTeX format"
+  verbose = true
+  entry = "latexindent --overwriteIfDifferent --silent --local=.latexindent.yaml"
+  language = "system"
+  files = "^cv/.*\\.(tex|sty)$"
+  require_serial = true
+  priority = 68
+
+  # Warnings disabled as they misfire on TikZ code, which is most of the CV:
+  #   1  "command terminated with space": \node, \fill, \path, \else
+  #   8  "wrong length of dash": minus signs of coordinates, e.g. (0cm, -1mm)
+  #   36 "space in front of parenthesis": coordinates, e.g. at (gmail.south)
+  [[repos.hooks]]
+  id = "chktex"
+  alias = "latex"
+  name = "<<<CHECK>>> LaTeX lint"
+  verbose = true
+  entry = "chktex --quiet --inputfiles=0 --nowarn=1 --nowarn=8 --nowarn=36"
+  language = "system"
+  files = "^cv/.*\\.(tex|sty)$"
+  priority = 70
+
+  # Both themes compile (scripts/build-cv.sh, XeLaTeX)
+  [[repos.hooks]]
+  id = "cv"
+  verbose = true
+  name = "<<<CHECK>>> CV build"
+  entry = "npm run --silent build:cv"
+  pass_filenames = false
+  language = "system"
+  require_serial = true
+  files = "^(cv/.*|scripts/build-cv\\.sh)$"
+  priority = 90
+
+[[repos]]
+repo = "https://github.com/adrienverge/yamllint"
+rev = "cba56bcde1fdd01c1deb3f945e69764c291a6530"  # frozen: v1.38.0
+
+  # Configured in .yamllint.yml
+  [[repos.hooks]]
+  id = "yamllint"
+  alias = "yaml"
+  name = "<<<CHECK>>> YAML"
+  verbose = true
+  priority = 70
+
+[[repos]]
+repo = "https://github.com/open-nudge/noqaexplain"
+rev = "f7b87e8a5c95c0d402970aeb958b7e84c5616ee7"  # frozen: v0.3.0
+
+  # Every disabled linting rule is explained (enq: comment)
+  [[repos.hooks]]
+  id = "noqaexplain"
+  alias = "explain"
+  name = "<<<CHECK>>> Explained ignores"
+  verbose = true
+  types_or = ["yaml", "markdown", "javascript", "ts"]
+  priority = 80
+
+[[repos]]
+repo = "local"
+
+  [[repos.hooks]]
+  id = "ini"
+  verbose = true
+  name = "<<<CHECK>>> INI"
+  entry = "pyinilint"
+  language = "python"
+  additional_dependencies = ["pyinilint==0.17"]
+  require_serial = true
+  types_or = ["ini", "editorconfig"]
+  priority = 70
+
+##############################################################################
+#
+#                               GITHUB ACTIONS
+#
+##############################################################################
+
+[[repos]]
+repo = "https://github.com/rhysd/actionlint"
+rev = "914e7df21a07ef503a81201c76d2b11c789d3fca" # frozen: v1.7.12
+
+  [[repos.hooks]]
+  id = "actionlint"
+  alias = "github-actions-actionlint"
+  name = "<<<CHECK>>> GitHub Actions actionlint"
+  verbose = true
+  priority = 70
+
+[[repos]]
+repo = "https://github.com/zizmorcore/zizmor-pre-commit"
+rev = "c92afdf2c6ca336aaa8f39e2bd8d48f62dbd8e1f"  # frozen: v1.31.1
+
+  [[repos.hooks]]
+  id = "zizmor"
+  alias = "github"
+  name = "<<<CHECK>>> GitHub"
+  verbose = true
+  args = ["--no-progress", "--persona", "auditor"]
+  priority = 70
+
+[[repos]]
+repo = "https://github.com/python-jsonschema/check-jsonschema"
+rev = "a76b92851fc9eede9f9bc4073eb55202f34eb0df"  # frozen: 0.39.0
+
+  [[repos.hooks]]
+  id = "check-github-workflows"
+  alias = "github-workflows"
+  name = "<<<CHECK>>> GitHub Workflows"
+  verbose = true
+  priority = 70
+
+  [[repos.hooks]]
+  id = "check-jsonschema"
+  alias = "github-workflows-timeout"
+  name = "<<<CHECK>>> GitHub Workflows timeout"
+  verbose = true
+  args = ["--builtin-schema", "github-workflows-require-timeout"]
+  files = "^\\.github/workflows/.*\\.ya?ml$"
+  priority = 70
+
+  [[repos.hooks]]
+  id = "check-dependabot"
+  alias = "github-dependabot"
+  name = "<<<CHECK>>> GitHub Dependabot"
+  verbose = true
+  priority = 70
+
+##############################################################################
+#
+#                         NPM BASED CHECKS (package.json)
+#
+##############################################################################
+
+[[repos]]
+repo = "local"
+
+  [[repos.hooks]]
+  id = "prek"
+  verbose = true
+  name = "<<<FIX>>> Prek"
+  entry = "npm run --silent update:hooks"
+  pass_filenames = false
+  language = "system"
+  require_serial = true
+  always_run = true
+  priority = 30
+
+  # Runs on every commit, new advisories appear without lock changes
+  [[repos.hooks]]
+  id = "npm-audit"
+  alias = "audit"
+  verbose = true
+  name = "<<<CHECK>>> npm audit"
+  entry = "npm run --silent check:audit"
+  pass_filenames = false
+  language = "system"
+  always_run = true
+  priority = 30
+
+  # Biome (biome.jsonc): formatting, linting and import sorting
+  [[repos.hooks]]
+  id = "js"
+  verbose = true
+  name = "<<<FIX>>> JS / TS / Astro / CSS"
+  entry = "npm run --silent fix:js --"
+  language = "system"
+  require_serial = true
+  files = "\\.(astro|[cm]?[jt]s|css|jsonc?)$"
+  exclude = "^package-lock.json$"
+  priority = 70
+
+  # astro check: TypeScript, Astro templates and projects.yaml (content schema)
+  [[repos.hooks]]
+  id = "typing"
+  verbose = true
+  name = "<<<CHECK>>> Typing"
+  entry = "npm run --silent check"
+  pass_filenames = false
+  language = "system"
+  require_serial = true
+  files = "(\\.(astro|[cm]?[jt]s)|^src/content/.*|^(tsconfig|package(-lock)?)\\.json)$"
+  priority = 80
+
+  [[repos.hooks]]
+  id = "build"
+  verbose = true
+  name = "<<<CHECK>>> Build"
+  entry = "npm run --silent build"
+  pass_filenames = false
+  language = "system"
+  require_serial = true
+  files = "^(src/.*|public/.*|astro\\.config\\.mjs|astro\\.env|package(-lock)?\\.json)$"
+  priority = 90

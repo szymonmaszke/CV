@@ -1,0 +1,183 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// The intro at the top of the page: pills, name and motto, the lead, the
+// buttons and a few numbers.
+import { about, opensource, screens, short, stackoverflow } from "../lib/data";
+import { site } from "../site.config";
+import Arrow from "./Arrow.astro";
+import Icon from "./Icon.astro";
+import Markdown from "./Markdown.astro";
+
+// Hero numbers: written in site.yaml, or taken from the data files (`stat`).
+const stats = { stars: short(opensource.totals.stars), reputation: short(stackoverflow.stats.reputation) };
+const spec = site.hero.spec.map((cell) => ({ ...cell, value: cell.stat ? stats[cell.stat] : cell.value }));
+---
+
+<section class="hero wrap">
+  {/* phones get fewer pills (site.yaml: hero.points) */}
+  {screens.map((screen) => (
+    <ul class:list={["tags", "points", `only-${screen}`]}>
+      {site.hero.points[screen].map((point) => (
+        <li>{point}</li>
+      ))}
+    </ul>
+  ))}
+  <!-- data-page-title: once it scrolls under the top bar, the bar shows the
+       name (Header.astro) -->
+  <h1 data-page-title>
+    <Markdown inline text={site.hero.title} />
+    <span class="motto">{site.hero.motto}</span>
+  </h1>
+  <Markdown class="lead" text={site.hero.lead} />
+  <p class="actions">
+    {/* "see more" (down to the open section: tabs.ts keeps the link on it;
+        the first without scripts), then the CV in grey; phones and small
+        tablets have no "see more" and the CV filled (styles below) */}
+    <a class="button primary more" href={`#${about.summary.id}`} data-open-section>
+      <Arrow direction="down" bounce />
+      {site.hero.actions.more}
+    </a>
+    <a class="button cv" href={site.cv.light} download>
+      <Icon name="download" />
+      {site.hero.actions.cv}
+    </a>
+    <a class="button" href={`mailto:${site.email}`}>
+      <Icon name="mail" />
+      {site.hero.actions.email}
+    </a>
+    <a class="button" href={site.links.github}>
+      <Icon name="github" />
+      {site.hero.actions.github}
+    </a>
+  </p>
+  <dl class="spec hero-spec">
+    {spec.map((cell) => (
+      <div>
+        <dt>{cell.key}</dt>
+        <dd>
+          <strong>{cell.value}</strong>
+          {cell.note}
+        </dd>
+      </div>
+    ))}
+  </dl>
+</section>
+
+<style>
+.hero {
+  padding-block: clamp(2rem, 7vw, 4rem) clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.points {
+  margin-bottom: 1.25rem;
+}
+
+.hero h1 {
+  margin-bottom: 0.75rem;
+}
+
+.motto {
+  display: block;
+  margin-top: 0.375rem;
+  color: var(--muted);
+  font-size: var(--fs-lead, clamp(1.0625rem, 2vw, 1.125rem));
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+.hero :global(.lead) {
+  margin: 0;
+}
+
+.hero-spec {
+  margin-top: clamp(1.75rem, 5vw, 2.5rem);
+}
+
+/* desktop: the boxes are --gap from the buttons above them and from the
+   section tabs below them (the tab bar's own 0.5rem top padding makes up
+   the rest) */
+@media (min-width: 48.0625rem) {
+  .hero {
+    --gap: clamp(1.75rem, 5vw, 2.5rem);
+    padding-bottom: calc(var(--gap) - 0.5rem);
+  }
+
+  .hero-spec {
+    margin-top: var(--gap);
+  }
+}
+
+/* desktop: the title sits lower, about a fifth of the screen further from
+   the top bar (162px more on a 900px screen; capped for tall monitors) */
+@media (min-width: 48.0625rem) and (orientation: landscape) {
+  .hero {
+    padding-top: min(calc(4rem + 18svh), 16rem);
+  }
+}
+
+/* phones, as on opennudge.com: the hero takes most of the first screen,
+   down to the section tabs. The room left goes above the pills, so the
+   boxes stay right above the tabs, and the tabs land where opennudge's do
+   (its hero: its content, about --content tall, and a share, --spare, of
+   the room left above its tabs, --tabs tall). The pills cost no height: the
+   top padding and the room above the boxes are smaller by as much, so on a
+   short screen (no room left) the tabs stay where they were without them. */
+@media (max-width: 40rem) {
+  .hero {
+    --content: 30.5rem;
+    --spare: 0.6;
+    --tabs: 4rem;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(var(--content) + var(--spare) * (100svh - var(--header) - var(--tabs) - var(--content)));
+    padding-top: 0.5rem;
+  }
+
+  .points {
+    margin-top: auto;
+    margin-bottom: 0.625rem;
+  }
+
+  .hero-spec {
+    margin-top: 1.25rem;
+  }
+}
+
+/* phones and small tablets keep their buttons: no "see more", and the CV
+   filled, as .button.primary (global.css) */
+@media (max-width: 48rem) {
+  .actions > .more {
+    display: none;
+  }
+
+  .actions > .cv {
+    --hover: var(--inverse-hover);
+    background: var(--inverse);
+    color: var(--on-inverse);
+    box-shadow: none;
+  }
+
+  .actions > .cv:active {
+    background: var(--hover);
+    border-color: var(--hover);
+  }
+}
+
+@media (max-width: 48rem) and (hover: hover) {
+  .actions > .cv:hover {
+    background: var(--hover);
+    border-color: var(--hover);
+  }
+}
+
+/* phones: the CV button takes the first row, the other two share the
+   second (global.css .actions) */
+@media (max-width: 30rem) {
+  .actions > .cv {
+    flex-basis: 100%;
+  }
+}
+</style>

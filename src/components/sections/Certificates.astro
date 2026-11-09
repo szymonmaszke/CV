@@ -1,0 +1,78 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// Certificates: one card each, its issuer, topic and a note.
+import { about, certificates } from "../../lib/data";
+import { site } from "../../site.config";
+import Markdown from "../Markdown.astro";
+import Section from "../Section.astro";
+---
+
+<Section section={about.certificates}>
+  <ul class="certificates">
+    {certificates.map((certificate) => (
+      <li class="card">
+        <div class="certificate-top">
+          <h3>
+            <a href={certificate.url}>{certificate.title}</a>
+          </h3>
+          {certificate.inProgress && <span class="status">{site.ui.inProgress}</span>}
+        </div>
+        <p class="where">
+          {certificate.issuer}
+          <br>
+          <span class="muted">{certificate.topic}</span>
+        </p>
+        <Markdown class="note" text={certificate.note} />
+      </li>
+    ))}
+  </ul>
+</Section>
+
+<style>
+.certificates {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+}
+
+.certificates .card {
+  gap: 0.3rem;
+}
+
+.certificate-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+}
+
+.certificate-top h3 {
+  margin: 0;
+}
+
+.certificate-top a {
+  text-decoration-color: transparent;
+}
+
+.certificate-top a:hover {
+  text-decoration-color: currentColor;
+}
+
+.certificates .where {
+  margin: 0;
+}
+
+/* unscoped on purpose: its margin loses to :is(dd, li) > .prose
+   (global.css), so the card's gap spaces the note; scoped, it would win */
+:global(.note) {
+  margin: 0.375rem 0 0;
+  color: var(--muted);
+  font-size: var(--fs-small, 0.875rem);
+}
+</style>

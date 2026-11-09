@@ -1,3 +1,6 @@
+% SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+% SPDX-License-Identifier: Apache-2.0
+
 \ProvidesPackage{styles/commands}
 
 \newcommand{\worktag}[1]{%
@@ -24,13 +27,6 @@
     inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#2};
 }
 
-% When the CV was generated
-\newcommand{\generated}{
-  \textcolor{annotation}{
-    \hfill\tiny{CV generated at: \DTMnow}
-  }
-}
-
 % Create Privacy compliant clause at the end of document.
 \newcommand{\clause}{
   \begin{spacing}{-0.5}
@@ -49,57 +45,17 @@
 %   2 - Surname
 \newcommand{\name}[2]{
   \node (username) at ($(current page.north west)+(\cvMiddleSidebar / 2, 0.5cm)$)
-    [below, text width = \cvSideWidth]
-    {
-      \begin{cvtext}
-        \begin{center}
+  [below, text width = \cvSideWidth]
+  {
+    \begin{cvtext}
+      \begin{center}
 
-          \fontsize{34}{40}\selectfont #1
-          \textbf{#2}
+        \fontsize{34}{40}\selectfont #1
+        \textbf{#2}
 
-        \end{center}
-      \end{cvtext}
+      \end{center}
+    \end{cvtext}
   };
-}
-
-% Create open source project
-%   1 - name of project
-%   2 - href to project
-%   3 - number of stars
-%   4 - release date
-%   5 - first description
-%   6 - second description
-\newcommand{\project}[6]{
-  \textbf{
-    \href{#2}{\large \faGithub\space #1} \hfill
-  }
-  \textcolor{annotation}{
-    \faStar\space #3 \hfill
-    \faCalendar\space #4
-  }
-  \vspace{-2.5mm}
-
-  \begin{itemize}[leftmargin=*]
-    \setlength\itemsep{0mm}
-    \item #5
-    \item #6
-  \end{itemize}
-}
-
-\newcommand{\oneproject}[5]{
-  \textbf{
-    \href{#2}{\large \faGithub\space #1} \hfill
-  }
-  \textcolor{annotation}{
-    \faStar\space #3 \hfill
-    \faCalendar\space #4
-  }
-  \vspace{-2.5mm}
-
-  \begin{itemize}[leftmargin=*]
-    \setlength\itemsep{0mm}
-    \item #5
-  \end{itemize}
 }
 
 % Create work entry layout
@@ -130,8 +86,8 @@
     \vspace{0.1cm}
     {\centering
       \foreach \Tag in #5 {%
-        \worktag{\Tag}\hspace{0.4em}%
-      }%
+          \worktag{\Tag}\hspace{0.4em}%
+        }%
       \par
     }
     \vspace{-0.15cm}
@@ -145,8 +101,8 @@
     \begin{itemize}[leftmargin=*]
       \setlength\itemsep{0mm}
       \foreach \Description in #4 {%
-        \item \Description
-      }
+      \item \Description
+            }
     \end{itemize}
     \vspace{-0.1cm}
   \fi
@@ -162,44 +118,6 @@
 \newcommand{\work}[6]{%
   \workentry{#1}{#2}{\faCalendar\space #3--#4}{#5}{#6}%
 }
-
-% Create work entry with custom right-side annotation
-%   1 - name of work
-%   2 - location of work
-%   3 - annotation text
-%   4 - list with job descriptions
-%   5 - list with tags
-\newcommand{\workconcurrent}[5]{%
-  \workentry{#1}{#2}{#3}{#4}{#5}%
-}
-
-% \newcommand{\work}[5]{%
-%   \noindent
-%   \makebox[0pt][l]{%
-%     \hspace{0pt}%
-%     \makebox[8cm][l]{\textbf{\large \textcolor{text}{#1}}}%
-%   }%
-%   \hspace*{6cm}%
-%   \makebox[0pt][l]{%
-%     \textbf{\large \textcolor{text}{\faMapMarker\space #2}}%
-%   }%
-%   \hfill
-%   \textcolor{annotation}{\faCalendar\space #3--#4}%
-%   %
-%   % Check if #5 is empty
-%   \if\relax\detokenize{#5}\relax
-%     \vspace{+0.2cm}
-%   \else
-%     \vspace{-0.1cm}
-%     \begin{itemize}[leftmargin=*]
-%       \setlength\itemsep{0mm}
-%       \foreach \Description in #5 {
-%         \item \Description
-%       }
-%     \end{itemize}
-%     \vspace{0.05cm}
-%   \fi
-% }
 
 % Create on-going education entry
 %   1 - [optional] specialization
@@ -221,37 +139,10 @@
   \textcolor{annotation}{\faUniversity\space #3}
 }
 
-% Multiline previous version
-% Create short education entry (without dates)
-%   1 - name and rank
-%   2 - university
-%   3 - Other (location, GPA)
-% \newcommand{\educationFinished}[3]{
-%   \begin{cvtext}
-%     \begin{center}
-%       \textbf{\large #1}
-%     \end{center}
-%   \end{cvtext}
-%   \vspace*{-0.3cm}
-%   \small{
-%     \textcolor{annotation}{
-%       \hfill \faUniversity\space #2
-%       \hfill #3 \hfill
-%     }
-%   }
-% }
-
 % Create finished education entry
 %   1 - [optional] specialization
 %   2 - name of education
 %   3 - university
-% \newcommand{\educationFinished}[2]{
-%   \textcolor{text}{
-%     \textbf{\large #1 \hfill}
-%   }
-%   \textcolor{annotation}{\faUniversity\space #2}
-% }
-
 \newcommand{\educationFinished}[3][]{
   \unskip\noindent
   \makebox[0pt][l]{%
@@ -267,12 +158,6 @@
   \textcolor{annotation}{\faUniversity\space #3}
 }
 
-% \newcommand{\educationFinished}[2]{
-%   \begin{tabular*}{\textwidth}{@{}l@{\extracolsep{\fill}}r@{}}
-%     \textbf{\large \textcolor{text}{#1}} & \textcolor{annotation}{\faUniversity\space #2} \\
-%   \end{tabular*}
-% }
-
 % Create top bar icon
 %   1 - [optional] relative location of icon (below or east usually)
 %   2 - Name of node (and name of color)
@@ -281,41 +166,16 @@
 %   5 - Text displayed to the right
 \newcommand{\icon}[5][below]{
   \node (#2) at (#3)
-    [rectangle, fill=#2, #1,
+  [rectangle, fill=#2, #1,
     minimum width=1cm, minimum height=1cm]{
-      \textcolor{background}{\Large #4}
+    \textcolor{background}{\Large #4}
   };
   \node (#2 data) at (#2.east) [right, text width = \cvSideWidth] {
     \textcolor{text}{#5}
   };
 }
 
-% Create sidebar enumeration
-%   1 - [optional] relative location of icon (usually below)
-%   2 - Name of node (and name of color)
-%   3 - Location of icon
-%   4 - Icon
-%   5 - Text displayed to the right
-\newcommand{\sidebarEnum}[5][below]{
-  \node (#2) at (#3)
-    [
-      rectangle, fill=#2, #1,
-      minimum width=\cvSideWidth+2\Margin, minimum height=\cvSectionHeight
-    ]{
-      #4
-  };
-  \node (#2 data) at ($(#2.south) + (0cm, 2mm)$) [below, text width = \cvSideWidth] {
-    \textcolor{text}{
-      \begin{itemize}
-        \foreach \Icon/\Description in #5{
-          \item[\Icon] \Description
-        }
-      \end{itemize}
-    }
-  };
-}
-
-% Create certificate entry
+% Create centered sidebar entry (postgraduate, research)
 %   1 - First (main) line
 %   2 - Second line
 %   3 - Third line
@@ -347,3 +207,8 @@
     \vspace*{-0.6cm}
   \fi
 }
+
+% Links: plain text with a faint light-gray underline as a clickable hint
+\newcommand{\linkline}{\bgroup\markoverwith{\textcolor{linkline}{\rule[-0.45ex]{2pt}{0.4pt}}}\ULon}
+\let\cvhref\href
+\renewcommand{\href}[2]{\cvhref{#1}{\linkline{#2}}}

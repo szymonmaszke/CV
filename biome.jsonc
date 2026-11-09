@@ -1,0 +1,206 @@
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// Formatting and linting of TypeScript, JavaScript, Astro, CSS and JSON
+// (npm run fix:js / check:js, prek: fix-js). Every rule is enabled ("all"),
+// exceptions below are explained next to each rule.
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    // Agent settings (.claude/, .mcp.json) are ignored by a global git ignore,
+    // which Biome does not read; SVGs are exported artwork (brand assets),
+    // kept byte for byte
+    "includes": ["**", "!package-lock.json", "!**/.claude", "!.mcp.json", "!**/*.svg"]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 110
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all",
+      "arrowParentheses": "always"
+    }
+  },
+  "html": {
+    // .astro templates and their <style> blocks, not only the frontmatter
+    "experimentalFullSupportEnabled": true,
+    "formatter": {
+      "enabled": true
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    // Framework rules only for what the site uses: Astro, no React & co.
+    "domains": {
+      "astro": "all",
+      "project": "all",
+      "types": "all",
+      "drizzle": "none",
+      "next": "none",
+      "playwright": "none",
+      "qwik": "none",
+      "react": "none",
+      "reactNative": "none",
+      "solid": "none",
+      "svelte": "none",
+      "tailwind": "none",
+      "test": "none",
+      "turborepo": "none",
+      "vue": "none"
+    },
+    "rules": {
+      "preset": "all",
+      "correctness": {
+        // astro check (TypeScript) resolves imports, including Astro's
+        // virtual modules (astro:content) that Biome cannot see
+        "noUnresolvedImports": "off",
+        // Astro frontmatter and endpoints run in Node at build time,
+        // enabled again for browser scripts (overrides below)
+        "noNodejsModules": "off"
+      },
+      "a11y": {
+        // Icons are hidden from screen readers by a spread of
+        // iconAttributes() (src/lib/code.ts), which Biome does not follow
+        "noSvgWithoutTitle": "off"
+      },
+      "style": {
+        // Greys of the design tokens are hex colours
+        "noHexColors": "off",
+        // Short ternaries are idiomatic in templates (nested ones are not)
+        "noTernary": "off",
+        // Copy lives in the templates, the site has one language (no i18n)
+        "noJsxLiterals": "off",
+        // Flags selectors setting different properties and selectors
+        // compared with themselves (same rule), the cascade is intentional
+        "noDescendingSpecificity": "off",
+        // HTML boolean attributes (hidden, ...) are written bare in templates
+        "noImplicitBoolean": "off",
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "filenameCases": ["kebab-case"]
+          }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      // Astro components and layouts are PascalCase (their tag names)
+      "includes": ["src/components/**", "src/layouts/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "filenameCases": ["PascalCase"]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      // Templates: sizes passed as props are self-describing; the
+      // frontmatter may hold only the SPDX header and a description
+      "includes": ["**/*.astro"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noMagicNumbers": "off"
+          },
+          "suspicious": {
+            "noEmptySource": {
+              "level": "error",
+              "options": {
+                "allowComments": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      // Configuration files are loaded through their default export
+      "includes": ["*.config.mjs"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          }
+        }
+      }
+    },
+    {
+      // One stylesheet, inlined into every page (astro.config.mjs)
+      "includes": ["src/styles/global.css"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noExcessiveLinesPerFile": "off"
+          }
+        }
+      }
+    },
+    {
+      // Scripts shipped to the browser cannot use Node built-ins
+      "includes": ["src/scripts/**"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noNodejsModules": "error"
+          }
+        }
+      }
+    },
+    {
+      // Test fixtures are Markdown and HTML snippets, not credentials
+      "includes": ["scripts/*.test.ts"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noSecrets": "off"
+          }
+        }
+      }
+    },
+    {
+      // Fields of the GitHub and StackExchange API responses keep the APIs'
+      // snake_case names (html_url, creation_date, ...)
+      "includes": ["scripts/update-stats.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNamingConvention": {
+              "level": "on",
+              "options": {
+                "conventions": [
+                  {
+                    "selector": { "kind": "typeProperty" },
+                    "formats": ["camelCase", "snake_case"]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

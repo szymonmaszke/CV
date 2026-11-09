@@ -1,0 +1,120 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// Open source: the totals, opennudge (current) and the past projects' cards.
+import { about, long, opensource } from "../../lib/data";
+import Arrow from "../Arrow.astro";
+import Icon from "../Icon.astro";
+import Markdown from "../Markdown.astro";
+import RepoCard from "../RepoCard.astro";
+import Section from "../Section.astro";
+---
+
+<Section section={about.opensource} text={about.opensource.text}>
+  <dl class="spec">
+    <div>
+      <dt>{about.opensource.stats.stars}</dt>
+      <dd><strong>{long(opensource.totals.stars)}</strong></dd>
+    </div>
+    <div>
+      <dt>{about.opensource.stats.forks}</dt>
+      <dd><strong>{long(opensource.totals.forks)}</strong></dd>
+    </div>
+    <div>
+      <dt>{about.opensource.stats.repos}</dt>
+      <dd><strong>{opensource.totals.repos}</strong></dd>
+    </div>
+    <div>
+      <dt>{about.opensource.stats.since}</dt>
+      <dd><strong>{opensource.totals.since}</strong></dd>
+    </div>
+  </dl>
+
+  <div class="featured">
+    <div>
+      <p class="eyebrow">{about.opensource.featured.eyebrow}</p>
+      <h3 class="featured-title">
+        <a href={about.opensource.featured.website.href}>{about.opensource.featured.title}</a>
+      </h3>
+      <Markdown class="lead" text={about.opensource.featured.text} />
+      <Markdown class="muted" text={about.opensource.featured.note} />
+      <p class="actions">
+        <a class="button primary" href={about.opensource.featured.website.href}>
+          <Arrow direction="right" bounce />
+          {about.opensource.featured.website.label}
+        </a>
+        <a class="button" href={about.opensource.featured.github.href}>
+          <Icon name="github" />
+          {about.opensource.featured.github.label}
+        </a>
+      </p>
+    </div>
+    <div>
+      <h4 class="caption">{about.opensource.current}</h4>
+      <ul class="group">
+        {opensource.current.map((project) => (
+          <li>
+            <a class="row" href={project.url}>
+              <span>
+                <span class="row-title">{project.name}</span>
+                <span class="row-sub">
+                  <Markdown inline text={project.description} />
+                </span>
+              </span>
+              <Icon name="chevron" size={14} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="section-head">
+      <h3>{about.opensource.past}</h3>
+      <Markdown text={about.opensource.pastText} />
+    </div>
+    <div class="cards">
+      {opensource.past.map((project) => <RepoCard project={project} />)}
+    </div>
+    <Markdown class="more-link" text={about.opensource.more} />
+  </div>
+</Section>
+
+<style>
+.featured {
+  display: grid;
+  gap: 1.5rem 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  align-items: start;
+  margin-top: clamp(2rem, 6vw, 3rem);
+}
+
+.featured .eyebrow {
+  margin-bottom: 0.25rem;
+}
+
+.featured-title {
+  font-size: var(--fs-h2, 1.25rem);
+  margin-bottom: 0.5rem;
+}
+
+.featured-title a {
+  text-decoration: none;
+}
+
+.featured :global(.lead) {
+  margin-bottom: 0.75rem;
+}
+
+.featured :global(.muted) {
+  font-size: var(--fs-small, 0.9375rem);
+}
+
+.cards {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+}
+</style>

@@ -1,0 +1,9 @@
+{# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke> #}
+{# SPDX-License-Identifier: Apache-2.0 #}
+{# Two-line SPDX header of new files (prek: fix-legal) #}
+{% for copyright_line in copyright_lines %}
+{{ copyright_line }}
+{% endfor %}
+{% for expression in spdx_expressions %}
+SPDX-License-Identifier: {{ expression }}
+{% endfor %}

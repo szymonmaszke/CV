@@ -1,0 +1,25 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// Experience: the roles on a timeline, then advisory work.
+import { about, experience } from "../../lib/data";
+import Markdown from "../Markdown.astro";
+import Role from "../Role.astro";
+import Section from "../Section.astro";
+---
+
+<Section section={about.experience}>
+  <ol class="group">
+    {experience.roles.map((role) => <Role role={role} />)}
+  </ol>
+  <div class="subsection">
+    <div class="section-head">
+      <h3>{about.experience.advisory}</h3>
+      <Markdown text={about.experience.advisoryText} />
+    </div>
+    <ol class="group">
+      {experience.advisory.map((role) => <Role role={role} heading="h4" />)}
+    </ol>
+  </div>
+</Section>

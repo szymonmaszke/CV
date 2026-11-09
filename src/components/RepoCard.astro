@@ -1,0 +1,112 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// An open source project: name, stars, description, tags, GitHub link (and
+// whether it is archived).
+import { long, type opensource, short } from "../lib/data";
+import { site } from "../site.config";
+import Icon from "./Icon.astro";
+import Markdown from "./Markdown.astro";
+
+interface Props {
+  /** One entry of `past` in src/content/opensource.yaml. */
+  project: (typeof opensource.past)[number];
+}
+
+const { project } = Astro.props;
+---
+
+<article class="card nudge" id={project.name}>
+  <div class="top">
+    <h4><a href={project.repo}>{project.name}</a></h4>
+    <span class="stars num" title={`${long(project.stars)} ${site.ui.stars}`}>
+      <Icon name="star" size={13} />
+      {short(project.stars)}
+      <span class="visually-hidden">{site.ui.stars}</span>
+    </span>
+  </div>
+  <Markdown class="description" text={project.description} />
+  <ul class="tags">
+    {project.tags.map((tag) => <li>{tag}</li>)}
+  </ul>
+  <p class="links">
+    <a href={project.repo}>
+      <Icon name="github" />
+      {site.ui.github}
+    </a>
+    {project.archived && (
+      <>
+        <span aria-hidden="true">·</span>
+        <span>{site.ui.archived}</span>
+      </>
+    )}
+  </p>
+</article>
+
+<style>
+.top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+h4 {
+  margin: 0;
+  font-size: var(--fs-title, 1.0625rem);
+}
+
+/* the underline fades in rather than appearing */
+h4 a {
+  text-decoration-color: transparent;
+}
+
+h4 a:hover {
+  text-decoration-color: currentColor;
+}
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--muted);
+  font-size: var(--fs-small, 0.85rem);
+}
+
+:global(.description) {
+  flex: 1;
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--fs-small, 0.9375rem);
+}
+
+/* the GitHub link, then "· archived" in muted text */
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0.1rem 0 0;
+  color: var(--muted);
+  font-size: var(--fs-small, 0.875rem);
+}
+
+/* icon + label; only the label is underlined */
+.links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--text);
+}
+
+.links :global(svg) {
+  color: var(--muted);
+  transition: color var(--slow) var(--ease);
+}
+
+.links a:hover :global(svg) {
+  color: var(--text);
+  transition-duration: var(--fast);
+}
+</style>

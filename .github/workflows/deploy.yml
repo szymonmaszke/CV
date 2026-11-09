@@ -1,0 +1,137 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+# Builds the site and the CV (light and dark, cv/) on every push and pull
+# request; deploys `main` to GitHub Pages (maszke.co). Also rebuilt daily, so
+# the GitHub and StackOverflow numbers (`npm run update:stats`, refreshed on
+# every deploy) stay current.
+# Actions are pinned to commit SHAs (Dependabot keeps them up to date).
+
+---
+name: "deploy"
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+  schedule:
+    # daily, off the hour (the stats refresh below)
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+
+# enq: GitHub accepts only an empty mapping to drop all default permissions
+permissions: {} # yamllint disable-line rule:braces
+
+concurrency:
+  group: "pages-${{ github.ref }}"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: "ubuntu-latest"
+    timeout-minutes: 15
+    permissions:
+      contents: "read" # checkout of the repository
+    steps:
+      - name: "Harden runner"
+        uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
+        with:
+          egress-policy: "audit"
+
+      - name: "Checkout"
+        uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: "Set up Node.js"
+        uses: "actions/setup-node@820762786026740c76f36085b0efc47a31fe5020" # v7.0.0
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: "Install dependencies"
+        run: "npm ci"
+
+      - name: "Refresh GitHub and StackOverflow numbers"
+        # Not on pull requests (their builds use the committed numbers). An API
+        # outage keeps the committed numbers instead of blocking the deploy;
+        # the refreshed files are validated by the next step.
+        if: "github.event_name != 'pull_request'"
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: "${{ github.token }}" # higher GitHub API rate limit
+        run: "npm run update:stats"
+
+      - name: "Check types and content"
+        run: "npm run check"
+
+      - name: "Test content rendering"
+        run: "npm test"
+
+      - name: "Install XeLaTeX"
+        # Ubuntu's TeX Live packages: XeTeX plus the fonts (Lato, FontAwesome)
+        # and LaTeX packages cv/main.tex loads
+        run: >
+          sudo apt-get update
+          && sudo apt-get install --yes --no-install-recommends
+          texlive-xetex
+          texlive-latex-recommended
+          texlive-latex-extra
+          texlive-pictures
+          texlive-plain-generic
+          texlive-fonts-extra
+
+      - name: "Build CV (light and dark)"
+        # public/szymon-maszke-cv.pdf and public/szymon-maszke-cv-dark.pdf,
+        # copied into the site by the next step
+        run: "npm run build:cv"
+
+      - name: "Build"
+        run: "npm run build"
+
+      - name: "Check the CVs are in the site"
+        run: >
+          test -s dist/szymon-maszke-cv.pdf
+          && test -s dist/szymon-maszke-cv-dark.pdf
+
+      - name: "Upload CVs"
+        # Downloadable from the run's summary, also for pull requests
+        uses: "actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9" # v7.0.2
+        with:
+          name: "cv"
+          path: |
+            dist/szymon-maszke-cv.pdf
+            dist/szymon-maszke-cv-dark.pdf
+          if-no-files-found: "error"
+          retention-days: 30
+
+      - name: "Upload site"
+        if: "github.event_name != 'pull_request'"
+        uses: "actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9" # v5.0.0
+        with:
+          path: "dist"
+
+  deploy:
+    name: "Deploy"
+    needs: "build"
+    if: "github.event_name != 'pull_request' && github.ref == 'refs/heads/main'"
+    runs-on: "ubuntu-latest"
+    timeout-minutes: 10
+    permissions:
+      pages: "write" # publish the site to GitHub Pages
+      id-token: "write" # OIDC token that proves the deployment's origin to Pages
+    environment:
+      name: "github-pages"
+      url: "${{ steps.deployment.outputs.page_url }}"
+    steps:
+      - name: "Harden runner"
+        uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
+        with:
+          egress-policy: "audit"
+
+      - name: "Deploy to GitHub Pages"
+        id: "deployment"
+        uses: "actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346" # v5.0.1
+...

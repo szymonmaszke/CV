@@ -1,0 +1,41 @@
+{
+  "name": "maszke-website",
+  "version": "0.0.0",
+  "private": true,
+  "description": "maszke.co: personal website built with Astro, with the LaTeX CV it serves",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "node --env-file=astro.env node_modules/astro/bin/astro.mjs dev",
+    "build": "npm run check:content && node --env-file=astro.env node_modules/astro/bin/astro.mjs build",
+    "preview": "node --env-file=astro.env node_modules/astro/bin/astro.mjs preview",
+    "check": "npm run check:content && node --env-file=astro.env node_modules/astro/bin/astro.mjs check",
+    "astro": "node --env-file=astro.env node_modules/astro/bin/astro.mjs",
+    "setup": "npm ci && prek install",
+    "fix": "prek run --all-files",
+    "fix:js": "biome check --write --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=true",
+    "check:js": "biome check --error-on-warnings --no-errors-on-unmatched --files-ignore-unknown=true",
+    "check:audit": "npm audit && npm audit signatures",
+    "check:licenses": "node .github/tools/licenses.ts",
+    "update:hooks": "prek update",
+    "check:content": "node --experimental-strip-types --input-type=module -e \"import './scripts/check-content.ts'\"",
+    "test": "node --experimental-strip-types --input-type=module -e \"import './scripts/content.test.ts'\"",
+    "update:stats": "node --experimental-strip-types scripts/update-stats.ts",
+    "build:cv": "sh scripts/build-cv.sh"
+  },
+  "dependencies": {
+    "astro": "7.3.5",
+    "marked": "18.1.1",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@biomejs/biome": "2.5.15",
+    "@j178/prek": "0.5.4",
+    "@types/node": "24.19.2",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "name": "branch-default",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "exclude": [],
+      "include": ["~DEFAULT_BRANCH"]
+    }
+  },
+  "rules": [
+    {
+      "type": "deletion"
+    },
+    {
+      "type": "pull_request",
+      "parameters": {
+        "required_approving_review_count": "PLACEHOLDER_REVIEWERS",
+        "require_last_push_approval": "PLACEHOLDER_LAST_PUSH_APPROVAL",
+        "require_code_owner_review": true,
+        "dismiss_stale_reviews_on_push": true,
+        "required_review_thread_resolution": true,
+        "automatic_copilot_code_review_enabled": true,
+        "allowed_merge_methods": ["squash"]
+      }
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": false,
+        "do_not_enforce_on_create": false,
+        "required_status_checks": [
+          {
+            "context": "Build",
+            "integration_id": 15368
+          },
+          {
+            "context": "Policy",
+            "integration_id": 15368
+          },
+          {
+            "context": "Pull Request",
+            "integration_id": 15368
+          },
+          {
+            "context": "Security Secrets",
+            "integration_id": 15368
+          }
+        ]
+      }
+    },
+    {
+      "type": "code_scanning",
+      "parameters": {
+        "code_scanning_tools": [
+          {
+            "tool": "CodeQL",
+            "security_alerts_threshold": "high_or_higher",
+            "alerts_threshold": "errors"
+          }
+        ]
+      }
+    }
+  ],
+  "bypass_actors": []
+}

@@ -1,22 +1,23 @@
-# SPDX-FileCopyrightText: © 2024 open-nudge <https://github.com/open-nudge>
-# SPDX-FileContributor: szymonmaszke <github@maszke.co>
-#
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
 # SPDX-License-Identifier: Apache-2.0
 
 ---
 cff-version: "1.2.0"
 abstract: >
-  Repository containing core information about the opennudge organization
+  Source of maszke.co, the personal website of Szymon Maszke (Astro), and of
+  the LaTeX CV it serves in a light and a dark version.
 message: "If you use this software, please cite it as below."
 authors:
-  - family-names: "open-nudge"
-url: "https://github.com/open-nudge/.github"
-repository-code: "https://github.com/open-nudge/.github"
-title: "opentemplate"
+  - family-names: "Maszke"
+    given-names: "Szymon"
+    email: "szymon@maszke.co"
+url: "https://maszke.co"
+repository-code: "https://github.com/szymonmaszke/CV"
+title: "maszke.co"
 license: "Apache-2.0"
 keywords:
-  - "opennudge"
-  - "info"
-  - "organization"
-  - "markdown"
-  - "open source"
+  - "website"
+  - "cv"
+  - "astro"
+  - "latex"
+  - "personal"

@@ -1,0 +1,188 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// /: a short intro (Hero.astro), then the CV in sections
+// (src/components/sections/) switched by tabs (Tabs.astro).
+// Text lives in src/content/*.yaml.
+import Hero from "../components/Hero.astro";
+import Certificates from "../components/sections/Certificates.astro";
+import Education from "../components/sections/Education.astro";
+import Experience from "../components/sections/Experience.astro";
+import OpenSource from "../components/sections/OpenSource.astro";
+import StackOverflow from "../components/sections/StackOverflow.astro";
+import Summary from "../components/sections/Summary.astro";
+import Technologies from "../components/sections/Technologies.astro";
+import Tabs from "../components/Tabs.astro";
+import Base from "../layouts/Base.astro";
+import { about, education } from "../lib/data";
+import { plainText } from "../lib/markdown";
+import { site } from "../site.config";
+
+const sections = [
+  about.summary,
+  about.opensource,
+  about.stackoverflow,
+  about.experience,
+  about.education,
+  about.certificates,
+  about.technologies,
+];
+
+const home = new URL(site.links.home, site.url).href;
+const person = `${home}#person`;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${home}#website`,
+      url: home,
+      name: site.name,
+      inLanguage: site.language,
+      publisher: { "@id": person },
+    },
+    {
+      "@type": "ProfilePage",
+      url: home,
+      name: site.title,
+      description: site.description,
+      isPartOf: { "@id": `${home}#website` },
+      mainEntity: { "@id": person },
+    },
+    {
+      "@type": "Person",
+      "@id": person,
+      name: site.name,
+      url: home,
+      email: `mailto:${site.email}`,
+      jobTitle: "Founder",
+      description: plainText(site.hero.lead),
+      worksFor: {
+        "@type": "Organization",
+        name: "opennudge",
+        url: site.links.opennudge,
+        sameAs: ["https://github.com/open-nudge"],
+      },
+      sameAs: [site.links.github, site.links.stackoverflow],
+      alumniOf: education.degrees
+        .filter((degree) => !degree.inProgress)
+        .map((degree) => ({ "@type": "CollegeOrUniversity", name: degree.school, sameAs: degree.url })),
+      knowsAbout: [
+        "Large language models",
+        "Machine learning",
+        "Deep learning",
+        "PyTorch",
+        "Python",
+        "AI agents",
+        "Software supply chain security",
+        "SLSA",
+        "Developer tooling",
+        "Engineering leadership",
+      ],
+      knowsLanguage: ["pl", "en"],
+    },
+  ],
+};
+---
+
+<Base>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd).replaceAll("<", "\\u003c")}
+  />
+
+  <Hero />
+
+  <Tabs sections={sections} />
+
+  {/* desktop: the line between the tab bar and the section (opennudge's section line) */}
+  <div class="panels-rule" aria-hidden="true"></div>
+
+  {/* the sections, each a [data-panel] (Section.astro), in tab order */}
+  <div class="wrap panels">
+    <Summary />
+    <OpenSource />
+    <StackOverflow />
+    <Experience />
+    <Education />
+    <Certificates />
+    <Technologies />
+  </div>
+
+  <!-- Before the first paint: only the section named by the URL (else the
+       first) is shown, so a deep link never flashes the long page. The tabs
+       script (src/scripts/tabs.ts) takes over from here. -->
+  <script is:inline>
+  (() => {
+    const panels = [...document.querySelectorAll("[data-panel]")];
+    const id = decodeURIComponent(location.hash.slice(1));
+    const open = panels.some((panel) => panel.id === id) ? id : panels[0]?.id;
+    for (const panel of panels) {
+      panel.hidden = panel.id !== open;
+    }
+    document.querySelector(".panels")?.setAttribute("data-tabbed", "");
+  })();
+  </script>
+</Base>
+
+<style>
+.panels {
+  padding-block: clamp(1.5rem, 5vw, 2.5rem) clamp(2.5rem, 7vw, 4rem);
+}
+
+.panels-rule {
+  display: none;
+}
+
+/* desktop: the section starts --panel-gap below the tab capsule (the tab
+   bar's own 1rem bottom padding included), a full-width line halfway (in
+   place of the tab bar's own line: Tabs.astro), also when a link or a tab
+   scrolls to it (its scroll margin: global.css, tabs.ts) */
+@media (min-width: 48.0625rem) {
+  /* ADJUST HERE: the room from the tab capsule down to the section's title
+     (12px plus 4cm: 43px less than before the pills above the title, which
+     are 43px tall with their margin, so the section stays where it was);
+     the line always stays in the middle */
+  :global(:root) {
+    --panel-gap: calc(12px + 4cm);
+  }
+
+  .panels-rule {
+    display: block;
+    margin-top: calc(var(--panel-gap) / 2 - 1rem);
+    border-top: 1px solid var(--line);
+  }
+
+  .panels {
+    padding-top: calc(var(--panel-gap) / 2 - 1px);
+  }
+
+  .panels :global([data-panel]) {
+    scroll-margin-top: calc(var(--panel-gap) - 1rem);
+  }
+}
+
+/* without scripts every section is shown, one after another */
+.panels:not([data-tabbed]) :global([data-panel] + [data-panel]) {
+  margin-top: clamp(2.5rem, 7vw, 4rem);
+  padding-top: clamp(2rem, 5vw, 3rem);
+  border-top: 1px solid var(--line);
+}
+
+/* phones (the tabs a carousel): swiped sideways between sections
+   (src/scripts/swipe.ts); the page keeps vertical scrolling and pinch-zoom
+   (off while zoomed in: carousel.ts), and a section sliding out is cut at
+   the screen's edge */
+.panels[data-swipe] {
+  position: relative;
+  overflow-x: clip;
+  touch-action: pan-y pinch-zoom;
+}
+
+/* panels are focusable (tabs.ts) for screen readers, not for the eye */
+.panels :global([data-panel]:focus) {
+  outline: none;
+}
+</style>

@@ -1,0 +1,62 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+---
+name: "Pull Request"
+
+on:
+  # enq: can be used as it's a low-risk action with no custom code execution
+  pull_request_target: # zizmor: ignore[dangerous-triggers]
+    types:
+      - "opened"
+      - "edited"
+      - "synchronize"
+      - "reopened"
+    branches:
+      - "main"
+
+# enq: the only way to set permissions to none in GH Actions
+permissions: {} # yamllint disable-line rule:braces
+
+concurrency:
+  group: >
+    ${{ github.workflow_ref }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pull-request:
+    timeout-minutes: 10
+    name: "Pull Request"
+    permissions:
+      pull-requests: "read" # Needed to process pull request data
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Harden Runner"
+        uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
+        with:
+          disable-sudo-and-containers: true
+          egress-policy: "block"
+          allowed-endpoints: |
+            github.com:443
+            *.actions.githubusercontent.com:443
+            codeload.github.com:443
+            results-receiver.actions.githubusercontent.com:443
+            *.blob.core.windows.net:443
+            api.github.com:443
+      - name: "Lint Pull Request"
+        uses: "amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50" # v6.1.1
+        with:
+          types: |
+            fix
+            feat
+          requireScope: false
+          disallowScopes: |
+            .+
+          subjectPattern: "^(?![A-Z]).+$"
+          subjectPatternError: |
+            The subject "{subject}" found in the pull request title "{title}"
+            didn't match the configured pattern. Please ensure that the subject
+            doesn't start with an uppercase character.
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+...

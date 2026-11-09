@@ -1,0 +1,85 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// One role on the timeline: title, then company and dates, then what I did.
+import { type experience, isoMonth } from "../lib/data";
+import { site } from "../site.config";
+import Markdown from "./Markdown.astro";
+
+interface Props {
+  /** One entry of src/content/experience.yaml. */
+  role: (typeof experience.roles)[number];
+  /** Heading level of the title: h4 inside a subsection (advisory). */
+  heading?: "h3" | "h4";
+}
+
+const { role, heading = "h3" } = Astro.props;
+const Heading = heading;
+---
+
+<li class="role row">
+  <Heading class="title">{role.title}</Heading>
+  <p class="meta">
+    <span class="at">{role.url ? <a href={role.url}>{role.company}</a> : role.company}</span>
+    <span aria-hidden="true">·</span>
+    <span class="when num">
+      <time datetime={isoMonth(role.from)}>{role.from}</time>
+      <span aria-hidden="true">-</span>
+      {role.to ? <time datetime={isoMonth(role.to)}>{role.to}</time> : <span>{site.ui.present}</span>}
+    </span>
+  </p>
+  <ul class="points">
+    {role.points.map((point) => (
+      <li>
+        <Markdown inline text={point} />
+      </li>
+    ))}
+  </ul>
+  {role.tags.length > 0 && (
+    <ul class="tags">
+      {role.tags.map((tag) => (
+        <li>{tag}</li>
+      ))}
+    </ul>
+  )}
+</li>
+
+<style>
+/* one row of a grouped list (the experience section, sections/Experience.astro):
+   everything on one left edge, at every width */
+.role {
+  padding-block: 0.875rem 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--fs-title, 1.0625rem);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.375rem;
+  margin: 0.15rem 0 0.625rem;
+  color: var(--muted);
+  font-size: var(--fs-small, 0.9375rem);
+}
+
+.when {
+  white-space: nowrap;
+}
+
+.points {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0 0 0.75rem;
+  padding-left: 1.1rem;
+  /* .group sets list-style: none, which inherits down to this list */
+  list-style: disc outside;
+}
+
+.points li::marker {
+  color: var(--text);
+}
+</style>

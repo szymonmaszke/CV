@@ -1,0 +1,134 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+#
+# Roles, most recent first. Dates are MM/YYYY; no `to` means "present".
+# `points` are Markdown, `tags` plain pills.
+---
+roles:
+  - title: "Founder"
+    company: "opennudge"
+    url: "https://opennudge.com"
+    from: "03/2026"
+    points:
+      - "Building a harness to generate RLVR data for improving LLMs’ coding"
+      - "Validating commercial fit, shifting from build to sales phase"
+    tags:
+      - "pre-sales"
+      - "pricing"
+      - "data creation"
+      - "agents"
+  - title: "Interim CTO"
+    company: "Softwise.AI"
+    url: "https://softwise.ai/"
+    from: "10/2025"
+    to: "03/2026"
+    points:
+      - "Led developers and introduced engineering best practices, e.g. ADRs"
+      - "Cut product-core latency over fivefold in 30+ streaming agents"
+      - "Owned technical discovery, pre-sales and key account relationships"
+      - "Refocused the product on B2B by removing redundant B2C systems"
+    tags:
+      - "pre-sales"
+      - "pricing"
+      - "agents"
+      - "leadership"
+  - title: "Founder"
+    company: "opennudge"
+    url: "https://opennudge.com"
+    from: "03/2024"
+    to: "10/2025"
+    points:
+      - >-
+          Created [opentemplate](https://github.com/open-nudge/opentemplate), a Python template for SLSA
+          L3 builds, attested SBOMs and CI
+      - >-
+          Architected [lintkit](https://github.com/open-nudge/lintkit), an MCP-enabled cross-language
+          linting framework
+      - "Built a ~100-workflow open source Python quality and security platform"
+    tags:
+      - "open source"
+      - "supply chain security"
+      - "CI/CD"
+  - title: "CTO"
+    company: "InovIntell"
+    url: "https://www.inovintell.com"
+    from: "04/2022"
+    to: "02/2024"
+    points:
+      - "Co-founded a 30-person life-sciences machine learning company"
+      - "Owned the technical roadmap, direction, culture and engineering practices"
+      - "Built and led two teams (research and development) of 10+ engineers"
+      - "Translated domain and business requirements into technical tasks"
+      - "Designed tools to improve velocity and reliability across teams"
+    tags:
+      - "life sciences"
+      - "NLP"
+      - "LLM"
+      - "ML"
+      - "leadership"
+  - title: "Head of Curriculum"
+    company: "AiCore"
+    url: "https://www.theaicore.com/"
+    from: "11/2020"
+    to: "09/2021"
+    points:
+      - "Led technical delivery of a UK government-backed AI upskilling program"
+      - "Designed and delivered courses on Python, Linux, ML, DL and Ops"
+      - "Supervised 100+ learners through the curriculum and their projects"
+    tags:
+      - "supervision"
+      - "curriculum"
+      - "teaching"
+  - title: "Machine Learning Developer"
+    company: "ArtPlanet"
+    from: "08/2019"
+    to: "06/2020"
+    points:
+      - "Owned the full SDLC, from data science and ML to AWS deployment"
+      - "Built a low-maintenance, serverless neural network art tagger"
+      - >-
+          Open sourced parts of it: [torchdatasets](https://github.com/open-nudge/torchdatasets),
+          [torchlambda](https://github.com/szymonmaszke/torchlambda)
+    tags:
+      - "end-to-end"
+      - "cloud"
+      - "open source"
+  - title: "Machine Learning Developer"
+    company: "Codete"
+    url: "https://codete.com/"
+    from: "04/2018"
+    to: "10/2018"
+    points:
+      - "Co-created commercial machine learning courses for O’Reilly"
+      - "Built a proof-of-concept Keras to TensorFlow model converter"
+    tags:
+      - "applied research"
+      - "deep learning"
+
+advisory:
+  - title: "Deep Learning Advisor"
+    company: "wincan"
+    url: "https://www.wincan.com/en/home/"
+    from: "10/2022"
+    to: "06/2023"
+    points:
+      - "Co-developed the technical and scientific plan for the AI offering"
+      - "Guided development of the computer vision algorithms"
+      - "Mentored the ML team, advised on technical strategy"
+    tags:
+      - "computer vision"
+      - "mentoring"
+      - "strategy"
+  - title: "Deep Learning Advisor"
+    company: "music.ai"
+    url: "https://music.ai/"
+    from: "05/2022"
+    to: "08/2022"
+    points:
+      - "Optimized audio neural networks for deployment on mobile devices"
+      - "Sped up inference via TorchScript to Core ML conversion"
+    tags:
+      - "audio"
+      - "optimization"
+      - "applied research"
+...

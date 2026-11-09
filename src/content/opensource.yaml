@@ -1,0 +1,82 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+#
+# `totals` and every `stars` are refreshed by `npm run update:stats`
+# (scripts/update-stats.ts): public, non-fork repositories of `accounts`.
+# The deploy refreshes them daily; the values here are the fallback.
+# Everything else is written by hand.
+---
+totals:
+  stars: 1718
+  forks: 107
+  repos: 26
+  since: 2017
+accounts:
+  - "szymonmaszke"
+  - "open-nudge"
+
+# opennudge projects (the featured block), linked to their opennudge.com card
+current:
+  - name: "opentemplate"
+    url: "https://opennudge.com/#opentemplate"
+    description: "All-in-one Python template. One click, one command."
+  - name: "lintkit"
+    url: "https://opennudge.com/#lintkit"
+    description: "Easily create linters for Python, YAML, JSON and more."
+  - name: "pynudger"
+    url: "https://opennudge.com/#pynudger"
+    description: "Semantic linter - code quality rules, for humans and agents."
+
+past:
+  - name: "torchlayers"
+    repo: "https://github.com/open-nudge/torchlayers"
+    description: "Shape and dimension inference (Keras-like) for PyTorch layers and neural nets."
+    stars: 572
+    tags:
+      - "PyTorch"
+      - "shape inference"
+      - "library"
+  - name: "torchdatasets"
+    repo: "https://github.com/open-nudge/torchdatasets"
+    description: "PyTorch datasets extended with map, cache and more (tf.data-like)."
+    stars: 331
+    tags:
+      - "PyTorch"
+      - "data"
+      - "preprocessing"
+  - name: "vimpyter"
+    repo: "https://github.com/szymonmaszke/vimpyter"
+    description: "Edit scientific Jupyter notebooks in Vim."
+    stars: 330
+    archived: true
+    tags:
+      - "Vim"
+      - "Jupyter"
+  - name: "torchfunc"
+    repo: "https://github.com/szymonmaszke/torchfunc"
+    description: "PyTorch utilities: performance tips, recording, activations observability."
+    stars: 196
+    archived: true
+    tags:
+      - "PyTorch"
+      - "utilities"
+      - "observability"
+  - name: "torchlambda"
+    repo: "https://github.com/szymonmaszke/torchlambda"
+    description: "Deploy PyTorch models to AWS Lambda with LibTorch (C++), from one YAML file."
+    stars: 126
+    archived: true
+    tags:
+      - "PyTorch"
+      - "AWS Lambda"
+      - "C++"
+  - name: "numpp"
+    repo: "https://github.com/szymonmaszke/numpp"
+    description: "Research library for compile-time numerical methods in C++17."
+    stars: 13
+    archived: true
+    tags:
+      - "C++"
+      - "numerical methods"
+      - "research"
+...

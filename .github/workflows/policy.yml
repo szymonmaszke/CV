@@ -1,0 +1,56 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+---
+name: "Policy"
+
+on:
+  pull_request:
+    branches:
+      - "main"
+
+# enq: the only way to set permissions to none in GH Actions
+permissions: {} # yamllint disable-line rule:braces
+
+concurrency:
+  group: >
+    ${{ github.workflow_ref }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  policy:
+    timeout-minutes: 10
+    name: "Policy"
+    permissions:
+      contents: "read"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Harden Runner"
+        uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
+        with:
+          # Uses docker container,
+          # disable-sudo-and-containers impossible
+          disable-sudo: true
+          egress-policy: "block"
+          allowed-endpoints: >
+            *.actions.githubusercontent.com:443
+            codeload.github.com:443
+            results-receiver.actions.githubusercontent.com:443
+            *.blob.core.windows.net:443
+            api.github.com:443
+            github.com:443
+      - name: "Checkout Repository"
+        uses: "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1" # v7.0.1
+        with:
+          sparse-checkout: |
+            .conform.yaml
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+          # Necessary for the conform action to work (commit ranges)
+          # See here: https://github.com/siderolabs/conform/issues/231
+          fetch-depth: 2
+      - name: "Check policy compliance"
+        uses: "siderolabs/conform@cfdb3cce90daece912e6a5cb3f20b2316a78a5bf" # v0.1.0-alpha.31
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+...

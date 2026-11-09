@@ -1,0 +1,26 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// One section of the page (a [data-panel], shown by its tab: Tabs.astro):
+// its title, a short description if it has one, then its content (the slot).
+import Markdown from "./Markdown.astro";
+
+interface Props {
+  /** The section in src/content/about.yaml: its anchor (`/#experience`) and title. */
+  section: { id: string; title: string };
+  /** A short description under the title. */
+  text?: string;
+}
+
+const { section, text } = Astro.props;
+const titleId = `${section.id}-title`;
+---
+
+<section id={section.id} data-panel aria-labelledby={titleId}>
+  <div class="section-head">
+    <h2 id={titleId}><Markdown inline text={section.title} /></h2>
+    {text && <Markdown text={text} />}
+  </div>
+  <slot />
+</section>

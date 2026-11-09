@@ -1,0 +1,22 @@
+opennudge brand assets
+
+Copyright © 2026 open-nudge <https://github.com/open-nudge>. All rights reserved.
+
+This license applies to the opennudge name, logo, mark, wordmark, icons and
+social images in this repository (Szymon Maszke's website, maszke.co): the
+files listed with LicenseRef-opennudge-brand in REUSE.toml, among them the
+site icons (favicon.ico, favicon.svg, apple-touch-icon.png) and the opennudge
+mark. It replaces any other license of this repository for these files: they
+are not licensed under the Apache License, Version 2.0, which covers the rest
+of the repository and, in its Section 6, grants no permission to use
+trademarks.
+
+No permission is granted to copy, modify, distribute or create derivative works
+of these files, except, by permission of open-nudge:
+
+1. to build and serve Szymon Maszke's website (maszke.co) from this
+   repository, with these files unmodified, and
+2. to refer to opennudge and its projects.
+
+Forks and other derived websites must replace these files with their own.
+Any other use requires prior written permission from open-nudge.

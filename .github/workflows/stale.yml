@@ -1,0 +1,56 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+
+---
+name: "Stale"
+on:
+  schedule:
+    - cron: "0 3 * * 6"
+  workflow_dispatch:
+
+# enq: the only way to set permissions to none in GH Actions
+permissions: {} # yamllint disable-line rule:braces
+
+concurrency:
+  group: >
+    ${{ github.workflow_ref }}
+
+jobs:
+  stale:
+    timeout-minutes: 10
+    name: "Stale"
+    permissions:
+      issues: "write" # Needed to close stale issues
+      pull-requests: "write" # Needed to close stale pull requests
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Harden Runner"
+        uses: "step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25" # v2.22.1
+        with:
+          disable-sudo-and-containers: true
+          egress-policy: "block"
+          allowed-endpoints: >
+            *.actions.githubusercontent.com:443
+            codeload.github.com:443
+            results-receiver.actions.githubusercontent.com:443
+            *.blob.core.windows.net:443
+            api.github.com:443
+            github.com:443
+      - name: "Mark stale PRs"
+        uses: "actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93" # v11.0.0
+        with:
+          stale-pr-message: >
+            This pull request did not receive any commits in the last 7 days.
+            Marking pull request as stale (push additional commits or
+            merge to unstale it).
+          close-pr-message: >
+            This PR was stale for the last 7 days.
+            Closing the PR (one can reopen it at any time
+            by committing and/or merging).
+          days-before-pr-stale: 14
+          days-before-pr-close: 28
+          stale-pr-label: "stale"
+          close-pr-label: "expired"
+          remove-pr-stale-when-updated: true
+          labels-to-remove-when-unstale: "stale"
+...

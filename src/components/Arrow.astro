@@ -1,0 +1,41 @@
+---
+// SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+// SPDX-License-Identifier: Apache-2.0
+
+// opennudge.com's bouncing arrow (a filled chevron, 24x24); turned to point
+// right for links onwards. The rotation is on a group around the path, so
+// the bounce (global.css .bounce, on the path) moves along where the arrow
+// points, either way.
+import { arrowPath } from "../lib/icons";
+
+interface Props {
+  /** Where it points. */
+  direction: "down" | "right";
+  /** Bounce all the time (global.css .bounce). */
+  bounce?: boolean;
+  /** Width and height, in pixels. */
+  size?: number;
+  class?: string;
+}
+
+const { direction, bounce = false, size = 18, class: className } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  fill="currentColor"
+  aria-hidden="true"
+  class:list={["arrow-icon", className, { bounce }]}
+>
+  <g transform={direction === "right" ? "rotate(-90 12 12)" : undefined}>
+    <path d={arrowPath} />
+  </g>
+</svg>
+
+<style>
+.arrow-icon {
+  flex: none;
+}
+</style>

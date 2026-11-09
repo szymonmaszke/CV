@@ -1,0 +1,94 @@
+# SPDX-FileCopyrightText: © 2026 Szymon Maszke <https://github.com/szymonmaszke>
+# SPDX-License-Identifier: Apache-2.0
+# Site-wide text and links. Prose supports Markdown; labels and URLs are plain text.
+---
+name: "Szymon Maszke"
+url: "https://maszke.co"
+title: "Szymon Maszke - CTO, founder (ML, DL, LLM, Python, SSCS)"
+description: >-
+  Szymon Maszke: two-time CTO and founder of opennudge. LLM and ML/DL systems, Python tooling and
+  supply chain security. Experience, open source and CV.
+language: "en"
+email: "szymon@maszke.co"
+# CV PDFs built from cv/ (npm run build:cv); links serve the one matching the
+# current theme (light without JavaScript)
+cv:
+  light: "/szymon-maszke-cv.pdf"
+  dark: "/szymon-maszke-cv-dark.pdf"
+links:
+  home: "/"
+  github: "https://github.com/szymonmaszke"
+  stackoverflow: "https://stackoverflow.com/users/10886420/szymon-maszke"
+  opennudge: "https://opennudge.com"
+  llms: "/llms.txt"
+ui:
+  skip: "skip to content"
+  githubLabel: "Szymon Maszke on GitHub"
+  stackoverflowLabel: "Szymon Maszke on Stack Overflow"
+  opennudgeLabel: "opennudge"
+  darkMode: "Dark mode"
+  cv: "cv"
+  cvLabel: "Download CV (PDF)"
+  sections: "Sections"
+  menu: "Menu"
+  closeMenu: "Close menu"
+  previous: "previous section"
+  next: "next section"
+  stackoverflow: "stackoverflow"
+  github: "github"
+  stars: "stars"
+  archived: "archived"
+  views: "views"
+  votes: "votes"
+  present: "present"
+  inProgress: "in progress"
+hero:
+  title: "Szymon Maszke"
+  motto: "engineering leader, founder of opennudge"
+  lead: >-
+    Two-time CTO with 8+ years as a team leader and developer.
+    LLM and ML systems, Python tooling and supply chain security.
+  # pills above the title; phones (max-width: 40rem) show `mobile`
+  points:
+    desktop:
+      - "machine learning"
+      - "large models"
+      - "backend"
+      - "supply chain security"
+      - "open source"
+    mobile:
+      - "machine learning"
+      - "backend"
+      - "supply chain security"
+  # `stat` takes the value from the data files (refreshed by `npm run update:stats`)
+  spec:
+    - key: "leadership"
+      value: "2× CTO"
+      note: "InovIntell, Softwise.AI"
+    - key: "experience"
+      value: "8+ years"
+      note: "team leader and developer"
+    - key: "open source"
+      stat: "stars"
+      note: "GitHub stars"
+    - key: "stackoverflow"
+      stat: "reputation"
+      note: "reputation"
+  actions:
+    more: "see more"
+    cv: "download cv"
+    email: "email"
+    github: "github"
+footer:
+  contact: "contact"
+  elsewhere: "elsewhere"
+  files: "files"
+  llms: "llms.txt"
+  license: "Source code: Apache-2.0"
+notFound:
+  title: "Not found"
+  code: "404"
+  heading: "nothing here"
+  text: "This page does not exist."
+  action: "home"
+...
