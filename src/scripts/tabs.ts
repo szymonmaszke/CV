@@ -23,6 +23,7 @@ import {
   swipeable,
   zoomed,
 } from "./carousel.ts";
+import { glide } from "./glide.ts";
 import { swipe } from "./swipe.ts";
 import { arrows, bar, block, list, openLinks, panels, room, tabs } from "./tab-elements.ts";
 
@@ -59,15 +60,15 @@ const scrollsTo = (panel: HTMLElement) => stuck() || panel.getBoundingClientRect
 
 /** Scroll the page to the top of a section, just under the sticky bar (and
  * its scroll margin: desktop keeps the gap the page has there): down to it
- * from above, up to it from deep in another one. `jump`: see {@link show}. */
+ * from above, up to it from deep in another one, gliding (glide.ts).
+ * `jump`: see {@link show}. */
 const toTop = (panel: HTMLElement, { jump = false } = {}) => {
   if (!bar) {
     return;
   }
   const margin = Number.parseFloat(getComputedStyle(panel).scrollMarginTop) || 0;
-  scrollTo({
-    top: panel.getBoundingClientRect().top + scrollY - stickyTop(bar) - bar.offsetHeight - margin,
-    behavior: jump ? "instant" : "auto",
+  glide(panel.getBoundingClientRect().top + scrollY - stickyTop(bar) - bar.offsetHeight - margin, {
+    instant: jump,
   });
 };
 

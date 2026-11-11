@@ -162,6 +162,14 @@ const jsonLd = {
   .panels :global([data-panel]) {
     scroll-margin-top: calc(var(--panel-gap) - 1rem);
   }
+
+  /* a section is at least a screen tall below the bar (global.css
+     --tabs-bar) and its scroll margin, so a tab can always bring its top
+     under the bar: a short one doesn't shrink the page, which would snap
+     the scroll up mid-switch (tabs.ts) */
+  .panels[data-tabbed] :global([data-panel]) {
+    min-height: calc(100dvh - var(--header) - var(--tabs-bar) - (var(--panel-gap) - 1rem));
+  }
 }
 
 /* without scripts every section is shown, one after another */

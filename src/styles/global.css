@@ -120,16 +120,18 @@ html {
 /* desktop: exactly under the section tabs' bar (Tabs.astro: 0.5rem above
    and 1rem below a capsule as tall as the hero's buttons, 2.4rem + 2px;
    2.75rem for thumbs), so a section lands its scroll margin below it, as
-   the page lays it out (index.astro: --panel-gap) */
+   the page lays it out (index.astro: --panel-gap). --tabs-bar: the bar's
+   height, also what a section keeps clear of the screen (index.astro) */
 @media (min-width: 48.0625rem) {
   html {
-    scroll-padding-top: calc(var(--header) + 3.9rem + 2px);
+    --tabs-bar: calc(3.9rem + 2px);
+    scroll-padding-top: calc(var(--header) + var(--tabs-bar));
   }
 }
 
 @media (min-width: 48.0625rem) and (pointer: coarse) {
   html {
-    scroll-padding-top: calc(var(--header) + 4.25rem);
+    --tabs-bar: 4.25rem;
   }
 }
 
