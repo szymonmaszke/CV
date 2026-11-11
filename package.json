@@ -32,10 +32,10 @@
     "yaml": "2.9.1"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.10",
-    "@biomejs/biome": "2.5.15",
-    "@j178/prek": "0.5.4",
-    "@types/node": "24.19.2",
+    "@astrojs/check": "0.9.12",
+    "@biomejs/biome": "2.6.4",
+    "@j178/prek": "0.5.9",
+    "@types/node": "26.6.6",
     "typescript": "6.0.3"
   }
 }
